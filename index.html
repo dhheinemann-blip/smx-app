@@ -11,7 +11,7 @@
   <link id="dynamic-favicon" rel="icon" type="image/png">
   <link id="dynamic-touch-icon" rel="apple-touch-icon">
   <link id="dynamic-manifest" rel="manifest">
-  <title>Sauenmatrix v26.3 (Nacht-Fokus & Beunruhigung)</title>
+  <title>Sauenmatrix v26.4 (Überläufer-Sync, Beifang & SUPERSIM)</title>
   <style>
     :root {
       --bg-main: #0b130e;
@@ -727,6 +727,157 @@
       grid-template-columns: 1.45fr 1fr;
       gap: 8px;
     }
+
+    /* v26.4: Überläufer-Durchreiche (sm_cam_inbox_v1) & Beifang-Tagebuch (sm_beifang_v1) */
+    #ul-inbox-banner {
+      margin: 8px 14px 4px;
+      background: linear-gradient(135deg, #1b3d28 0%, #132c1d 100%);
+      border: 2px solid var(--accent-green);
+      border-radius: 16px;
+      padding: 10px 12px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(34, 230, 107, 0.22);
+    }
+    body.home-mode:not(.home-swiping) #ul-inbox-banner {
+      display: none !important;
+    }
+    .ul-banner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .ul-banner-actions {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 8px;
+    }
+    #home-ul-inbox-pill {
+      margin-top: 16px;
+      background: rgba(34, 230, 107, 0.16);
+      border: 1.5px solid var(--accent-green);
+      color: #d8ffe6;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    }
+    #home-ul-inbox-pill:active {
+      transform: scale(0.96);
+    }
+    .ul-inbox-card {
+      background: #152a1e;
+      border: 1.5px solid #356347;
+      border-left: 5px solid var(--accent-green);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .ul-inbox-card.is-beifang {
+      border-left-color: var(--accent-yellow);
+    }
+    .ul-inbox-card.is-dup {
+      border-left-color: #94a3b8;
+      opacity: 0.85;
+    }
+    .ul-inbox-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: #cfe3d5;
+    }
+    .ul-inbox-tag {
+      background: rgba(9, 18, 12, 0.65);
+      border: 1px solid rgba(67, 135, 93, 0.42);
+      border-radius: 7px;
+      padding: 2px 7px;
+      font-weight: 700;
+    }
+    .ul-inbox-actions {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .tb-main-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+      background: #0f1e15;
+      border: 1.5px solid #356347;
+      border-radius: 14px;
+      padding: 4px;
+    }
+    .tb-main-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid transparent;
+      border-radius: 10px;
+      padding: 8px 6px;
+      font-size: 0.84rem;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tb-main-btn.active {
+      background: var(--tile-green);
+      color: #fff;
+      border-color: var(--accent-green);
+      box-shadow: 0 2px 8px rgba(34, 230, 107, 0.22);
+    }
+    .tb-main-btn.active-beifang {
+      background: #2f3a1b;
+      color: #fff3bf;
+      border-color: var(--accent-yellow);
+      box-shadow: 0 2px 8px rgba(244, 196, 48, 0.2);
+    }
+    .beifang-card {
+      background: #162a1e;
+      border: 1px solid #385e46;
+      border-left: 6px solid var(--accent-yellow);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .beifang-cat-pill {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: rgba(244, 196, 48, 0.16);
+      border: 1px solid rgba(244, 196, 48, 0.55);
+      color: #fff3bf;
+    }
+    .ss-diag-box {
+      display: none;
+      background: rgba(230, 57, 70, 0.14);
+      border: 1px solid rgba(230, 57, 70, 0.65);
+      border-radius: 11px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      color: #ffd6dc;
+    }
   </style>
 </head>
 <body class="home-mode">
@@ -741,6 +892,7 @@
     <div id="home-logo-wrap" onclick="enterCockpitFromHome()" title="Zum Cockpit"></div>
     <div class="home-brand-title">Sauenmatrix</div>
     <div class="home-brand-sub">24h Jagd- &amp; Schwarzwild-Auswertung</div>
+    <button type="button" id="home-ul-inbox-pill" onclick="openCamInboxModal()">📥 Überläufer bereit</button>
   </div>
   <div id="home-toast-msg">✅ Im Tagebuch gespeichert</div>
   <button type="button" id="home-fab-plus" onclick="openQuickHomeDiaryEntry()" aria-label="Neuer Tagebuch-Eintrag" title="Neuer Eintrag">+</button>
@@ -763,7 +915,7 @@
       <div class="header-quick-grid">
         <button type="button" class="quick-btn" onclick="openWindyModal()">Windy</button>
         <button type="button" class="quick-btn" onclick="openModal('modal-lunalink')">LunaLink</button>
-        <button type="button" class="quick-btn" id="quick-supersim-btn" onclick="openSupersimModal()">📷 SUPERSIM</button>
+        <button type="button" class="quick-btn" id="quick-supersim-btn" onclick="openSupersimModal()">📷 SIM</button>
       </div>
     </div>
 
@@ -780,6 +932,20 @@
     <div class="backup-actions">
       <button class="btn-sm btn-yes" onclick="triggerInstantBackup()">Ja</button>
       <button class="btn-sm btn-no" onclick="dismissBackupReminder()">Nein</button>
+    </div>
+  </div>
+
+  <!-- ÜBERLÄUFER-DURCHREICHE BANNER (erscheint sobald Einträge in sm_cam_inbox_v1 warten) -->
+  <div id="ul-inbox-banner" role="region" aria-label="Überläufer Kamera-Posteingang">
+    <div class="ul-banner-top">
+      <div style="min-width:0;">
+        <div style="font-weight:900; color:var(--accent-green); font-size:0.9rem;" id="ul-banner-title">📥 Überläufer-Besuche bereit</div>
+        <div style="font-size:0.75rem; color:#d8e6dc; margin-top:2px;" id="ul-banner-sub">Saubere Sortierung nach Sauen &amp; Beifang (mit Duplikatschutz)</div>
+      </div>
+    </div>
+    <div class="ul-banner-actions">
+      <button type="button" class="btn-sm btn-yes" onclick="importAllFromCamInbox()">✅ Alle abholen</button>
+      <button type="button" class="btn-sm btn-no" onclick="openCamInboxModal()">👁️ Prüfen</button>
     </div>
   </div>
 
@@ -1967,22 +2133,24 @@
         <div id="ss-settings-box" style="display:none; background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:10px 12px; margin-bottom:12px;">
           <div style="font-weight:800; font-size:0.82rem; margin-bottom:6px; color:var(--accent-green);">🔗 Google-Skript-Verbindung</div>
           <div style="margin-bottom:8px;">
-            <label class="app-label">Web-App-URL (https://script.google.com/macros/s/.../exec)</label>
+            <label class="app-label">Web-App-URL (muss auf /exec enden)</label>
             <input type="url" class="app-input" id="ss-url-input" placeholder="https://script.google.com/macros/s/.../exec">
           </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:end;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:end; margin-bottom:8px;">
             <div>
               <label class="app-label">PIN (wie im Skript)</label>
               <input type="text" class="app-input" id="ss-pin-input" placeholder="1234">
             </div>
             <button type="button" class="btn-sm btn-yes" style="height:37px;" onclick="saveSupersimSettings()">💾 Speichern</button>
           </div>
+          <button type="button" class="btn-sm btn-no" style="width:100%; font-size:0.76rem; padding:6px 10px;" onclick="testSupersimUrlInBrowser()">🌐 URL direkt im Browser testen (Diagnose)</button>
         </div>
 
-        <!-- Status-Zeile -->
-        <div id="ss-status-line" style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px; font-weight:700;">
+        <!-- Status-Zeile & Klartext-Diagnose -->
+        <div id="ss-status-line" style="font-size:0.78rem; color:var(--text-muted); margin-bottom:8px; font-weight:700; line-height:1.35;">
           Bereit zum Abrufen.
         </div>
+        <div id="ss-diag-box" class="ss-diag-box"></div>
 
         <!-- Prüfliste eingehender Besuche -->
         <div id="ss-visits-list"></div>
@@ -2033,6 +2201,87 @@
 
       <div class="modal-footer-back" style="margin-top:8px;">
         <button type="button" class="back-pill-btn" onclick="closeModal('modal-sos-emergency')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 7: ÜBERLÄUFER POSTEINGANG PRÜFEN & ABHOLEN (sm_cam_inbox_v1) -->
+  <div class="modal-backdrop" id="modal-ul-inbox">
+    <div class="modal-card no-swipe" style="max-width:500px; padding:14px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;">📥 Überläufer-Posteingang</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-ul-inbox')">✕</button>
+      </div>
+      <div id="ul-inbox-modal-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.4; color:#d8e6dc;"></div>
+      <div style="display:grid; grid-template-columns:1.45fr 1fr; gap:8px; margin-bottom:10px;">
+        <button type="button" class="btn-add-entry-hero" id="ul-modal-import-all-btn" onclick="importAllFromCamInbox()">✅ Alle übernehmen</button>
+        <button type="button" class="btn-sm btn-no" style="color:#ff8fa3; font-size:0.8rem;" id="ul-modal-discard-all-btn" onclick="discardAllCamInbox()">🗑️ Alle verwerfen</button>
+      </div>
+      <div id="ul-inbox-modal-feedback" style="display:none; background:rgba(34,230,107,0.16); border:1px solid var(--accent-green); color:#c8fad7; border-radius:10px; padding:6px 10px; margin-bottom:8px; font-size:0.76rem; font-weight:800;"></div>
+      <div id="ul-inbox-modal-list"></div>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-ul-inbox')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 8: BEIFANG-EINTRAG ANLEGEN / BEARBEITEN (sm_beifang_v1) -->
+  <div class="modal-backdrop" id="modal-beifang-entry">
+    <div class="modal-card no-swipe">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;" id="bf-modal-title">🦌 Beifang eintragen</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-beifang-entry')">✕</button>
+      </div>
+      <input type="hidden" id="bf-edit-id" value="">
+      <div class="form-row-2col">
+        <div>
+          <label class="app-label">🏷️ Wildart / Kategorie</label>
+          <select class="app-input" id="bf-category-input">
+            <option value="REHWILD">🦌 Rehwild</option>
+            <option value="DAMWILD">🦌 Damwild</option>
+            <option value="RAUBWILD">🦊 Raubwild</option>
+            <option value="WOLF">🐺 Wolf</option>
+            <option value="HAUSTIER">🐕 Haustier</option>
+            <option value="VOGEL">🐦 Vogel</option>
+            <option value="STOERUNG">⚠️ Störung</option>
+            <option value="UNKLAR">❓ Unklar</option>
+          </select>
+        </div>
+        <div>
+          <label class="app-label">🔎 Detail / Art</label>
+          <input type="text" class="app-input" id="bf-detail-input" placeholder="z. B. Rehbock, Dachs, Waschbär">
+        </div>
+      </div>
+      <div class="form-row-2col">
+        <div>
+          <label class="app-label">📅 Datum</label>
+          <input type="date" class="app-input" id="bf-date-input">
+        </div>
+        <div>
+          <label class="app-label">🏯 Standort / Sitz</label>
+          <select class="app-input" id="bf-kanzel-input"></select>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 78px 72px; gap:6px; margin-bottom:10px;">
+        <div><label class="app-label">🕒 Von</label><input type="time" class="app-input" id="bf-arrival-input" oninput="autoCalcBeifangDuration()"></div>
+        <div><label class="app-label">🕓 Bis</label><input type="time" class="app-input" id="bf-departure-input" oninput="autoCalcBeifangDuration()"></div>
+        <div><label class="app-label">⏱️ Min</label><input type="number" class="app-input" id="bf-duration-input" min="0" placeholder="0"></div>
+        <div><label class="app-label">🔢 Stk.</label><input type="number" class="app-input" id="bf-count-input" min="1" value="1"></div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label class="app-label">📷 Kamera (optional)</label>
+        <input type="text" class="app-input" id="bf-camera-input" placeholder="z. B. Seissiger Tunnel">
+      </div>
+      <div style="margin-bottom:12px;">
+        <label class="app-label">📝 Notiz (optional)</label>
+        <textarea class="app-input" id="bf-note-input" rows="2" placeholder="Besonderheiten, Richtung, Verhalten..."></textarea>
+      </div>
+      <div style="font-size:0.71rem; color:var(--text-muted); margin-bottom:10px; line-height:1.3;">
+        🛡️ Streng getrennt gespeichert in <strong>Beifang</strong> – kein Eintrag im Sauen-Kalender und kein Einfluss auf Sauen-Prognose oder Statistik.
+      </div>
+      <button type="button" class="btn-add-entry-hero" onclick="saveBeifangEntryFromModal()">💾 Beifang speichern</button>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-beifang-entry')">◀ Zurück</button>
       </div>
     </div>
   </div>
@@ -3087,7 +3336,10 @@
       } else if (tabName === "kuehltruhe") {
         if (typeof renderReifeTimerList === "function") renderReifeTimerList();
         if (typeof renderKuehltruhe === "function") renderKuehltruhe();
+      } else if (tabName === "tagebuch") {
+        if (typeof renderBeifangList === "function") renderBeifangList();
       }
+      if (typeof refreshCamInboxBanner === "function") refreshCamInboxBanner();
       window.scrollTo(0, 0);
       history.pushState({ modal: null, tab: tabName }, "");
     }
@@ -3154,13 +3406,15 @@
       const wartung = (typeof getWartungData === "function") ? getWartungData() : safeGetJSON("sm_wartung_v1", { checks: {}, issues: [], extraSitze: [] });
       const rotten = (typeof getRottenProfiles === "function") ? getRottenProfiles() : safeGetJSON("sm_rotten_v1", []);
       const reife = (typeof getReifeEntries === "function") ? getReifeEntries() : safeGetJSON("sm_reife_v1", []);
+      const beifang = (typeof getBeifangEntries === "function") ? getBeifangEntries() : safeGetJSON("sm_beifang_v1", []);
 
       const dateStr = getLocalISODate();
       const backupPayload = {
-        appVersion: "Sauenmatrix-v26.3",
+        appVersion: "Sauenmatrix-v26.4",
         exportDatum: getLocalISODateTime(),
         activeKanzel: activeKanzel,
         logs: logs,
+        beifang: beifang,
         kanzeln: kanzeln,
         strecke: strecke,
         kuehltruhe: truhe,
@@ -8095,6 +8349,14 @@
 </style>
 
 <template id="tpl-block4-tagebuch">
+  <!-- KOMPAKTER HAUPT-UMSCHALTER: 🐗 SAUEN | 🦌 BEIFANG (STRIKT GETRENNT) -->
+  <div class="tb-main-switcher no-swipe">
+    <button type="button" class="tb-main-btn active" id="tb-main-SAUEN" onclick="setTagebuchMainSection('SAUEN')">🐗 Sauen</button>
+    <button type="button" class="tb-main-btn" id="tb-main-BEIFANG" onclick="setTagebuchMainSection('BEIFANG')">🦌 Beifang (<span id="beifang-tab-count-badge">0</span>)</button>
+  </div>
+
+  <!-- BEREICH A: SAUEN-TAGEBUCH (UNVERÄNDERT) -->
+  <div id="tb-section-SAUEN">
   <div class="truhe-mode-switcher cols-3 no-swipe">
     <button type="button" class="truhe-mode-btn active" id="tb-mode-CAL" onclick="setTagebuchSubMode('CAL')">📅 Kalender</button>
     <button type="button" class="truhe-mode-btn" id="tb-mode-LIST" onclick="setTagebuchSubMode('LIST')">📖 Liste (<span id="diary-total-count-badge">0</span>)</button>
@@ -8187,9 +8449,36 @@
         🧹 Bestand auf Duplikate prüfen &amp; bereinigen
       </button>
       <div style="font-size:0.69rem; color:#d8e6dc; margin-top:6px; text-align:center; line-height:1.3;">
-        Erkennt Sauenmatrix-, alte HTML-App- &amp; Jagdbegleiter-Backups automatisch inkl. Duplikatschutz.
+        Erkennt Sauenmatrix-, alte HTML-App- &amp; Jagdbegleiter-Backups automatisch inkl. Beifang &amp; Duplikatschutz.
       </div>
     </div>
+  </div>
+  </div>
+
+  <!-- BEREICH B: BEIFANG-TAGEBUCH (sm_beifang_v1 · KEIN EINFLUSS AUF SAUEN-KALENDER / SCORING) -->
+  <div id="tb-section-BEIFANG" style="display:none;">
+    <div style="display:flex; gap:8px; margin-bottom:8px;">
+      <button type="button" class="btn-add-entry-hero" onclick="openBeifangModal(null)">➕ Beifang eintragen</button>
+      <select class="app-input" id="bf-filter-kanzel" style="width:136px; flex-shrink:0;" onchange="renderBeifangList()">
+        <option value="ALL">Alle Standorte</option>
+      </select>
+    </div>
+    <div style="margin-bottom:8px;">
+      <input type="text" class="app-input" id="bf-search-input" placeholder="🔍 Beifang suchen (z. B. Dachs, Rehbock, Waschbär...)" oninput="renderBeifangList()">
+    </div>
+    <div class="diary-filter-row no-swipe" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()">
+      <button type="button" class="filter-chip active" id="bf-flt-ALL" onclick="setBeifangCatFilter('ALL')">Alle</button>
+      <button type="button" class="filter-chip" id="bf-flt-REHWILD" onclick="setBeifangCatFilter('REHWILD')">🦌 Rehwild</button>
+      <button type="button" class="filter-chip" id="bf-flt-DAMWILD" onclick="setBeifangCatFilter('DAMWILD')">🦌 Damwild</button>
+      <button type="button" class="filter-chip" id="bf-flt-RAUBWILD" onclick="setBeifangCatFilter('RAUBWILD')">🦊 Raubwild</button>
+      <button type="button" class="filter-chip" id="bf-flt-WOLF" onclick="setBeifangCatFilter('WOLF')">🐺 Wolf</button>
+      <button type="button" class="filter-chip" id="bf-flt-HAUSTIER" onclick="setBeifangCatFilter('HAUSTIER')">🐕 Haustier</button>
+      <button type="button" class="filter-chip" id="bf-flt-VOGEL" onclick="setBeifangCatFilter('VOGEL')">🐦 Vogel</button>
+      <button type="button" class="filter-chip" id="bf-flt-STOERUNG" onclick="setBeifangCatFilter('STOERUNG')">⚠️ Störung</button>
+      <button type="button" class="filter-chip" id="bf-flt-UNKLAR" onclick="setBeifangCatFilter('UNKLAR')">❓ Unklar</button>
+    </div>
+    <div id="beifang-summary-bar" style="font-size:0.75rem; color:var(--text-muted); font-weight:700; margin-bottom:8px;"></div>
+    <div id="beifang-entries-container"></div>
   </div>
 </template>
 
@@ -12305,7 +12594,8 @@
       jagdzeiten: null,
       wartung: null,
       rotten: [],
-      reife: []
+      reife: [],
+      beifang: []
     };
 
     const looksLikeJSON = text.startsWith("{") || text.startsWith("[");
@@ -12421,9 +12711,15 @@
           res.reife = rawReife.filter(x => x && typeof x === "object");
         }
 
+        // 9. Beifang-Tagebuch (sm_beifang_v1)
+        const rawBeifang = data.beifang || normRoot.beifang || normRoot.smbeifangv1;
+        if (Array.isArray(rawBeifang)) {
+          res.beifang = rawBeifang.filter(x => x && typeof x === "object");
+        }
+
         const isSauenmatrix = Boolean(
           (typeof data.appVersion === "string" && data.appVersion.toLowerCase().includes("sauenmatrix")) ||
-          data.wartung || data.kuehltruhe || data.jagdzeiten || data.rotten || data.reife
+          data.wartung || data.kuehltruhe || data.jagdzeiten || data.rotten || data.reife || data.beifang
         );
         const isJB = Boolean(
           normRoot.revier || normRoot.jagdtagebuch || normRoot.beobachtungen ||
@@ -12470,7 +12766,9 @@
 
   function isSameDiaryEntry(a, b, toleranceMin = 15) {
     if (!a || !b) return false;
-    // 1. Exakte ID-Übereinstimmung (wenn beide aus dem selben Datum stammen)
+    // 1. Exakte ID-, inboxId- oder visitId-Übereinstimmung
+    if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
+    if (a.visitId && b.visitId && String(a.visitId) === String(b.visitId)) return true;
     if (a.id && b.id && a.id === b.id && a.date === b.date) return true;
 
     const stA = a.status || "GREEN";
@@ -12576,6 +12874,9 @@
       merged.weatherStamp = Object.assign({}, incoming.weatherStamp);
       if (!merged.richtung && merged.weatherStamp.windDir) merged.richtung = merged.weatherStamp.windDir;
     }
+    if (!merged.inboxId && incoming.inboxId) merged.inboxId = incoming.inboxId;
+    if (!merged.visitId && incoming.visitId) merged.visitId = incoming.visitId;
+    if (!merged.source && incoming.source) merged.source = incoming.source;
     return merged;
   }
 
@@ -12766,6 +13067,7 @@
     if (p.wartung) lines.push(`🛠️ <strong>Wartung / Reparaturen:</strong> ${p.wartung.issues.length} Einträge` + (p.wartung.extraSitze.length ? `, ${p.wartung.extraSitze.length} Extra-Sitze` : ""));
     if (Array.isArray(p.rotten) && p.rotten.length > 0) lines.push(`🐗 <strong>Bekannte Gesichter:</strong> ${p.rotten.length} Steckbriefe`);
     if (Array.isArray(p.reife) && p.reife.length > 0) lines.push(`🥩 <strong>Landig Reife-Timer:</strong> ${p.reife.length} Stücke`);
+    if (Array.isArray(p.beifang) && p.beifang.length > 0) lines.push(`🦌 <strong>Beifang-Tagebuch:</strong> ${p.beifang.length} Einträge`);
     if (p.jagdzeiten) lines.push(`📜 <strong>Jagdzeiten:</strong> ${p.jagdzeiten.length} Einträge`);
 
     if (sumEl) sumEl.innerHTML = lines.join("<br>");
@@ -12854,6 +13156,12 @@
       saveReifeEntries(mergedRf);
     }
 
+    // 9. Beifang-Tagebuch (sm_beifang_v1)
+    if (Array.isArray(p.beifang) && p.beifang.length > 0) {
+      const mergedBf = mergeBeifangLists(getBeifangEntries(), p.beifang, mode);
+      saveBeifangEntries(mergedBf);
+    }
+
     pendingBackupImport = null;
     closeModal("modal-import-preview");
 
@@ -12861,6 +13169,7 @@
     renderDiaryCalendar();
     renderRottenProfiles();
     renderDiaryList();
+    if (typeof renderBeifangList === "function") renderBeifangList();
     renderStreckenliste();
     renderReifeTimerList();
     renderKuehltruhe();
@@ -12875,9 +13184,11 @@
     const rfCnt = getReifeEntries().length;
     const wrtCnt = getWartungData().issues.length;
     const rotCnt = getRottenProfiles().length;
+    const bfCnt = (typeof getBeifangEntries === "function") ? getBeifangEntries().length : 0;
     alert(
       `Import abgeschlossen (${mode === "MERGE" ? "Zusammengeführt" : "Ersetzt"})!\n` +
-      `• Tagebuch gesamt: ${diaryLogs.length} Einträge (+${dupReport.addedNew} neu, ${dupReport.totalDupsSkipped} Duplikate gefiltert)\n` +
+      `• Sauen-Tagebuch gesamt: ${diaryLogs.length} Einträge (+${dupReport.addedNew} neu, ${dupReport.totalDupsSkipped} Duplikate gefiltert)\n` +
+      `• Beifang-Tagebuch: ${bfCnt} Einträge\n` +
       `• Bekannte Gesichter: ${rotCnt} Steckbriefe\n` +
       `• Streckenliste: ${strCnt} Abschüsse\n` +
       `• Landig Reife-Timer: ${rfCnt} Stücke\n` +
@@ -12927,7 +13238,8 @@
           Boolean(parsed.jagdzeiten) ||
           Boolean(parsed.wartung) ||
           (Array.isArray(parsed.rotten) && parsed.rotten.length > 0) ||
-          (Array.isArray(parsed.reife) && parsed.reife.length > 0);
+          (Array.isArray(parsed.reife) && parsed.reife.length > 0) ||
+          (Array.isArray(parsed.beifang) && parsed.beifang.length > 0);
 
         if (!hasAny) {
           alert("Die Datei enthält keine erkennbaren Sauenmatrix-, Alt-App- oder Jagdbegleiter-Daten.");
@@ -14826,7 +15138,7 @@
   }
 
   // =========================================================================
-  // PUNKT 15 / v17: SUPERSIM KAMERA-SYNC (AN/AUS-SCHALTER & PRÜFLISTE)
+  // PUNKT 15 / v26.4: SUPERSIM KAMERA-SYNC (CORS-FIX, DIAGNOSE & PRÜFLISTE)
   // =========================================================================
   let supersimVisitsCache = [];
   let pendingSupersimAckVisit = null;
@@ -14848,18 +15160,34 @@
     syncSupersimHeaderBadge();
   }
 
+  function sanitizeSupersimUrl(rawUrl) {
+    return String(rawUrl || "").trim().replace(/\s+/g, "");
+  }
+
+  function setSupersimDiagMessage(htmlMsg = "") {
+    const box = document.getElementById("ss-diag-box");
+    if (!box) return;
+    if (!htmlMsg) {
+      box.style.display = "none";
+      box.innerHTML = "";
+    } else {
+      box.style.display = "block";
+      box.innerHTML = htmlMsg;
+    }
+  }
+
   function syncSupersimHeaderBadge() {
     const btn = document.getElementById("quick-supersim-btn");
     if (!btn) return;
     const cfg = getSupersimConfig();
     if (!cfg.enabled) {
-      btn.textContent = "📷 SUPERSIM (Aus)";
+      btn.textContent = "📷 SIM (Aus)";
       btn.style.opacity = "0.75";
     } else if (supersimVisitsCache.length > 0) {
-      btn.textContent = `📷 SUPERSIM (${supersimVisitsCache.length})`;
+      btn.textContent = `📷 SIM (${supersimVisitsCache.length})`;
       btn.style.opacity = "1";
     } else {
-      btn.textContent = "📷 SUPERSIM";
+      btn.textContent = "📷 SIM";
       btn.style.opacity = "1";
     }
   }
@@ -14900,6 +15228,7 @@
   }
 
   function openSupersimModal() {
+    setSupersimDiagMessage("");
     renderSupersimModalUI();
     openModal("modal-supersim");
   }
@@ -14910,6 +15239,7 @@
     if (!cfg.enabled) {
       supersimVisitsCache = [];
       pendingSupersimAckVisit = null;
+      setSupersimDiagMessage("");
     }
     saveSupersimConfig(cfg);
     renderSupersimModalUI();
@@ -14923,14 +15253,50 @@
 
   function saveSupersimSettings() {
     const cfg = getSupersimConfig();
-    cfg.url = (document.getElementById("ss-url-input")?.value || "").trim();
-    cfg.pin = (document.getElementById("ss-pin-input")?.value || "1234").trim() || "1234";
+    const cleanUrl = sanitizeSupersimUrl(document.getElementById("ss-url-input")?.value || "");
+    const cleanPin = String(document.getElementById("ss-pin-input")?.value || "1234").trim() || "1234";
+    cfg.url = cleanUrl;
+    cfg.pin = cleanPin;
     saveSupersimConfig(cfg);
-    const box = document.getElementById("ss-settings-box");
-    if (box && cfg.url) box.style.display = "none";
+    setSupersimDiagMessage("");
+
+    const urlInp = document.getElementById("ss-url-input");
+    if (urlInp) urlInp.value = cleanUrl;
     const statusEl = document.getElementById("ss-status-line");
-    if (statusEl) statusEl.textContent = cfg.url ? "✅ Verbindung gespeichert – tippe auf „Neue Bilder abrufen“." : "⚠️ Bitte Web-App-URL eintragen.";
+
+    if (!cleanUrl) {
+      if (statusEl) statusEl.textContent = "⚠️ Bitte Web-App-URL eintragen.";
+      return;
+    }
+    if (!/^https:\/\//i.test(cleanUrl)) {
+      if (statusEl) statusEl.textContent = "⚠️ URL muss mit https:// beginnen.";
+      return;
+    }
+    if (/\/dev(\?|$)/i.test(cleanUrl)) {
+      if (statusEl) statusEl.textContent = "⚠️ Test-URL (/dev) erkannt – bitte die produktive /exec-URL eintragen!";
+      setSupersimDiagMessage("Eine <strong>/dev</strong>-URL funktioniert nur im eingeloggten Google-Editor. Kopiere unter <em>Bereitstellen → Bereitstellungen verwalten</em> die Web-App-URL mit <strong>/exec</strong> am Ende.");
+      return;
+    }
+    const box = document.getElementById("ss-settings-box");
+    if (box) box.style.display = "none";
+    if (statusEl) statusEl.textContent = "✅ Verbindung gespeichert – tippe auf „Neue Bilder abrufen“.";
   }
+
+  function testSupersimUrlInBrowser() {
+    const inpUrl = sanitizeSupersimUrl(document.getElementById("ss-url-input")?.value || "");
+    const inpPin = String(document.getElementById("ss-pin-input")?.value || "").trim();
+    const cfg = getSupersimConfig();
+    const url = inpUrl || sanitizeSupersimUrl(cfg.url);
+    const pin = inpPin || cfg.pin || "1234";
+    if (!url || !/^https:\/\//i.test(url)) {
+      alert("Bitte zuerst eine gültige https:// Web-App-URL eintragen.");
+      return;
+    }
+    const sep = url.includes("?") ? "&" : "?";
+    const testUrl = `${url}${sep}action=list&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`;
+    window.open(testUrl, "_blank");
+  }
+  window.testSupersimUrlInBrowser = testSupersimUrlInBrowser;
 
   async function fetchSupersimVisits() {
     const cfg = getSupersimConfig();
@@ -14938,10 +15304,26 @@
     const syncBtn = document.getElementById("ss-sync-now-btn");
     if (!cfg.enabled) return;
 
-    if (!cfg.url) {
+    setSupersimDiagMessage("");
+    const cleanUrl = sanitizeSupersimUrl(cfg.url);
+
+    if (!cleanUrl) {
       const box = document.getElementById("ss-settings-box");
       if (box) box.style.display = "block";
       if (statusEl) statusEl.textContent = "⚠️ Bitte zuerst deine Google Web-App-URL unter ⚙️ Setup eintragen.";
+      return;
+    }
+    if (!/^https:\/\//i.test(cleanUrl)) {
+      const box = document.getElementById("ss-settings-box");
+      if (box) box.style.display = "block";
+      if (statusEl) statusEl.textContent = "❌ Ungültige URL (muss mit https:// beginnen).";
+      return;
+    }
+    if (/\/dev(\?|$)/i.test(cleanUrl)) {
+      const box = document.getElementById("ss-settings-box");
+      if (box) box.style.display = "block";
+      if (statusEl) statusEl.textContent = "❌ URL endet auf /dev statt /exec.";
+      setSupersimDiagMessage("Bitte im Google Apps Script unter <strong>Bereitstellen → Bereitstellungen verwalten</strong> die fertige <strong>/exec</strong>-URL kopieren und hier einfügen.");
       return;
     }
     if (!navigator.onLine) {
@@ -14953,14 +15335,53 @@
     if (statusEl) statusEl.textContent = "⏳ Rufe neue SUPERSIM-Meldungen ab...";
 
     try {
-      const sep = cfg.url.includes("?") ? "&" : "?";
-      const fetchUrl = `${cfg.url}${sep}action=list&pin=${encodeURIComponent(cfg.pin)}&_t=${Date.now()}`;
-      const resp = await fetch(fetchUrl, { method: "GET", cache: "no-store" });
-      if (!resp.ok) throw new Error("HTTP " + resp.status);
-      const data = await resp.json();
+      const sep = cleanUrl.includes("?") ? "&" : "?";
+      const fetchUrl = `${cleanUrl}${sep}action=list&pin=${encodeURIComponent(cfg.pin)}&_t=${Date.now()}`;
+      // WICHTIG (v26.4 Fix): Kein cache:"no-store" und keine Extra-Header -> vermeidet CORS-Preflight-Block bei Google Apps Script!
+      const resp = await fetch(fetchUrl, { method: "GET", redirect: "follow" });
+      const rawText = await resp.text();
+
+      if (!resp.ok) {
+        if (resp.status === 401 || resp.status === 403) {
+          if (statusEl) statusEl.textContent = `🔒 Zugriff verweigert (HTTP ${resp.status}).`;
+          setSupersimDiagMessage("Google blockiert den Zugriff. Stelle im Apps Script unter <strong>Bereitstellen → Bereitstellungen verwalten</strong> sicher: <em>Ausführen als: Ich</em> &amp; <em>Zugriff: Jeder</em>.");
+        } else if (resp.status === 404) {
+          if (statusEl) statusEl.textContent = "❌ Web-App-URL nicht gefunden (HTTP 404).";
+          setSupersimDiagMessage("Die gespeicherte Skript-URL existiert nicht mehr oder ist unvollständig. Bitte unter ⚙️ Setup prüfen.");
+        } else {
+          if (statusEl) statusEl.textContent = `❌ Server-Antwort HTTP ${resp.status}.`;
+          setSupersimDiagMessage(`Antwort vom Server: HTTP ${resp.status}. Tippe unter ⚙️ Setup auf <strong>„🌐 URL direkt im Browser testen“</strong>.`);
+        }
+        return;
+      }
+
+      const trimmed = String(rawText || "").trim();
+      if (/^<!doctype|^<html/i.test(trimmed)) {
+        const isLogin = /accounts\.google\.com|ServiceLogin|Anmelden|Sign in/i.test(trimmed);
+        if (isLogin) {
+          if (statusEl) statusEl.textContent = "🔒 Google verlangt Anmeldung statt JSON-Daten.";
+          setSupersimDiagMessage("Im Google Apps Script steht <strong>Zugriff</strong> nicht auf <strong>„Jeder“</strong> (oder es ist noch eine alte Bereitstellung). Bitte neu bereitstellen mit Zugriff: <em>Jeder</em>.");
+        } else {
+          if (statusEl) statusEl.textContent = "⚠️ Google-Skript hat eine Fehlerseite (HTML) statt JSON geliefert.";
+          setSupersimDiagMessage("Das Skript läuft, wirft aber intern einen Fehler oder gibt kein JSON zurück. Tippe unter ⚙️ Setup auf <strong>„🌐 URL direkt im Browser testen“</strong>, um die genaue Meldung zu sehen.");
+        }
+        return;
+      }
+
+      let data = null;
+      try {
+        data = JSON.parse(trimmed);
+      } catch (parseErr) {
+        if (statusEl) statusEl.textContent = "❌ Unerwartete Antwort (kein gültiges JSON).";
+        setSupersimDiagMessage(`Antwort-Auszug: <code>${escapeHTML(trimmed.slice(0, 140) || "(leer)")}</code>`);
+        return;
+      }
 
       if (!data || !data.ok) {
-        if (statusEl) statusEl.textContent = `❌ Fehler: ${(data && data.error) ? data.error : "Abruf fehlgeschlagen"}`;
+        if (statusEl) statusEl.textContent = `❌ Skript-Meldung: ${(data && data.error) ? data.error : "Abruf fehlgeschlagen"}`;
+        if (data && /pin/i.test(String(data.error || ""))) {
+          setSupersimDiagMessage("Die PIN in der Sauenmatrix stimmt nicht mit der PIN im Google Apps Script überein. Bitte unter ⚙️ Setup angleichen.");
+        }
         return;
       }
       if (data.paused) {
@@ -14971,13 +15392,25 @@
         if (statusEl) {
           statusEl.textContent = supersimVisitsCache.length > 0
             ? `✅ ${supersimVisitsCache.length} neue Kamera-Meldung(en) zum Prüfen:`
-            : "✅ Alles aktuell – keine neuen Kamera-Meldungen im Posteingang.";
+            : "✅ Verbindung OK – keine neuen Kamera-Meldungen im Posteingang.";
         }
       }
       renderSupersimVisitsList();
       syncSupersimHeaderBadge();
     } catch (err) {
-      if (statusEl) statusEl.textContent = "❌ Abruf fehlgeschlagen. Prüfe Web-App-URL, PIN und Internetverbindung.";
+      const msg = String(err && err.message ? err.message : err || "");
+      const isNetworkOrCors = /Failed to fetch|Load failed|NetworkError|fetch/i.test(msg);
+      if (statusEl) {
+        statusEl.textContent = isNetworkOrCors
+          ? "❌ Verbindung von Google blockiert oder Netzwerkfehler."
+          : `❌ Abruf-Fehler: ${msg}`;
+      }
+      setSupersimDiagMessage(
+        `<strong>Mögliche Ursachen:</strong><br>` +
+        `1. Im Apps Script steht <em>Zugriff</em> nicht auf <strong>„Jeder“</strong> (Google leitet dann auf Login um → Browser blockiert).<br>` +
+        `2. Web-App-URL unvollständig oder veraltet.<br>` +
+        `<button type="button" class="btn-sm btn-no" style="margin-top:7px; width:100%; font-size:0.74rem;" onclick="testSupersimUrlInBrowser()">🌐 URL jetzt im Browser testen</button>`
+      );
     } finally {
       if (syncBtn) syncBtn.disabled = false;
     }
@@ -14996,16 +15429,16 @@
         : `${v.arrival || "--:--"} Uhr`;
       const imgTag = v.preview ? `<img class="ss-visit-thumb" src="${v.preview}" alt="Wildkamera-Aufnahme">` : "";
       return `
-        <div class="ss-visit-card" id="ss-card-${v.id}">
+        <div class="ss-visit-card" id="ss-card-${escapeHTML(v.id)}">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
             <strong style="font-size:0.88rem; color:#fff;">🏯 ${escapeHTML(v.kanzel || "Tunnel")}</strong>
             <span class="duration-badge-green">📷 ${v.imageCount || 1} Bild${(v.imageCount || 1) > 1 ? "er" : ""}</span>
           </div>
-          <div style="font-size:0.8rem; color:#d8e6dc;">📅 ${formatDateDE(v.date)} · 🕒 ${timeTxt}</div>
+          <div style="font-size:0.8rem; color:#d8e6dc;">📅 ${formatDateDE(v.date)} · 🕒 ${escapeHTML(timeTxt)}</div>
           ${imgTag}
           <div class="ss-visit-actions">
-            <button type="button" class="btn-sm btn-yes" onclick="adoptSupersimVisit('${v.id}')">🐗 Als Sauen-Besuch</button>
-            <button type="button" class="btn-sm btn-no" style="color:#ff8fa3;" onclick="discardSupersimVisit('${v.id}')">❌ Verwerfen</button>
+            <button type="button" class="btn-sm btn-yes" onclick="adoptSupersimVisit('${escapeHTML(v.id)}')">🐗 Als Sauen-Besuch</button>
+            <button type="button" class="btn-sm btn-no" style="color:#ff8fa3;" onclick="discardSupersimVisit('${escapeHTML(v.id)}')">❌ Verwerfen</button>
           </div>
         </div>
       `;
@@ -15015,11 +15448,12 @@
   async function ackSupersimVisitOnServer(visit) {
     if (!visit || !Array.isArray(visit.msgIds) || visit.msgIds.length === 0) return;
     const cfg = getSupersimConfig();
-    if (!cfg.enabled || !cfg.url || !navigator.onLine) return;
+    const cleanUrl = sanitizeSupersimUrl(cfg.url);
+    if (!cfg.enabled || !cleanUrl || !navigator.onLine) return;
     try {
-      const sep = cfg.url.includes("?") ? "&" : "?";
-      const ackUrl = `${cfg.url}${sep}action=ack&pin=${encodeURIComponent(cfg.pin)}&ids=${encodeURIComponent(visit.msgIds.join(","))}`;
-      await fetch(ackUrl, { method: "GET", cache: "no-store" });
+      const sep = cleanUrl.includes("?") ? "&" : "?";
+      const ackUrl = `${cleanUrl}${sep}action=ack&pin=${encodeURIComponent(cfg.pin)}&ids=${encodeURIComponent(visit.msgIds.join(","))}&_t=${Date.now()}`;
+      await fetch(ackUrl, { method: "GET", redirect: "follow" });
     } catch (e) {}
   }
 
@@ -15038,10 +15472,11 @@
   function adoptSupersimVisit(visitId) {
     const visit = supersimVisitsCache.find(x => x.id === visitId);
     if (!visit) return;
-    pendingSupersimAckVisit = visit;
     closeModal("modal-supersim");
 
     openDiaryEntryModal(visit.date || getLocalISODate());
+    // Erst NACH openDiaryEntryModal setzen (damit normale Aufrufe sauber zurückgesetzt bleiben)
+    pendingSupersimAckVisit = visit;
     selectEntryStatus("GREEN");
     const kSel = document.getElementById("entry-kanzel-select");
     if (kSel && visit.kanzel) {
@@ -15062,18 +15497,839 @@
     }
   }
 
+  // Bei normalem Öffnen oder Abbrechen des Tagebuch-Modals vorgemerkten SUPERSIM-Besuch sauber zurücksetzen
+  const _origOpenDiaryForSupersim = openDiaryEntryModal;
+  openDiaryEntryModal = function(prefillDate = null, editId = null) {
+    pendingSupersimAckVisit = null;
+    return _origOpenDiaryForSupersim(prefillDate, editId);
+  };
+
+  const _origCloseModalForSupersim = window.closeModal;
+  window.closeModal = function(id) {
+    if (id === "modal-diary-entry") {
+      pendingSupersimAckVisit = null;
+    }
+    if (typeof _origCloseModalForSupersim === "function") {
+      _origCloseModalForSupersim(id);
+    }
+  };
+
   // Beim Speichern eines aus SUPERSIM übernommenen Tagebuch-Eintrags automatisch im Postfach abhaken
   const _origSaveDiaryForSupersim = saveDiaryEntryFromModal;
   saveDiaryEntryFromModal = function() {
+    const ackCandidate = pendingSupersimAckVisit;
+    pendingSupersimAckVisit = null;
     _origSaveDiaryForSupersim();
-    if (pendingSupersimAckVisit) {
-      const v = pendingSupersimAckVisit;
-      pendingSupersimAckVisit = null;
-      supersimVisitsCache = supersimVisitsCache.filter(x => x.id !== v.id);
+    if (ackCandidate) {
+      supersimVisitsCache = supersimVisitsCache.filter(x => x.id !== ackCandidate.id);
       syncSupersimHeaderBadge();
-      ackSupersimVisitOnServer(v);
+      ackSupersimVisitOnServer(ackCandidate);
     }
   };
+
+  // =========================================================================
+  // v26.4: ÜBERLÄUFER-DURCHREICHE (sm_cam_inbox_v1) & BEIFANG-TAGEBUCH (sm_beifang_v1)
+  // STRIKTE TRENNUNG: Beifang landet NIEMALS in sm_logs_v1 / Kalender / Scoring!
+  // =========================================================================
+  const BEIFANG_CAT_META = {
+    REHWILD:  { label: "Rehwild",  icon: "🦌", color: "#84cc16" },
+    DAMWILD:  { label: "Damwild",  icon: "🦌", color: "#eab308" },
+    RAUBWILD: { label: "Raubwild", icon: "🦊", color: "#f97316" },
+    WOLF:     { label: "Wolf",     icon: "🐺", color: "#ef4444" },
+    HAUSTIER: { label: "Haustier", icon: "🐕", color: "#38bdf8" },
+    VOGEL:    { label: "Vogel",    icon: "🐦", color: "#a78bfa" },
+    STOERUNG: { label: "Störung",  icon: "⚠️", color: "#f43f5e" },
+    UNKLAR:   { label: "Unklar",   icon: "❓", color: "#94a3b8" }
+  };
+
+  let currentTagebuchMainSection = "SAUEN"; // "SAUEN" | "BEIFANG"
+  let currentBeifangCatFilter = "ALL";
+
+  function normalizeBeifangCategory(rawCat) {
+    const c = String(rawCat || "").trim().toUpperCase()
+      .replace(/Ä/g, "AE").replace(/Ö/g, "OE").replace(/Ü/g, "UE").replace(/ß/g, "SS");
+    if (!c) return "SCHWARZWILD"; // Abwärtskompatibel für Überläufer v0.5.3 ohne category-Feld!
+    if (c === "SCHWARZWILD" || c === "SAU" || c === "SAUEN" || c === "WILDSCHWEIN") return "SCHWARZWILD";
+    if (BEIFANG_CAT_META[c]) return c;
+    if (c.includes("REH")) return "REHWILD";
+    if (c.includes("DAM")) return "DAMWILD";
+    if (c.includes("RAUB") || c.includes("FUCHS") || c.includes("DACHS") || c.includes("WASCH") || c.includes("MARDER")) return "RAUBWILD";
+    if (c.includes("WOLF")) return "WOLF";
+    if (c.includes("HAUS") || c.includes("HUND") || c.includes("KATZ")) return "HAUSTIER";
+    if (c.includes("VOGEL") || c.includes("FEDER") || c.includes("KRAEH") || c.includes("TAUBE") || c.includes("EULE")) return "VOGEL";
+    if (c.includes("STOER") || c.includes("MENSCH") || c.includes("FAHRZEUG") || c.includes("TRECKER") || c.includes("WANDER")) return "STOERUNG";
+    return "UNKLAR";
+  }
+
+  function isCamInboxBeifang(item) {
+    if (!item || typeof item !== "object") return false;
+    const cat = normalizeBeifangCategory(item.category);
+    return cat !== "SCHWARZWILD";
+  }
+
+  function getCamInboxEntries() {
+    try {
+      const raw = safeGetItem("sm_cam_inbox_v1", null);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed.filter(x => x && typeof x === "object");
+      if (parsed && Array.isArray(parsed.items)) return parsed.items.filter(x => x && typeof x === "object");
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCamInboxEntries(list) {
+    const clean = Array.isArray(list) ? list : [];
+    safeSetItem("sm_cam_inbox_v1", JSON.stringify(clean));
+    refreshCamInboxBanner();
+  }
+
+  function getBeifangEntries() {
+    try {
+      const raw = safeGetItem("sm_beifang_v1", "[]");
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.filter(x => x && typeof x === "object") : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  window.getBeifangEntries = getBeifangEntries;
+
+  function saveBeifangEntries(list) {
+    const sorted = (Array.isArray(list) ? list : []).slice().sort((a, b) =>
+      `${b.date || ""}T${b.arrival || "00:00"}`.localeCompare(`${a.date || ""}T${a.arrival || "00:00"}`)
+    );
+    safeSetItem("sm_beifang_v1", JSON.stringify(sorted));
+    return sorted;
+  }
+
+  function extractCamInboxCounts(item) {
+    const src = (item && item.counts && typeof item.counts === "object") ? item.counts : {};
+    const num = (k) => {
+      const v = item?.[k] !== undefined ? item[k] : src[k];
+      return Math.max(0, Math.round(Number(v || 0)));
+    };
+    return {
+      K: num("K"),
+      B: num("B"),
+      UEB: num("UEB"),
+      UEK: num("UEK"),
+      F: num("F"),
+      GROSS: num("GROSS"),
+      KLEIN: num("KLEIN"),
+      UNBEKANNT: num("UNBEKANNT")
+    };
+  }
+
+  function formatCamCountsToStructure(counts, fallbackTotal = 0) {
+    const parts = [];
+    if (counts.K > 0) parts.push(`${counts.K}K`);
+    if (counts.B > 0) parts.push(`${counts.B}B`);
+    if (counts.UEB > 0) parts.push(`${counts.UEB}ÜB`);
+    if (counts.UEK > 0) parts.push(`${counts.UEK}ÜK`);
+    if (counts.F > 0) parts.push(`${counts.F}F`);
+    if (counts.GROSS > 0) parts.push(`${counts.GROSS} Groß (?)`);
+    if (counts.KLEIN > 0) parts.push(`${counts.KLEIN} Klein (?)`);
+    if (counts.UNBEKANNT > 0) parts.push(`${counts.UNBEKANNT}x Nicht zu erkennen`);
+    if (parts.length > 0) return parts.join(", ");
+    if (Number(fallbackTotal) > 0) return `${Number(fallbackTotal)} Sauen`;
+    return "Sauen-Besuch";
+  }
+
+  function buildCamInboxKey(item, fallbackIdx = 0) {
+    if (item && item.inboxId) return String(item.inboxId);
+    if (item && item.visitId) return String(item.visitId);
+    return `idx_${fallbackIdx}_${item?.date || ""}_${item?.arrival || ""}_${item?.kanzel || ""}`;
+  }
+
+  function convertCamInboxToSauenLog(item) {
+    const dt = parseFlexibleDateAndTime(item.date || item.createdAt || getLocalISODate(), item.arrival || "");
+    const dateVal = dt.date || getLocalISODate();
+    const arrVal = dt.time || parseFlexibleTime(item.arrival) || "21:00";
+    const depVal = parseFlexibleTime(item.departure) || "";
+    let durVal = Number(item.durationMin || 0);
+    if ((!durVal || isNaN(durVal)) && arrVal && depVal) {
+      durVal = calcDurationBetweenTimes(arrVal, depVal);
+    }
+    durVal = Math.max(0, Math.round(durVal || 0));
+
+    const rawSt = String(item.status || "GREEN").trim().toUpperCase();
+    const statusVal = ["GREEN", "BLUE", "RED", "YELLOW", "DRUECKJAGD"].includes(rawSt) ? rawSt : "GREEN";
+    const kanzelVal = normalizeImportedKanzelName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel");
+
+    const counts = extractCamInboxCounts(item);
+    const countSum = Object.values(counts).reduce((a, b) => a + b, 0);
+    const totalStk = statusVal === "GREEN"
+      ? (countSum > 0 ? countSum : Math.max(0, Math.round(Number(item.totalCount || 0))))
+      : 0;
+    const structVal = statusVal === "BLUE"
+      ? "Kirrung bestückt"
+      : (statusVal === "YELLOW"
+        ? "Ansitz"
+        : formatCamCountsToStructure(counts, totalStk));
+
+    const noteParts = [];
+    const baseNote = String(item.note || "").trim();
+    if (baseNote) noteParts.push(baseNote);
+    if (item.rottenTag && !baseNote.toLowerCase().includes(String(item.rottenTag).toLowerCase())) {
+      noteParts.push(`Rotte: ${String(item.rottenTag).trim()}`);
+    }
+    const metaBits = [];
+    if (item.cameraName) metaBits.push(`Kamera: ${String(item.cameraName).trim()}`);
+    if (item.originalSpot && normalizeKanzelCompareKey(item.originalSpot) !== normalizeKanzelCompareKey(kanzelVal)) {
+      metaBits.push(`Spot: ${String(item.originalSpot).trim()}`);
+    }
+    if (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) {
+      metaBits.push(`Cam ${Number(item.ocrTempC)}°C`);
+    }
+    const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
+    if (fCnt > 0) metaBits.push(`${fCnt} Datei${fCnt === 1 ? "" : "en"}`);
+    if (metaBits.length > 0) {
+      noteParts.push(`[Überläufer: ${metaBits.join(" · ")}]`);
+    }
+    const finalNote = noteParts.join(" · ");
+
+    const stamp = buildLocalWeatherStampSync(dateVal, arrVal);
+    if (stamp && stamp.tempC === null && item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) {
+      stamp.tempC = Number(item.ocrTempC);
+    }
+
+    const inboxIdStr = String(item.inboxId || "").trim();
+    const visitIdStr = String(item.visitId || "").trim();
+    const uid = inboxIdStr || visitIdStr || (`${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
+    const jnDateObj = new Date(`${dateVal}T${arrVal}:00`);
+    const jagdnachtStr = isNaN(jnDateObj.getTime()) ? dateVal : getJagdnachtKeyFromDate(jnDateObj);
+
+    return {
+      id: `ul-${uid}`,
+      inboxId: inboxIdStr,
+      visitId: visitIdStr,
+      source: String(item.source || "UEBERLAEUFER"),
+      sourceVersion: String(item.sourceVersion || ""),
+      date: dateVal,
+      datum: dateVal,
+      jagdnacht: jagdnachtStr,
+      arrival: arrVal,
+      ankunft: arrVal,
+      departure: depVal,
+      abgang: depVal,
+      durationMin: durVal,
+      dauer_min: durVal,
+      status: statusVal,
+      kanzel: kanzelVal,
+      vergraemt: false,
+      structure: structVal,
+      anzahl: structVal,
+      totalStk: totalStk,
+      counts: statusVal === "GREEN" ? counts : null,
+      kirrgut: statusVal === "BLUE" ? "Körnermais" : "-- Kein Wechsel --",
+      lockmittel: statusVal === "BLUE" ? "Körnermais" : "-- Kein Wechsel --",
+      richtung: (stamp && stamp.windDir) ? stamp.windDir : "",
+      weatherStamp: stamp,
+      note: finalNote,
+      notiz: finalNote,
+      photo: null
+    };
+  }
+
+  function convertCamInboxToBeifangEntry(item) {
+    const dt = parseFlexibleDateAndTime(item.date || item.createdAt || getLocalISODate(), item.arrival || "");
+    const dateVal = dt.date || getLocalISODate();
+    const arrVal = dt.time || parseFlexibleTime(item.arrival) || "21:00";
+    const depVal = parseFlexibleTime(item.departure) || "";
+    let durVal = Number(item.durationMin || 0);
+    if ((!durVal || isNaN(durVal)) && arrVal && depVal) {
+      durVal = calcDurationBetweenTimes(arrVal, depVal);
+    }
+    durVal = Math.max(0, Math.round(durVal || 0));
+
+    const catKey = normalizeBeifangCategory(item.category);
+    const finalCat = (catKey === "SCHWARZWILD") ? "UNKLAR" : catKey;
+    const kanzelVal = normalizeImportedKanzelName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel");
+    const inboxIdStr = String(item.inboxId || "").trim();
+    const visitIdStr = String(item.visitId || "").trim();
+    const uid = inboxIdStr || visitIdStr || (`${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
+    const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
+
+    return {
+      id: item.id && String(item.id).startsWith("bf-") ? String(item.id) : `bf-${uid}`,
+      inboxId: inboxIdStr,
+      visitId: visitIdStr,
+      source: String(item.source || "UEBERLAEUFER"),
+      sourceVersion: String(item.sourceVersion || ""),
+      createdAt: String(item.createdAt || getLocalISODateTime()),
+      date: dateVal,
+      arrival: arrVal,
+      departure: depVal,
+      durationMin: durVal,
+      kanzel: kanzelVal,
+      originalSpot: String(item.originalSpot || "").trim(),
+      cameraName: String(item.cameraName || "").trim(),
+      category: finalCat,
+      speciesDetail: String(item.speciesDetail || "").trim(),
+      totalCount: Math.max(1, Math.round(Number(item.totalCount || 1))),
+      ocrTempC: (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) ? Number(item.ocrTempC) : null,
+      fileCount: Math.max(0, Math.round(fCnt)),
+      note: String(item.note || "").trim()
+    };
+  }
+
+  function isSameBeifangEntry(a, b, toleranceMin = 15) {
+    if (!a || !b) return false;
+    if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
+    if (a.visitId && b.visitId && String(a.visitId) === String(b.visitId)) return true;
+    if (a.id && b.id && a.id === b.id) return true;
+    if (normalizeBeifangCategory(a.category) !== normalizeBeifangCategory(b.category)) return false;
+    if (normalizeKanzelCompareKey(a.kanzel) !== normalizeKanzelCompareKey(b.kanzel)) return false;
+    const minA = diaryEntryToEpochMinutes(a);
+    const minB = diaryEntryToEpochMinutes(b);
+    if (minA !== null && minB !== null) {
+      return Math.abs(minA - minB) <= toleranceMin;
+    }
+    return a.date === b.date && String(a.speciesDetail || "").toLowerCase() === String(b.speciesDetail || "").toLowerCase();
+  }
+
+  function mergeBeifangLists(existingList, incomingList, mode = "MERGE") {
+    const cleanIn = (incomingList || []).map(convertCamInboxToBeifangEntry).filter(Boolean);
+    if (mode === "REPLACE") {
+      const dedup = [];
+      cleanIn.forEach(item => {
+        if (!dedup.some(r => isSameBeifangEntry(r, item, 15))) dedup.push(item);
+      });
+      return dedup;
+    }
+    const result = (existingList || []).map(x => Object.assign({}, x));
+    cleanIn.forEach(item => {
+      if (!result.some(r => isSameBeifangEntry(r, item, 15))) {
+        result.push(item);
+      }
+    });
+    return result;
+  }
+
+  function checkCamInboxDuplicateStatus(item) {
+    if (isCamInboxBeifang(item)) {
+      const bfCand = convertCamInboxToBeifangEntry(item);
+      const list = getBeifangEntries();
+      return list.some(x => isSameBeifangEntry(x, bfCand, 15));
+    } else {
+      const logCand = convertCamInboxToSauenLog(item);
+      return diaryLogs.some(x => isSameDiaryEntry(x, logCand, 15));
+    }
+  }
+
+  function refreshCamInboxBanner() {
+    const items = getCamInboxEntries();
+    let sauenCnt = 0;
+    let beifangCnt = 0;
+    items.forEach(it => {
+      if (isCamInboxBeifang(it)) beifangCnt++;
+      else sauenCnt++;
+    });
+
+    const parts = [];
+    if (sauenCnt > 0) parts.push(`${sauenCnt} Sauen`);
+    if (beifangCnt > 0) parts.push(`${beifangCnt} Beifang`);
+    const summaryTxt = parts.join(" · ");
+
+    const banner = document.getElementById("ul-inbox-banner");
+    const bTitle = document.getElementById("ul-banner-title");
+    const bSub = document.getElementById("ul-banner-sub");
+    if (banner) {
+      if (items.length > 0) {
+        banner.style.display = "flex";
+        if (bTitle) bTitle.textContent = `📥 Überläufer: ${summaryTxt} bereit`;
+        if (bSub) bSub.textContent = `${items.length} geprüfte${items.length === 1 ? "r Besuch wartet" : " Besuche warten"} – 1 Tipp sortiert Sauen & Beifang sauber ein.`;
+      } else {
+        banner.style.display = "none";
+      }
+    }
+
+    const homePill = document.getElementById("home-ul-inbox-pill");
+    if (homePill) {
+      if (items.length > 0) {
+        homePill.style.display = "inline-flex";
+        homePill.textContent = `📥 Überläufer: ${summaryTxt} abholen`;
+      } else {
+        homePill.style.display = "none";
+      }
+    }
+  }
+  window.refreshCamInboxBanner = refreshCamInboxBanner;
+
+  function importCamInboxItemsByPredicate(predicateFn, silentSummary = false) {
+    const inbox = getCamInboxEntries();
+    if (inbox.length === 0) {
+      refreshCamInboxBanner();
+      return;
+    }
+
+    let addedSauen = 0;
+    let addedBeifang = 0;
+    let skippedDups = 0;
+    const remaining = [];
+    const beifangList = getBeifangEntries();
+    let beifangChanged = false;
+    let logsChanged = false;
+    const weatherEnrichQueue = [];
+
+    inbox.forEach((item, idx) => {
+      const key = buildCamInboxKey(item, idx);
+      if (!predicateFn(item, key, idx)) {
+        remaining.push(item);
+        return;
+      }
+
+      if (isCamInboxBeifang(item)) {
+        const bfEntry = convertCamInboxToBeifangEntry(item);
+        const isDup = beifangList.some(existing => isSameBeifangEntry(existing, bfEntry, 15));
+        if (isDup) {
+          skippedDups++;
+        } else {
+          beifangList.unshift(bfEntry);
+          beifangChanged = true;
+          addedBeifang++;
+        }
+      } else {
+        const logEntry = convertCamInboxToSauenLog(item);
+        const dupIdx = diaryLogs.findIndex(existing => isSameDiaryEntry(existing, logEntry, 15));
+        if (dupIdx >= 0) {
+          // Kein Überschreiben – nur fehlende Detailinfos schonend ergänzen & als Duplikat zählen
+          diaryLogs[dupIdx] = mergeDuplicateDiaryEntry(diaryLogs[dupIdx], logEntry);
+          logsChanged = true;
+          skippedDups++;
+        } else {
+          diaryLogs.unshift(logEntry);
+          logsChanged = true;
+          addedSauen++;
+          if (!logEntry.weatherStamp || logEntry.weatherStamp.source !== "cache") {
+            weatherEnrichQueue.push({ id: logEntry.id, date: logEntry.date, arrival: logEntry.arrival });
+          }
+        }
+      }
+    });
+
+    if (logsChanged) {
+      diaryLogs.sort((a, b) => `${b.date}T${b.arrival || "00:00"}`.localeCompare(`${a.date}T${a.arrival || "00:00"}`));
+      window.TAGEBUCH_EINTRAEGE = diaryLogs;
+      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+    }
+    if (beifangChanged) {
+      saveBeifangEntries(beifangList);
+    }
+
+    // Erfolgreich abgeholte Einträge sauber aus sm_cam_inbox_v1 entfernen
+    saveCamInboxEntries(remaining);
+
+    // Alle Ansichten aktualisieren
+    renderDiaryCalendar();
+    renderDiaryList();
+    renderBeifangList();
+    if (typeof updateCockpitAll === "function") updateCockpitAll();
+    if (typeof window.renderTab4Stats === "function") window.renderTab4Stats();
+    if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
+
+    const modalEl = document.getElementById("modal-ul-inbox");
+    if (modalEl && modalEl.classList.contains("open")) {
+      renderCamInboxModal();
+      if (remaining.length === 0) closeModal("modal-ul-inbox");
+    }
+
+    // Wetter-Stempel für neue Sauen-Besuche asynchron nachladen (max. 8 direkt, um API zu schonen)
+    weatherEnrichQueue.slice(0, 8).forEach(q => {
+      enrichDiaryEntryWeatherAsync(q.id, q.date, q.arrival);
+    });
+
+    if (!silentSummary) {
+      const msgLines = [];
+      if (addedSauen > 0) msgLines.push(`🐗 ${addedSauen} Sauen-Besuch${addedSauen === 1 ? "" : "e"} ins Tagebuch übernommen`);
+      if (addedBeifang > 0) msgLines.push(`🦌 ${addedBeifang} Beifang-Eintrag${addedBeifang === 1 ? "" : "e"} getrennt im Beifang gespeichert`);
+      if (skippedDups > 0) msgLines.push(`🔁 ${skippedDups} Duplikat${skippedDups === 1 ? "" : "e"} erkannt & übersprungen`);
+      if (msgLines.length === 0) msgLines.push("Keine neuen Einträge übernommen.");
+      if (isHomeStartMode) {
+        showHomeToast(`✅ Überläufer: +${addedSauen} Sauen, +${addedBeifang} Beifang`);
+      } else {
+        alert(`✅ Überläufer-Abholung abgeschlossen!\n\n${msgLines.join("\n")}`);
+      }
+    }
+  }
+
+  function importAllFromCamInbox() {
+    importCamInboxItemsByPredicate(() => true, false);
+  }
+  window.importAllFromCamInbox = importAllFromCamInbox;
+
+  function showCamInboxModalFeedback(msg) {
+    const fb = document.getElementById("ul-inbox-modal-feedback");
+    if (!fb) return;
+    fb.textContent = msg;
+    fb.style.display = "block";
+    clearTimeout(window.__ulModalFbTimer);
+    window.__ulModalFbTimer = setTimeout(() => { fb.style.display = "none"; }, 2600);
+  }
+
+  function importSingleCamInboxItem(targetKey) {
+    importCamInboxItemsByPredicate((item, key) => key === targetKey, true);
+    showCamInboxModalFeedback("✅ Besuch sauber übernommen & aus Posteingang entfernt.");
+    if (isHomeStartMode) showHomeToast("✅ Besuch übernommen");
+  }
+  window.importSingleCamInboxItem = importSingleCamInboxItem;
+
+  function discardSingleCamInboxItem(targetKey) {
+    const inbox = getCamInboxEntries();
+    const remaining = inbox.filter((item, idx) => buildCamInboxKey(item, idx) !== targetKey);
+    saveCamInboxEntries(remaining);
+    renderCamInboxModal();
+    showCamInboxModalFeedback("🗑️ Eintrag verworfen & aus Posteingang entfernt.");
+    if (remaining.length === 0) closeModal("modal-ul-inbox");
+  }
+  window.discardSingleCamInboxItem = discardSingleCamInboxItem;
+
+  function discardAllCamInbox() {
+    const inbox = getCamInboxEntries();
+    if (inbox.length === 0) return;
+    if (!confirm(`Wirklich alle ${inbox.length} wartenden Überläufer-Einträge verwerfen?`)) return;
+    saveCamInboxEntries([]);
+    renderCamInboxModal();
+    closeModal("modal-ul-inbox");
+  }
+  window.discardAllCamInbox = discardAllCamInbox;
+
+  function openCamInboxModal() {
+    renderCamInboxModal();
+    openModal("modal-ul-inbox");
+  }
+  window.openCamInboxModal = openCamInboxModal;
+
+  function renderCamInboxModal() {
+    const items = getCamInboxEntries();
+    const sumEl = document.getElementById("ul-inbox-modal-summary");
+    const listEl = document.getElementById("ul-inbox-modal-list");
+    const impBtn = document.getElementById("ul-modal-import-all-btn");
+    const disBtn = document.getElementById("ul-modal-discard-all-btn");
+    if (!listEl) return;
+
+    let sauenCnt = 0, bfCnt = 0;
+    items.forEach(it => { if (isCamInboxBeifang(it)) bfCnt++; else sauenCnt++; });
+
+    if (impBtn) impBtn.disabled = items.length === 0;
+    if (disBtn) disBtn.disabled = items.length === 0;
+
+    if (sumEl) {
+      if (items.length === 0) {
+        sumEl.innerHTML = "✅ Der Überläufer-Posteingang ist leer – alles abgeholt.";
+      } else {
+        sumEl.innerHTML =
+          `<strong>${items.length} Besuch${items.length === 1 ? "" : "e"}</strong> bereit zur Übernahme:<br>` +
+          `• 🐗 <strong>${sauenCnt} Schwarzwild</strong> → normales Tagebuch (inkl. Kalender &amp; Scoring)<br>` +
+          `• 🦌 <strong>${bfCnt} Beifang</strong> → separates Beifang-Tagebuch (ohne Einfluss auf Sauen)`;
+      }
+    }
+
+    if (items.length === 0) {
+      listEl.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:0.82rem;">Keine offenen Einträge in sm_cam_inbox_v1.</div>`;
+      return;
+    }
+
+    listEl.innerHTML = items.map((item, idx) => {
+      const key = buildCamInboxKey(item, idx);
+      const isBf = isCamInboxBeifang(item);
+      const isDup = checkCamInboxDuplicateStatus(item);
+      const catKey = normalizeBeifangCategory(item.category);
+      const catMeta = BEIFANG_CAT_META[catKey] || { label: "Schwarzwild", icon: "🐗" };
+
+      const counts = extractCamInboxCounts(item);
+      const structTxt = isBf
+        ? `${item.speciesDetail ? escapeHTML(item.speciesDetail) : catMeta.label}${Number(item.totalCount || 0) > 1 ? ` (${item.totalCount} Stk.)` : ""}`
+        : escapeHTML(formatCamCountsToStructure(counts, item.totalCount));
+
+      const arr = parseFlexibleTime(item.arrival) || item.arrival || "--:--";
+      const dep = parseFlexibleTime(item.departure) || "";
+      const timeStr = (dep && dep !== arr) ? `${arr} – ${dep} Uhr` : `${arr} Uhr`;
+      const durStr = Number(item.durationMin || 0) > 0 ? `${Math.round(Number(item.durationMin))} Min.` : "";
+      const kanzelDisp = item.kanzel || item.originalSpot || "Tunnel";
+
+      const tags = [];
+      if (item.cameraName) tags.push(`📷 ${escapeHTML(item.cameraName)}`);
+      if (item.rottenTag) tags.push(`🏷️ ${escapeHTML(item.rottenTag)}`);
+      if (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "") tags.push(`🌡️ ${escapeHTML(item.ocrTempC)} °C`);
+      const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
+      if (fCnt > 0) tags.push(`🖼️ ${fCnt} Bild${fCnt === 1 ? "" : "er"}`);
+
+      const targetBadge = isBf
+        ? `<span class="beifang-cat-pill">${catMeta.icon} Beifang: ${escapeHTML(catMeta.label)}</span>`
+        : `<span class="duration-badge-green">🐗 Sauen-Tagebuch</span>`;
+
+      const dupBadge = isDup
+        ? `<div style="font-size:0.72rem; color:var(--accent-yellow); font-weight:800;">🔁 Bereits im Bestand erkannt (Duplikatschutz aktiv)</div>`
+        : "";
+
+      const safeKeyAttr = escapeHTML(key).replace(/'/g, "&#39;");
+      return `
+        <div class="ul-inbox-card ${isBf ? "is-beifang" : ""} ${isDup ? "is-dup" : ""}">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+            <strong style="font-size:0.84rem; color:#fff;">📅 ${formatDateDE(item.date)} · 🕒 ${escapeHTML(timeStr)}${durStr ? ` (${durStr})` : ""}</strong>
+            ${targetBadge}
+          </div>
+          <div style="font-size:0.85rem; font-weight:800; color:#fff;">
+            🏯 ${escapeHTML(kanzelDisp)} — ${structTxt}
+          </div>
+          ${tags.length > 0 ? `<div class="ul-inbox-meta-row">${tags.map(t => `<span class="ul-inbox-tag">${t}</span>`).join("")}</div>` : ""}
+          ${item.note ? `<div style="font-size:0.75rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
+          ${dupBadge}
+          <div class="ul-inbox-actions">
+            <button type="button" class="btn-sm btn-yes" onclick="importSingleCamInboxItem('${safeKeyAttr}')">${isDup ? "🔁 Abgleichen" : "✅ Übernehmen"}</button>
+            <button type="button" class="btn-sm btn-no" style="color:#ff8fa3;" onclick="discardSingleCamInboxItem('${safeKeyAttr}')">❌ Verwerfen</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // =========================================================================
+  // BEIFANG-TAGEBUCH UI (Umschalter 🐗 Sauen | 🦌 Beifang, Filter, Edit, Delete)
+  // =========================================================================
+  function setTagebuchMainSection(sec) {
+    currentTagebuchMainSection = (sec === "BEIFANG") ? "BEIFANG" : "SAUEN";
+    const btnS = document.getElementById("tb-main-SAUEN");
+    const btnB = document.getElementById("tb-main-BEIFANG");
+    const secS = document.getElementById("tb-section-SAUEN");
+    const secB = document.getElementById("tb-section-BEIFANG");
+    if (btnS) btnS.classList.toggle("active", currentTagebuchMainSection === "SAUEN");
+    if (btnB) {
+      btnB.classList.toggle("active-beifang", currentTagebuchMainSection === "BEIFANG");
+      btnB.classList.remove("active");
+    }
+    if (secS) secS.style.display = (currentTagebuchMainSection === "SAUEN") ? "block" : "none";
+    if (secB) secB.style.display = (currentTagebuchMainSection === "BEIFANG") ? "block" : "none";
+    if (currentTagebuchMainSection === "BEIFANG") {
+      renderBeifangList();
+    }
+  }
+  window.setTagebuchMainSection = setTagebuchMainSection;
+
+  function setBeifangCatFilter(cat) {
+    currentBeifangCatFilter = cat || "ALL";
+    ["ALL", "REHWILD", "DAMWILD", "RAUBWILD", "WOLF", "HAUSTIER", "VOGEL", "STOERUNG", "UNKLAR"].forEach(k => {
+      const btn = document.getElementById(`bf-flt-${k}`);
+      if (btn) btn.classList.toggle("active", k === currentBeifangCatFilter);
+    });
+    renderBeifangList();
+  }
+  window.setBeifangCatFilter = setBeifangCatFilter;
+
+  function populateBeifangKanzelSelects(selectedVal = null) {
+    const allBeifang = getBeifangEntries();
+    const baseSitze = (typeof getAllWartungSitze === "function")
+      ? getAllWartungSitze()
+      : Object.keys((typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} });
+    const names = baseSitze.slice();
+    allBeifang.forEach(b => {
+      const k = String(b.kanzel || "").trim();
+      if (k && !names.includes(k)) names.push(k);
+    });
+
+    const fltSel = document.getElementById("bf-filter-kanzel");
+    if (fltSel) {
+      const prev = fltSel.value || "ALL";
+      fltSel.innerHTML = `<option value="ALL">Alle Standorte</option>` +
+        names.map(n => `<option value="${escapeHTML(n)}">${escapeHTML(n)}</option>`).join("");
+      fltSel.value = (prev === "ALL" || names.includes(prev)) ? prev : "ALL";
+    }
+
+    const modalSel = document.getElementById("bf-kanzel-input");
+    if (modalSel) {
+      const opts = names.slice();
+      if (selectedVal && !opts.includes(selectedVal)) opts.unshift(selectedVal);
+      modalSel.innerHTML = opts.map(n => `<option value="${escapeHTML(n)}">${escapeHTML(n)}</option>`).join("");
+      const fallback = (typeof activeKanzel !== "undefined" && activeKanzel) ? activeKanzel : "Tunnel";
+      modalSel.value = selectedVal || fallback;
+    }
+  }
+
+  function autoCalcBeifangDuration() {
+    const arr = document.getElementById("bf-arrival-input")?.value || "";
+    const dep = document.getElementById("bf-departure-input")?.value || "";
+    if (!arr || !dep) return;
+    const diff = calcDurationBetweenTimes(arr, dep);
+    const inp = document.getElementById("bf-duration-input");
+    if (inp) inp.value = String(diff);
+  }
+  window.autoCalcBeifangDuration = autoCalcBeifangDuration;
+
+  function openBeifangModal(editId = null) {
+    const titleEl = document.getElementById("bf-modal-title");
+    if (editId) {
+      const existing = getBeifangEntries().find(x => x.id === editId);
+      if (!existing) return;
+      if (titleEl) titleEl.textContent = "✏️ Beifang bearbeiten";
+      document.getElementById("bf-edit-id").value = existing.id;
+      document.getElementById("bf-category-input").value = BEIFANG_CAT_META[existing.category] ? existing.category : "UNKLAR";
+      document.getElementById("bf-detail-input").value = existing.speciesDetail || "";
+      document.getElementById("bf-date-input").value = existing.date || getLocalISODate();
+      populateBeifangKanzelSelects(existing.kanzel || "Tunnel");
+      document.getElementById("bf-arrival-input").value = existing.arrival || getLocalHHMM();
+      document.getElementById("bf-departure-input").value = existing.departure || "";
+      document.getElementById("bf-duration-input").value = existing.durationMin ? String(existing.durationMin) : "";
+      document.getElementById("bf-count-input").value = String(Math.max(1, Number(existing.totalCount || 1)));
+      document.getElementById("bf-camera-input").value = existing.cameraName || "";
+      document.getElementById("bf-note-input").value = existing.note || "";
+    } else {
+      if (titleEl) titleEl.textContent = "🦌 Beifang eintragen";
+      document.getElementById("bf-edit-id").value = "";
+      document.getElementById("bf-category-input").value = "REHWILD";
+      document.getElementById("bf-detail-input").value = "";
+      document.getElementById("bf-date-input").value = getLocalISODate();
+      populateBeifangKanzelSelects();
+      document.getElementById("bf-arrival-input").value = getLocalHHMM();
+      document.getElementById("bf-departure-input").value = "";
+      document.getElementById("bf-duration-input").value = "";
+      document.getElementById("bf-count-input").value = "1";
+      document.getElementById("bf-camera-input").value = "";
+      document.getElementById("bf-note-input").value = "";
+    }
+    openModal("modal-beifang-entry");
+  }
+  window.openBeifangModal = openBeifangModal;
+
+  function saveBeifangEntryFromModal() {
+    const list = getBeifangEntries();
+    const editId = (document.getElementById("bf-edit-id")?.value || "").trim();
+    const prev = editId ? list.find(x => x.id === editId) : null;
+    const arrVal = document.getElementById("bf-arrival-input")?.value || getLocalHHMM();
+    const depVal = document.getElementById("bf-departure-input")?.value || "";
+    const durRaw = Number(document.getElementById("bf-duration-input")?.value || 0);
+    const durVal = durRaw > 0 ? Math.round(durRaw) : (depVal ? calcDurationBetweenTimes(arrVal, depVal) : 0);
+
+    const entry = {
+      id: editId || (`bf-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`),
+      inboxId: prev?.inboxId || "",
+      visitId: prev?.visitId || "",
+      source: prev?.source || "MANUAL",
+      sourceVersion: prev?.sourceVersion || "",
+      createdAt: prev?.createdAt || getLocalISODateTime(),
+      date: document.getElementById("bf-date-input")?.value || getLocalISODate(),
+      arrival: arrVal,
+      departure: depVal,
+      durationMin: durVal,
+      kanzel: document.getElementById("bf-kanzel-input")?.value || "Tunnel",
+      originalSpot: prev?.originalSpot || "",
+      cameraName: (document.getElementById("bf-camera-input")?.value || "").trim(),
+      category: document.getElementById("bf-category-input")?.value || "UNKLAR",
+      speciesDetail: (document.getElementById("bf-detail-input")?.value || "").trim(),
+      totalCount: Math.max(1, Math.round(Number(document.getElementById("bf-count-input")?.value || 1))),
+      ocrTempC: prev?.ocrTempC ?? null,
+      fileCount: prev?.fileCount || 0,
+      note: (document.getElementById("bf-note-input")?.value || "").trim()
+    };
+
+    const idx = list.findIndex(x => x.id === entry.id);
+    if (idx >= 0) list[idx] = entry;
+    else list.unshift(entry);
+
+    saveBeifangEntries(list);
+    closeModal("modal-beifang-entry");
+    renderBeifangList();
+  }
+  window.saveBeifangEntryFromModal = saveBeifangEntryFromModal;
+
+  function deleteBeifangEntry(id) {
+    if (!confirm("Diesen Beifang-Eintrag wirklich löschen?")) return;
+    const list = getBeifangEntries().filter(x => x.id !== id);
+    saveBeifangEntries(list);
+    renderBeifangList();
+  }
+  window.deleteBeifangEntry = deleteBeifangEntry;
+
+  function renderBeifangList() {
+    mountBlock4Views();
+    const all = getBeifangEntries();
+    const badge = document.getElementById("beifang-tab-count-badge");
+    if (badge) badge.textContent = String(all.length);
+
+    populateBeifangKanzelSelects();
+    const kFlt = document.getElementById("bf-filter-kanzel")?.value || "ALL";
+    const q = (document.getElementById("bf-search-input")?.value || "").trim().toLowerCase();
+
+    const filtered = all.filter(item => {
+      if (currentBeifangCatFilter !== "ALL" && item.category !== currentBeifangCatFilter) return false;
+      if (kFlt !== "ALL" && item.kanzel !== kFlt) return false;
+      if (!q) return true;
+      const meta = BEIFANG_CAT_META[item.category] || BEIFANG_CAT_META.UNKLAR;
+      return `${item.date} ${item.kanzel} ${item.originalSpot} ${meta.label} ${item.speciesDetail} ${item.cameraName} ${item.note}`.toLowerCase().includes(q);
+    });
+
+    const sumBar = document.getElementById("beifang-summary-bar");
+    if (sumBar) {
+      sumBar.textContent = all.length === 0
+        ? "Getrennter Speicher – kein Einfluss auf Sauen-Kalender oder Prognose."
+        : `Zeige ${filtered.length} von ${all.length} Beifang-Einträgen (streng getrennt von Sauen).`;
+    }
+
+    const container = document.getElementById("beifang-entries-container");
+    if (!container) return;
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:22px 12px; color:var(--text-muted); font-size:0.83rem; line-height:1.45;">
+        ${all.length === 0 ? "Noch keine Beifang-Einträge vorhanden.<br>Beifänge aus dem Überläufer landen automatisch hier." : "Keine Beifang-Einträge für diesen Filter gefunden."}
+      </div>`;
+      return;
+    }
+
+    container.innerHTML = filtered.slice(0, 150).map(item => {
+      const meta = BEIFANG_CAT_META[item.category] || BEIFANG_CAT_META.UNKLAR;
+      const timeRange = (item.departure && item.departure !== item.arrival)
+        ? `${item.arrival || "--:--"} – ${item.departure} Uhr`
+        : `${item.arrival || "--:--"} Uhr`;
+      const durBadge = Number(item.durationMin || 0) > 0
+        ? `<span class="duration-badge-green">⏱️ ${item.durationMin} Min.</span>`
+        : "";
+      const titleDetail = item.speciesDetail
+        ? `${meta.label} · ${item.speciesDetail}`
+        : meta.label;
+      const stkTxt = `${Math.max(1, Number(item.totalCount || 1))} Stk.`;
+      const metaBits = [];
+      if (item.cameraName) metaBits.push(`📷 ${escapeHTML(item.cameraName)}`);
+      if (item.ocrTempC !== null && item.ocrTempC !== undefined) metaBits.push(`🌡️ ${item.ocrTempC} °C`);
+      if (Number(item.fileCount || 0) > 0) metaBits.push(`🖼️ ${item.fileCount} Datei${item.fileCount === 1 ? "" : "en"}`);
+      const safeId = escapeHTML(item.id).replace(/'/g, "&#39;");
+
+      return `
+        <div class="beifang-card" style="border-left-color:${meta.color};">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+            <span style="font-weight:800; font-size:0.83rem;">${meta.icon} ${formatDateDE(item.date)} · ${escapeHTML(timeRange)}</span>
+            <div style="display:flex; gap:5px; align-items:center;">
+              ${durBadge}
+              <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="openBeifangModal('${safeId}')">✏️</button>
+              <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteBeifangEntry('${safeId}')">🗑️</button>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:0.86rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(item.kanzel || "Tunnel")} — ${escapeHTML(titleDetail)}</span>
+            <span class="beifang-cat-pill">${stkTxt}</span>
+          </div>
+          ${metaBits.length > 0 ? `<div class="ul-inbox-meta-row" style="margin-top:2px;">${metaBits.map(b => `<span class="ul-inbox-tag">${b}</span>`).join("")}</div>` : ""}
+          ${item.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
+        </div>
+      `;
+    }).join("") + (filtered.length > 150 ? `<div style="text-align:center; padding:10px; font-size:0.76rem; color:var(--text-muted);">Zeige die neuesten 150 von ${filtered.length} Treffern – Filter nutzen.</div>` : "");
+  }
+  window.renderBeifangList = renderBeifangList;
+
+  // Live-Prüfung auf neue Überläufer-Einträge beim Zurückkehren aus dem Überläufer-Tab
+  window.addEventListener("focus", () => {
+    refreshCamInboxBanner();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshCamInboxBanner();
+  });
+  window.addEventListener("storage", (e) => {
+    if (!e || !e.key || e.key === "sm_cam_inbox_v1") {
+      refreshCamInboxBanner();
+    }
+  });
 
 
   // =========================================================================
@@ -15847,7 +17103,10 @@
         }
       }, 60000);
     }
+    setTagebuchMainSection("SAUEN");
     setTagebuchSubMode("CAL");
+    if (typeof renderBeifangList === "function") renderBeifangList();
+    if (typeof refreshCamInboxBanner === "function") refreshCamInboxBanner();
     setWartungSubMode("ISSUES");
     renderWartungView();
     window.renderJagdzeitenList();

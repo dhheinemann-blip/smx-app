@@ -11,7 +11,7 @@
   <link id="dynamic-favicon" rel="icon" type="image/png">
   <link id="dynamic-touch-icon" rel="apple-touch-icon">
   <link id="dynamic-manifest" rel="manifest">
-  <title>Sauenmatrix v26.4 (Überläufer-Sync, Beifang & SUPERSIM)</title>
+  <title>Sauenmatrix v27.0 (Überläufer v0.5.4, Beifang-Kalender &amp; Trophäenträger)</title>
   <style>
     :root {
       --bg-main: #0b130e;
@@ -320,7 +320,7 @@
       cursor: pointer;
     }
 
-    /* Feste 7-Tab-Menüleiste unten (angepasst auf Galaxy A55 100dvh inkl. Sauenmatrix-Logo) */
+    /* Feste 8-Tab-Menüleiste unten (angepasst auf Galaxy A55 inkl. Trophäen & Sauenmatrix-Logo) */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -330,7 +330,7 @@
       background: #0e1a13;
       border-top: 1px solid #264232;
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       z-index: 600;
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -340,10 +340,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 3px;
+      gap: 2px;
       color: var(--text-muted);
-      font-size: 0.56rem;
-      letter-spacing: -0.25px;
+      font-size: 0.51rem;
+      letter-spacing: -0.35px;
       font-weight: 700;
       cursor: pointer;
       border: none;
@@ -358,19 +358,19 @@
       text-overflow: ellipsis;
     }
     .nav-icon-wrap {
-      width: 32px;
-      height: 24px;
-      border-radius: 12px;
+      width: 28px;
+      height: 22px;
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.96rem;
+      font-size: 0.9rem;
       transition: background 0.2s;
       overflow: hidden;
     }
     .nav-matrix-logo-img {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       object-fit: contain;
       display: block;
       filter: drop-shadow(0 1px 2px rgba(0,0,0,0.75));
@@ -878,6 +878,267 @@
       line-height: 1.4;
       color: #ffd6dc;
     }
+
+    /* v27.0: Überläufer v0.5.4, Standort-Chips, Beifang-Kalender & Trophäenträger */
+    .ul-banner-actions-v27 {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 6px;
+    }
+    .ul-banner-sub-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .ul-banner-sub-actions .btn-sm {
+      flex: 1;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      white-space: nowrap;
+    }
+    .ul-inbox-card.is-ignored {
+      border-left-color: #64748b;
+      opacity: 0.72;
+    }
+    .spot-chip-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 1px 7px;
+      margin-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .spot-chip-row::-webkit-scrollbar {
+      display: none;
+    }
+    .spot-chip {
+      background: #14261c;
+      color: var(--text-muted);
+      border: 1.5px solid #2f543d;
+      border-radius: 18px;
+      padding: 5px 11px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .spot-chip.active {
+      background: var(--tile-green);
+      color: #fff;
+      border-color: var(--accent-green);
+      box-shadow: 0 2px 8px rgba(34, 230, 107, 0.22);
+    }
+    .spot-chip.active-bf {
+      background: #2f3a1b;
+      color: #fff3bf;
+      border-color: var(--accent-yellow);
+      box-shadow: 0 2px 8px rgba(244, 196, 48, 0.2);
+    }
+    .spot-chip-cnt {
+      font-size: 0.67rem;
+      opacity: 0.85;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 1px 5px;
+      border-radius: 8px;
+    }
+    .bf-activity-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .bf-act-box {
+      background: #13251b;
+      border: 1px solid #355d44;
+      border-radius: 12px;
+      padding: 7px 6px;
+      text-align: center;
+      min-width: 0;
+    }
+    .bf-act-lbl {
+      font-size: 0.64rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bf-act-val {
+      font-size: 0.84rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .bf-act-sub {
+      font-size: 0.64rem;
+      color: #c8ded0;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bf-cal-card {
+      background: #1a2d1b;
+      border: 1.5px solid #6a7d39;
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+    .bf-trophy-dot {
+      position: absolute;
+      top: 2px;
+      right: 3px;
+      font-size: 0.56rem;
+      line-height: 1;
+      z-index: 3;
+    }
+    .trophy-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(244, 196, 48, 0.18);
+      border: 1px solid rgba(244, 196, 48, 0.72);
+      color: #fff3bf;
+      border-radius: 9px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .trophy-link-pill:active {
+      transform: scale(0.96);
+    }
+    .male-horn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.55);
+      color: #bae6fd;
+      border-radius: 8px;
+      padding: 1px 7px;
+      font-size: 0.69rem;
+      font-weight: 800;
+    }
+    /* Trophäenträger-Tab */
+    .trophy-card {
+      background: #15291d;
+      border: 1.5px solid #3c6e4e;
+      border-left: 6px solid var(--accent-yellow);
+      border-radius: 16px;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+    .trophy-card.sp-KEILER { border-left-color: var(--accent-green); }
+    .trophy-card.sp-REHBOCK { border-left-color: #84cc16; }
+    .trophy-card.sp-DAMHIRSCH { border-left-color: #f4c430; }
+    .trophy-card.sp-ROTHIRSCH { border-left-color: #f97316; }
+    .trophy-card-top {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .trophy-thumb-box {
+      width: 78px;
+      height: 78px;
+      border-radius: 12px;
+      background: #0c1811;
+      border: 1.5px solid #355e44;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    .trophy-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .trophy-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .trophy-stat-mini {
+      background: rgba(9, 18, 12, 0.62);
+      border: 1px solid rgba(67, 135, 93, 0.35);
+      border-radius: 10px;
+      padding: 6px 8px;
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+    .trophy-stat-mini strong {
+      display: block;
+      color: #fff;
+      font-size: 0.78rem;
+      margin-top: 1px;
+    }
+    .trophy-spots-line {
+      background: rgba(11, 19, 14, 0.55);
+      border: 1px solid rgba(244, 196, 48, 0.35);
+      border-radius: 10px;
+      padding: 6px 9px;
+      font-size: 0.74rem;
+      color: #fff3bf;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .trophy-actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+    .trophy-photo-preview-wrap {
+      margin-top: 8px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid #3c6e4e;
+      background: #0b140e;
+      max-height: 180px;
+      display: none;
+    }
+    .trophy-photo-preview-wrap img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    #modal-beifang-entry,
+    #modal-diary-entry,
+    #modal-trophy-entry {
+      z-index: 2100;
+    }
+    #modal-photo-lightbox {
+      z-index: 2200;
+    }
+    #modal-photo-lightbox img {
+      width: 100%;
+      max-height: 74dvh;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #08110c;
+      display: block;
+    }
   </style>
 </head>
 <body class="home-mode">
@@ -943,9 +1204,13 @@
         <div style="font-size:0.75rem; color:#d8e6dc; margin-top:2px;" id="ul-banner-sub">Saubere Sortierung nach Sauen &amp; Beifang (mit Duplikatschutz)</div>
       </div>
     </div>
-    <div class="ul-banner-actions">
+    <div class="ul-banner-actions-v27">
       <button type="button" class="btn-sm btn-yes" onclick="importAllFromCamInbox()">✅ Alle abholen</button>
       <button type="button" class="btn-sm btn-no" onclick="openCamInboxModal()">👁️ Prüfen</button>
+    </div>
+    <div class="ul-banner-sub-actions" id="ul-banner-split-row" style="display:none;">
+      <button type="button" class="btn-sm btn-no" id="ul-banner-only-sauen-btn" onclick="importOnlySauenFromCamInbox()">🐗 Nur Sauen</button>
+      <button type="button" class="btn-sm btn-no" id="ul-banner-only-beifang-btn" onclick="importOnlyBeifangFromCamInbox()">🦌 Nur Beifang</button>
     </div>
   </div>
 
@@ -1917,10 +2182,17 @@
   </main>
 
   <!-- ===================================================================== -->
-  <!-- TAB 2: TAGEBUCH (3er-Umschalter: Kalender | Liste | Rotten & Backup)  -->
+  <!-- TAB 2: TAGEBUCH (Sauen & Beifang getrennt mit Standort-Kalendern)     -->
   <!-- ===================================================================== -->
   <main id="tab-tagebuch" class="tab-section">
     <section class="single-tab-page" id="tagebuch-view"></section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- TAB 2b: TROPHÄENTRÄGER-REGISTER (EIGENER TAB UNTEN)                   -->
+  <!-- ===================================================================== -->
+  <main id="tab-trophaeen" class="tab-section">
+    <section class="single-tab-page" id="trophaeen-view"></section>
   </main>
 
   <!-- ===================================================================== -->
@@ -1958,7 +2230,7 @@
     <section class="single-tab-page" id="matrix-view"></section>
   </main>
 
-  <!-- FESTE MENÜLEISTE UNTEN (7 HAUPT-TABS INKL. SAUENMATRIX-LOGO) -->
+  <!-- FESTE MENÜLEISTE UNTEN (8 HAUPT-TABS INKL. TROPHÄEN & SAUENMATRIX-LOGO) -->
   <nav class="bottom-nav">
     <button type="button" class="nav-item" data-tab="cockpit" onclick="switchTab('cockpit', this)">
       <div class="nav-icon-wrap">🧭</div>
@@ -1967,6 +2239,10 @@
     <button type="button" class="nav-item" data-tab="tagebuch" onclick="switchTab('tagebuch', this)">
       <div class="nav-icon-wrap">📅</div>
       <span>Tagebuch</span>
+    </button>
+    <button type="button" class="nav-item" data-tab="trophaeen" onclick="switchTab('trophaeen', this)">
+      <div class="nav-icon-wrap">🏆</div>
+      <span>Trophäen</span>
     </button>
     <button type="button" class="nav-item" data-tab="strecke" onclick="switchTab('strecke', this)">
       <div class="nav-icon-wrap">🦌</div>
@@ -2088,7 +2364,7 @@
   <div class="modal-backdrop" id="modal-lunalink">
     <div class="modal-card" style="max-width:520px; padding:14px;">
       <div class="modal-header">
-        <h3 style="font-size:1.02rem;" id="lunalink-modal-title">🌕 Mondhelligkeit (17–7 Uhr)</h3>
+        <h3 style="font-size:1.02rem;" id="lunalink-modal-title">🌕 Mondhelligkeit (17–07 Uhr)</h3>
         <button class="close-x-btn" onclick="closeModal('modal-lunalink')">✕</button>
       </div>
       <div id="lunalink-matrix-container" class="no-swipe" style="overflow-x:auto; margin-bottom:12px;"></div>
@@ -2135,6 +2411,7 @@
           <div style="margin-bottom:8px;">
             <label class="app-label">Web-App-URL (muss auf /exec enden)</label>
             <input type="url" class="app-input" id="ss-url-input" placeholder="https://script.google.com/macros/s/.../exec">
+            <div style="font-size:0.68rem; color:var(--text-muted); margin-top:3px; line-height:1.3;">Hinweis: Hier die Google-Apps-Script-URL (.../exec) eintragen, nicht die Gmail-Adresse.</div>
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:end; margin-bottom:8px;">
             <div>
@@ -2157,7 +2434,7 @@
       </div>
 
       <div class="modal-footer-back" style="justify-content:space-between; align-items:center;">
-        <button type="button" class="btn-sm btn-no" style="font-size:0.78rem; padding:6px 10px;" onclick="window.open('https://my.supersim.camera', '_blank')">🌐 SUPERSIM-Portal</button>
+        <a href="https://my.supersim.camera" target="_blank" rel="noopener noreferrer" class="btn-sm btn-no" style="font-size:0.78rem; padding:6px 10px; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">🌐 SUPERSIM-Portal</a>
         <button type="button" class="back-pill-btn" onclick="closeModal('modal-supersim')">◀ Zurück</button>
       </div>
     </div>
@@ -2205,17 +2482,21 @@
     </div>
   </div>
 
-  <!-- MODAL 7: ÜBERLÄUFER POSTEINGANG PRÜFEN & ABHOLEN (sm_cam_inbox_v1) -->
+  <!-- MODAL 7: ÜBERLÄUFER POSTEINGANG PRÜFEN & ABHOLEN (sm_cam_inbox_v1, v0.5.4) -->
   <div class="modal-backdrop" id="modal-ul-inbox">
     <div class="modal-card no-swipe" style="max-width:500px; padding:14px;">
       <div class="modal-header">
         <h3 style="font-size:1.02rem;">📥 Überläufer-Posteingang</h3>
         <button type="button" class="close-x-btn" onclick="closeModal('modal-ul-inbox')">✕</button>
       </div>
-      <div id="ul-inbox-modal-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.4; color:#d8e6dc;"></div>
-      <div style="display:grid; grid-template-columns:1.45fr 1fr; gap:8px; margin-bottom:10px;">
+      <div id="ul-inbox-modal-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.45; color:#d8e6dc;"></div>
+      <div style="display:grid; grid-template-columns:1.45fr 1fr; gap:8px; margin-bottom:7px;">
         <button type="button" class="btn-add-entry-hero" id="ul-modal-import-all-btn" onclick="importAllFromCamInbox()">✅ Alle übernehmen</button>
         <button type="button" class="btn-sm btn-no" style="color:#ff8fa3; font-size:0.8rem;" id="ul-modal-discard-all-btn" onclick="discardAllCamInbox()">🗑️ Alle verwerfen</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;" id="ul-modal-split-actions">
+        <button type="button" class="btn-sm btn-no" id="ul-modal-only-sauen-btn" style="font-size:0.76rem; border-color:var(--accent-green); color:#c8fad7;" onclick="importOnlySauenFromCamInbox()">🐗 Nur Sauen</button>
+        <button type="button" class="btn-sm btn-no" id="ul-modal-only-beifang-btn" style="font-size:0.76rem; border-color:var(--accent-yellow); color:#fff3bf;" onclick="importOnlyBeifangFromCamInbox()">🦌 Nur Beifang</button>
       </div>
       <div id="ul-inbox-modal-feedback" style="display:none; background:rgba(34,230,107,0.16); border:1px solid var(--accent-green); color:#c8fad7; border-radius:10px; padding:6px 10px; margin-bottom:8px; font-size:0.76rem; font-weight:800;"></div>
       <div id="ul-inbox-modal-list"></div>
@@ -2235,22 +2516,37 @@
       <input type="hidden" id="bf-edit-id" value="">
       <div class="form-row-2col">
         <div>
-          <label class="app-label">🏷️ Wildart / Kategorie</label>
-          <select class="app-input" id="bf-category-input">
-            <option value="REHWILD">🦌 Rehwild</option>
+          <label class="app-label">🏷️ Wildart</label>
+          <select class="app-input" id="bf-category-input" onchange="syncBeifangModalTrophyControls()">
+            <option value="ROTWILD">🦌 Rotwild</option>
             <option value="DAMWILD">🦌 Damwild</option>
-            <option value="RAUBWILD">🦊 Raubwild</option>
+            <option value="REHWILD" selected>🦌 Rehwild</option>
+            <option value="FUCHS">🦊 Fuchs</option>
+            <option value="DACHS">🦡 Dachs</option>
+            <option value="MARDER">🐾 Marder</option>
+            <option value="MARDERHUND">🦝 Marderhund (Enok)</option>
+            <option value="WASCHBAER">🦝 Waschbär</option>
             <option value="WOLF">🐺 Wolf</option>
-            <option value="HAUSTIER">🐕 Haustier</option>
-            <option value="VOGEL">🐦 Vogel</option>
-            <option value="STOERUNG">⚠️ Störung</option>
-            <option value="UNKLAR">❓ Unklar</option>
+            <option value="SCHAKAL">🦊 Schakal (Goldschakal)</option>
+            <option value="WILDKATZE">🐱 Wildkatze</option>
+            <option value="STOERUNG">⚠️ Störung (Mensch / Fahrzeug)</option>
+            <option value="SONSTIGES">✨ Besonderes / Sonstiges</option>
           </select>
         </div>
         <div>
-          <label class="app-label">🔎 Detail / Art</label>
-          <input type="text" class="app-input" id="bf-detail-input" placeholder="z. B. Rehbock, Dachs, Waschbär">
+          <label class="app-label">🔎 Detail / Art (frei)</label>
+          <input type="text" class="app-input" id="bf-detail-input" placeholder="z. B. Rehbock, 6er, Traktor, Luchs">
         </div>
+      </div>
+      <div id="bf-trophy-link-wrap" style="background:#102217; border:1px solid #356045; border-radius:12px; padding:9px 10px; margin-bottom:10px;">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.8rem; font-weight:800; color:#bae6fd; margin-bottom:8px;">
+          <input type="checkbox" id="bf-male-trophy-chk" style="width:18px; height:18px; flex-shrink:0;">
+          <span>♂ Männliches Stück / Geweih / Gehörn</span>
+        </label>
+        <label class="app-label">🏆 Trophäenträger verknüpfen (optional)</label>
+        <select class="app-input" id="bf-trophy-input">
+          <option value="">— Kein Trophäenträger —</option>
+        </select>
       </div>
       <div class="form-row-2col">
         <div>
@@ -2282,6 +2578,113 @@
       <button type="button" class="btn-add-entry-hero" onclick="saveBeifangEntryFromModal()">💾 Beifang speichern</button>
       <div class="modal-footer-back">
         <button type="button" class="back-pill-btn" onclick="closeModal('modal-beifang-entry')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 9: TROPHÄENTRÄGER ANLEGEN / BEARBEITEN (sm_trophaeen_v1 + IndexedDB-Foto) -->
+  <div class="modal-backdrop" id="modal-trophy-entry">
+    <div class="modal-card no-swipe">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;" id="tr-modal-title">🏆 Trophäenträger anlegen</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-trophy-entry')">✕</button>
+      </div>
+      <input type="hidden" id="tr-edit-id" value="">
+      <div style="margin-bottom:10px;">
+        <label class="app-label">🏷️ Name / Spitzname</label>
+        <input type="text" class="app-input" id="tr-name-input" placeholder="z. B. Ungerader 6er Bahndamm, Starker Keiler Tunnel">
+      </div>
+      <div class="form-row-2col">
+        <div>
+          <label class="app-label">🦌 Art</label>
+          <select class="app-input" id="tr-species-input">
+            <option value="REHBOCK">🦌 Rehbock</option>
+            <option value="DAMHIRSCH">🦌 Damhirsch</option>
+            <option value="ROTHIRSCH">🦌 Rothirsch</option>
+            <option value="KEILER">🐗 Keiler</option>
+          </select>
+        </div>
+        <div>
+          <label class="app-label">⏳ Geschätztes Alter</label>
+          <input type="text" class="app-input" id="tr-age-input" placeholder="z. B. 4–5 Jahre">
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label class="app-label">🔎 Merkmale / Geweih- bzw. Gehörnbeschreibung</label>
+        <textarea class="app-input" id="tr-traits-input" rows="2" placeholder="z. B. Hoher 6er, rechte Stange nach innen gebogen, starke Waffen..."></textarea>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label class="app-label">📝 Notiz (optional)</label>
+        <textarea class="app-input" id="tr-note-input" rows="2" placeholder="Wechsel, Verhalten, Erkennungsmerkmale..."></textarea>
+      </div>
+      <div style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:10px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <div>
+            <div style="font-size:0.8rem; font-weight:800;">📷 Foto zum Wiedererkennen</div>
+            <div style="font-size:0.68rem; color:var(--text-muted);" id="tr-photo-status">Automatisch verkleinert in lokaler Bild-Datenbank (schont Speicher)</div>
+          </div>
+          <label class="btn-sm btn-yes" style="cursor:pointer; font-size:0.76rem; padding:6px 10px; white-space:nowrap;">
+            + Foto
+            <input type="file" accept="image/*" style="display:none;" onchange="handleTrophyPhotoUpload(event)">
+          </label>
+        </div>
+        <div class="trophy-photo-preview-wrap" id="tr-photo-preview-wrap">
+          <img id="tr-photo-preview-img" src="" alt="Trophäen-Foto">
+          <button type="button" class="del-photo-btn" onclick="clearTrophyModalPhoto()">✕ Entfernen</button>
+        </div>
+      </div>
+      <button type="button" class="btn-add-entry-hero" onclick="saveTrophyProfileFromModal()">💾 Steckbrief speichern</button>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-trophy-entry')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 10: TROPHÄENTRÄGER-KALENDER & SICHTUNGEN -->
+  <div class="modal-backdrop" id="modal-trophy-sightings">
+    <div class="modal-card no-swipe" style="max-width:500px; padding:14px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;" id="tr-sightings-modal-title">🏆 Sichtungen</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-trophy-sightings')">✕</button>
+      </div>
+      <div id="tr-sightings-modal-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.45; color:#d8e6dc;"></div>
+      <div class="cal-header-bar" style="padding:7px 10px; margin-bottom:8px;">
+        <div class="cal-nav-group">
+          <button type="button" class="cal-nav-btn" style="width:32px; height:32px;" onclick="changeTrophyCalMonth(-1)">◀</button>
+        </div>
+        <div class="cal-title-wrap" onclick="jumpTrophyCalToLatest()">
+          <div class="cal-month-title" style="font-size:0.95rem;" id="tr-cal-month-label">Monat</div>
+          <div class="cal-year-sub" id="tr-cal-year-label">Jahr</div>
+        </div>
+        <div class="cal-nav-group">
+          <button type="button" class="cal-nav-btn" style="width:32px; height:32px;" onclick="changeTrophyCalMonth(1)">▶</button>
+        </div>
+      </div>
+      <div class="bf-cal-card" style="padding:10px; margin-bottom:10px;">
+        <div class="cal-weekdays"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
+        <div class="cal-days-grid" id="tr-cal-days-grid"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-weight:800; font-size:0.84rem;" id="tr-sightings-list-heading">Alle verknüpften Sichtungen</span>
+        <button type="button" class="btn-sm btn-yes" style="padding:4px 10px; font-size:0.74rem;" id="tr-sightings-add-btn" onclick="addSightingForActiveTrophy()">+ Sichtung</button>
+      </div>
+      <div id="tr-sightings-list"></div>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-trophy-sightings')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 11: FOTO-VOLLBILD (TROPHÄEN-LIGHTBOX) -->
+  <div class="modal-backdrop" id="modal-photo-lightbox" onclick="if(event.target===this) closeModal('modal-photo-lightbox')">
+    <div class="modal-card no-swipe" style="max-width:520px; padding:12px;">
+      <div class="modal-header" style="margin-bottom:8px;">
+        <h3 style="font-size:0.98rem;" id="lightbox-photo-title">📷 Foto</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-photo-lightbox')">✕</button>
+      </div>
+      <img id="lightbox-photo-img" src="" alt="Foto Großansicht">
+      <div class="modal-footer-back" style="margin-top:10px;">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-photo-lightbox')">◀ Schließen</button>
       </div>
     </div>
   </div>
@@ -2700,7 +3103,7 @@
         openModal("modal-diary-entry");
       }
     }
-    const TAB_ORDER = ["cockpit", "tagebuch", "strecke", "kuehltruhe", "jagdzeiten", "wartung", "matrix"];
+    const TAB_ORDER = ["cockpit", "tagebuch", "trophaeen", "strecke", "kuehltruhe", "jagdzeiten", "wartung", "matrix"];
     let currentTab = "cockpit";
 
     function saveKanzelState() {
@@ -2823,6 +3226,8 @@
       document.querySelectorAll(".kanzel-name-sync").forEach(el => el.textContent = activeKanzel);
       renderKanzelSelectList();
       renderKanzelConfigModal();
+      if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
+      if (typeof renderBeifangView === "function") renderBeifangView();
       if (typeof renderWartungView === "function") renderWartungView();
       if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
       syncSupersimHeaderBadge();
@@ -3126,13 +3531,14 @@
     }
 
     // =========================================================================
-    // 4. EINHAND-WISCH-LOGIK FÜR ALLE 7 TABS
-    // ========================================================================= 
+    // 4. EINHAND-WISCH-LOGIK FÜR ALLE 8 TABS
+    // =========================================================================
 
     function isElementHorizontallyScrollable(el) {
       while (el && el !== document.body) {
         if (el.classList && (
           el.classList.contains("no-swipe") ||
+          el.classList.contains("spot-chip-row") ||
           el.classList.contains("modal-backdrop") ||
           el.classList.contains("bottom-nav") ||
           el.classList.contains("hourly-strip-wrap") ||
@@ -3337,7 +3743,10 @@
         if (typeof renderReifeTimerList === "function") renderReifeTimerList();
         if (typeof renderKuehltruhe === "function") renderKuehltruhe();
       } else if (tabName === "tagebuch") {
-        if (typeof renderBeifangList === "function") renderBeifangList();
+        if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
+        if (typeof renderBeifangView === "function") renderBeifangView();
+      } else if (tabName === "trophaeen") {
+        if (typeof renderTrophaeenView === "function") renderTrophaeenView();
       }
       if (typeof refreshCamInboxBanner === "function") refreshCamInboxBanner();
       window.scrollTo(0, 0);
@@ -3357,11 +3766,20 @@
       if (m) m.classList.remove("open");
     }
 
-    // Fängt die Handy-Zurück-Geste auf dem Galaxy A55 zuverlässig ab
+    // Fängt die Handy-Zurück-Geste auf dem Galaxy A55 zuverlässig ab (schließt immer das oberste Modal)
     window.addEventListener("popstate", () => {
-      const openModals = document.querySelectorAll(".modal-backdrop.open");
+      const openModals = Array.from(document.querySelectorAll(".modal-backdrop.open"));
       if (openModals.length > 0) {
-        openModals.forEach(m => m.classList.remove("open"));
+        let topModal = openModals[openModals.length - 1];
+        let topZ = -1;
+        openModals.forEach(m => {
+          const z = parseInt(window.getComputedStyle(m).zIndex, 10) || 2000;
+          if (z >= topZ) {
+            topZ = z;
+            topModal = m;
+          }
+        });
+        topModal.classList.remove("open");
         history.pushState({ Protected: true }, "");
         return;
       }
@@ -3397,7 +3815,7 @@
       if (tile) tile.style.display = "none";
     }
 
-    function triggerInstantBackup() {
+    async function triggerInstantBackup() {
       const logs = (typeof window.getAllDiaryEntries === "function") ? window.getAllDiaryEntries() : safeGetJSON("sm_logs_v1", []);
       const kanzeln = safeGetJSON("sm_kanzeln_v1", kanzelMap);
       const strecke = (typeof getStreckeEntries === "function") ? getStreckeEntries() : safeGetJSON("sm_strecke_v1", []);
@@ -3407,14 +3825,21 @@
       const rotten = (typeof getRottenProfiles === "function") ? getRottenProfiles() : safeGetJSON("sm_rotten_v1", []);
       const reife = (typeof getReifeEntries === "function") ? getReifeEntries() : safeGetJSON("sm_reife_v1", []);
       const beifang = (typeof getBeifangEntries === "function") ? getBeifangEntries() : safeGetJSON("sm_beifang_v1", []);
+      const trophaeen = (typeof getTrophyProfiles === "function") ? getTrophyProfiles() : safeGetJSON("sm_trophaeen_v1", []);
+      let trophaeenPhotos = {};
+      if (typeof trPhotoGetAllMap === "function") {
+        try { trophaeenPhotos = await trPhotoGetAllMap(); } catch (e) { trophaeenPhotos = {}; }
+      }
 
       const dateStr = getLocalISODate();
       const backupPayload = {
-        appVersion: "Sauenmatrix-v26.4",
+        appVersion: "Sauenmatrix-v27.0",
         exportDatum: getLocalISODateTime(),
         activeKanzel: activeKanzel,
         logs: logs,
         beifang: beifang,
+        trophaeen: trophaeen,
+        trophaeenPhotos: trophaeenPhotos,
         kanzeln: kanzeln,
         strecke: strecke,
         kuehltruhe: truhe,
@@ -4100,7 +4525,7 @@
           const doppelbesuchSignalAktiv = Boolean(isEarlyEveningVisit && diffNightsNow === 0 && letzterBesuchStd >= 1 && letzterBesuchStd <= 12);
 
           // 2. Aktuelles Kirrgut ("-- Kein Wechsel --" wird strikt ignoriert!)
-          let aktuellesKirrgut = (window.REVIER_CONFIG && REVIER_CONFIG.standardKirrgut) ? REVIER_CONFIG.standardKirrgut : "Körnermais";
+          let aktuellesKirrgut = (typeof REVIER_CONFIG !== "undefined" && REVIER_CONFIG.standardKirrgut) ? REVIER_CONFIG.standardKirrgut : "Körnermais";
           let latestKirrTs = 0;
 
           kanzelLogs.forEach(e => {
@@ -8363,8 +8788,9 @@
     <button type="button" class="truhe-mode-btn" id="tb-mode-TOOLS" onclick="setTagebuchSubMode('TOOLS')">🐗 Rotten / 💾</button>
   </div>
 
-  <!-- UNTERANSICHT 1: KALENDER -->
+  <!-- UNTERANSICHT 1: KALENDER (MIT DYNAMISCHEM STANDORT-FILTER) -->
   <div id="tb-subview-CAL">
+    <div class="spot-chip-row no-swipe" id="diary-cal-kanzel-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
     <div class="cal-header-bar">
       <div class="cal-nav-group">
         <button type="button" class="cal-nav-btn" onclick="changeDiaryYear(-1)" title="Vorheriges Jahr">«</button>
@@ -8380,7 +8806,7 @@
       </div>
     </div>
     <div class="cal-action-strip">
-      <button type="button" class="btn-add-entry-hero" onclick="openDiaryEntryModal()">➕ Neuer Eintrag</button>
+      <button type="button" class="btn-add-entry-hero" onclick="openDiaryEntryModalFromCal(false)">➕ Neuer Eintrag</button>
     </div>
     <div class="cal-grid-card">
       <div class="cal-weekdays"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
@@ -8396,7 +8822,7 @@
     <div class="cal-day-preview" id="cal-selected-day-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <span style="font-weight:800; font-size:0.9rem;" id="cal-selected-day-title">Ausgewählter Tag</span>
-        <button type="button" class="btn-sm btn-yes" style="padding:4px 10px; font-size:0.76rem;" onclick="openDiaryEntryModal(selectedCalendarDateStr)">+ Eintrag hier</button>
+        <button type="button" class="btn-sm btn-yes" style="padding:4px 10px; font-size:0.76rem;" onclick="openDiaryEntryModalFromCal()">+ Eintrag hier</button>
       </div>
       <div id="cal-selected-day-entries"></div>
     </div>
@@ -8449,37 +8875,108 @@
         🧹 Bestand auf Duplikate prüfen &amp; bereinigen
       </button>
       <div style="font-size:0.69rem; color:#d8e6dc; margin-top:6px; text-align:center; line-height:1.3;">
-        Erkennt Sauenmatrix-, alte HTML-App- &amp; Jagdbegleiter-Backups automatisch inkl. Beifang &amp; Duplikatschutz.
+        Erkennt Sauenmatrix-, alte HTML-App- &amp; Jagdbegleiter-Backups automatisch inkl. Beifang, Trophäenträger &amp; Duplikatschutz.
       </div>
     </div>
   </div>
   </div>
 
-  <!-- BEREICH B: BEIFANG-TAGEBUCH (sm_beifang_v1 · KEIN EINFLUSS AUF SAUEN-KALENDER / SCORING) -->
+  <!-- BEREICH B: BEIFANG-TAGEBUCH & DYNAMISCHER KALENDER (sm_beifang_v1 · STRIKT GETRENNT VON SAUEN) -->
   <div id="tb-section-BEIFANG" style="display:none;">
-    <div style="display:flex; gap:8px; margin-bottom:8px;">
-      <button type="button" class="btn-add-entry-hero" onclick="openBeifangModal(null)">➕ Beifang eintragen</button>
-      <select class="app-input" id="bf-filter-kanzel" style="width:136px; flex-shrink:0;" onchange="renderBeifangList()">
-        <option value="ALL">Alle Standorte</option>
-      </select>
+    <div class="truhe-mode-switcher no-swipe" style="margin-bottom:8px;">
+      <button type="button" class="truhe-mode-btn active" id="bf-mode-CAL" onclick="setBeifangSubMode('CAL')">📅 Kalender</button>
+      <button type="button" class="truhe-mode-btn" id="bf-mode-LIST" onclick="setBeifangSubMode('LIST')">📋 Liste (<span id="bf-filtered-count-badge">0</span>)</button>
     </div>
-    <div style="margin-bottom:8px;">
-      <input type="text" class="app-input" id="bf-search-input" placeholder="🔍 Beifang suchen (z. B. Dachs, Rehbock, Waschbär...)" oninput="renderBeifangList()">
+
+    <!-- FILTER 1: DYNAMISCHE STANDORTE (AUS sm_kanzeln_v1) -->
+    <div class="spot-chip-row no-swipe" id="bf-kanzel-chip-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
+
+    <!-- FILTER 2: EXAKTE WILDARTEN-FILTERLEISTE MIT ZÄHLERN -->
+    <div class="spot-chip-row no-swipe" id="bf-species-chip-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
+
+    <!-- AKTIVITÄTS-ÜBERBLICK (7-TAGE-TREND + HÄUFIGSTE ZEIT + GESAMT) -->
+    <div class="bf-activity-strip" id="bf-activity-strip">
+      <div class="bf-act-box">
+        <div class="bf-act-lbl">📈 7-Tage-Trend</div>
+        <div class="bf-act-val" id="bf-act-trend-val">--</div>
+        <div class="bf-act-sub" id="bf-act-trend-sub">vs. Vorwoche</div>
+      </div>
+      <div class="bf-act-box">
+        <div class="bf-act-lbl">🕒 Häufigste Zeit</div>
+        <div class="bf-act-val" id="bf-act-peak-val">--:--</div>
+        <div class="bf-act-sub" id="bf-act-peak-sub">Hauptaktivität</div>
+      </div>
+      <div class="bf-act-box">
+        <div class="bf-act-lbl">📊 Sichtungen</div>
+        <div class="bf-act-val" id="bf-act-total-val">0</div>
+        <div class="bf-act-sub" id="bf-act-total-sub">im Filter</div>
+      </div>
     </div>
-    <div class="diary-filter-row no-swipe" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()">
-      <button type="button" class="filter-chip active" id="bf-flt-ALL" onclick="setBeifangCatFilter('ALL')">Alle</button>
-      <button type="button" class="filter-chip" id="bf-flt-REHWILD" onclick="setBeifangCatFilter('REHWILD')">🦌 Rehwild</button>
-      <button type="button" class="filter-chip" id="bf-flt-DAMWILD" onclick="setBeifangCatFilter('DAMWILD')">🦌 Damwild</button>
-      <button type="button" class="filter-chip" id="bf-flt-RAUBWILD" onclick="setBeifangCatFilter('RAUBWILD')">🦊 Raubwild</button>
-      <button type="button" class="filter-chip" id="bf-flt-WOLF" onclick="setBeifangCatFilter('WOLF')">🐺 Wolf</button>
-      <button type="button" class="filter-chip" id="bf-flt-HAUSTIER" onclick="setBeifangCatFilter('HAUSTIER')">🐕 Haustier</button>
-      <button type="button" class="filter-chip" id="bf-flt-VOGEL" onclick="setBeifangCatFilter('VOGEL')">🐦 Vogel</button>
-      <button type="button" class="filter-chip" id="bf-flt-STOERUNG" onclick="setBeifangCatFilter('STOERUNG')">⚠️ Störung</button>
-      <button type="button" class="filter-chip" id="bf-flt-UNKLAR" onclick="setBeifangCatFilter('UNKLAR')">❓ Unklar</button>
+
+    <!-- BEIFANG UNTERANSICHT 1: DYNAMISCHER KALENDER -->
+    <div id="bf-subview-CAL">
+      <div class="cal-header-bar" style="background:#26361c; border-color:#6a7d39;">
+        <div class="cal-nav-group">
+          <button type="button" class="cal-nav-btn" onclick="changeBeifangYear(-1)" title="Vorheriges Jahr">«</button>
+          <button type="button" class="cal-nav-btn" onclick="changeBeifangMonth(-1)" title="Vorheriger Monat">◀</button>
+        </div>
+        <div class="cal-title-wrap" onclick="jumpBeifangToCurrentMonth()" title="Tippen für aktuellen Monat">
+          <div class="cal-month-title" id="bf-cal-month-label">Monat</div>
+          <div class="cal-year-sub" style="color:var(--accent-yellow);" id="bf-cal-year-label">Jahr · Heute</div>
+        </div>
+        <div class="cal-nav-group">
+          <button type="button" class="cal-nav-btn" onclick="changeBeifangMonth(1)" title="Nächster Monat">▶</button>
+          <button type="button" class="cal-nav-btn" onclick="changeBeifangYear(1)" title="Nächstes Jahr">»</button>
+        </div>
+      </div>
+      <div class="cal-action-strip">
+        <button type="button" class="btn-add-entry-hero" onclick="openBeifangModalFromCal()">➕ Beifang eintragen</button>
+      </div>
+      <div class="bf-cal-card">
+        <div class="cal-weekdays"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
+        <div class="cal-days-grid" id="bf-calendar-grid"></div>
+        <div class="cal-legend-row">
+          <span class="cal-legend-item"><span class="legend-dot" style="background:#3e5725;"></span>1×</span>
+          <span class="cal-legend-item"><span class="legend-dot" style="background:#856817;"></span>2×</span>
+          <span class="cal-legend-item"><span class="legend-dot" style="background:#c47a14;"></span>3–4×</span>
+          <span class="cal-legend-item"><span class="legend-dot" style="background:#ea580c;"></span>5+×</span>
+          <span class="cal-legend-item">🏆 Trophäenträger</span>
+        </div>
+      </div>
+      <div class="cal-day-preview" style="border-color:#6a7d39;" id="bf-selected-day-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-weight:800; font-size:0.9rem;" id="bf-selected-day-title">Ausgewählter Tag</span>
+          <button type="button" class="btn-sm btn-yes" style="padding:4px 10px; font-size:0.76rem;" onclick="openBeifangModalFromCal(true)">+ Hier</button>
+        </div>
+        <div id="bf-selected-day-entries"></div>
+      </div>
     </div>
-    <div id="beifang-summary-bar" style="font-size:0.75rem; color:var(--text-muted); font-weight:700; margin-bottom:8px;"></div>
-    <div id="beifang-entries-container"></div>
+
+    <!-- BEIFANG UNTERANSICHT 2: LISTE & SUCHE -->
+    <div id="bf-subview-LIST" style="display:none;">
+      <div style="display:flex; gap:8px; margin-bottom:8px;">
+        <input type="text" class="app-input" id="bf-search-input" placeholder="🔍 Suchen (z. B. Dachs, Rehbock, Enok, Notiz...)" oninput="renderBeifangList()">
+        <button type="button" class="btn-sm btn-yes" style="white-space:nowrap;" onclick="openBeifangModalFromCal()">+ Neu</button>
+      </div>
+      <div id="beifang-summary-bar" style="font-size:0.75rem; color:var(--text-muted); font-weight:700; margin-bottom:8px;"></div>
+      <div id="beifang-entries-container"></div>
+    </div>
   </div>
+</template>
+
+<template id="tpl-block4-trophaeen">
+  <div class="subview-topbar">
+    <span style="font-weight:800; font-size:0.95rem;">🏆 Trophäenträger-Register</span>
+    <span class="jz-badge jz-warn"><span id="tr-total-badge">0</span> Steckbriefe</span>
+  </div>
+  <div style="margin-bottom:9px;">
+    <button type="button" class="btn-add-entry-hero" style="width:100%;" onclick="openTrophyModal(null)">➕ Neuer Trophäenträger</button>
+  </div>
+  <div class="spot-chip-row no-swipe" id="tr-species-filter-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
+  <div style="margin-bottom:10px;">
+    <input type="text" class="app-input" id="tr-search-input" placeholder="🔍 Suchen (Name, Merkmal, Kanzel...)" oninput="renderTrophaeenView()">
+  </div>
+  <div id="tr-profiles-container"></div>
 </template>
 
 <template id="tpl-block5-streckenliste">
@@ -8715,6 +9212,12 @@
         <div class="rotten-col-unknown"><div class="rotten-code-unknown">Nicht erkennbar</div><div class="rotten-sub">Unklar (?)</div><div class="rotten-val" id="cnt-UNBEKANNT">0</div><div class="rotten-pm-row"><button type="button" class="pm-btn" onclick="adjRotte('UNBEKANNT', -1)">-</button><button type="button" class="pm-btn plus" onclick="adjRotte('UNBEKANNT', 1)">+</button></div></div>
       </div>
       <div style="margin-top:8px;"><input type="text" class="app-input" id="entry-anzahl-input" placeholder="z.B. 1B, 2ÜB, 4F oder 2 Groß (?)"></div>
+      <div style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(67,135,93,0.35);">
+        <label class="app-label">🏆 Keiler / Trophäenträger verknüpfen (optional)</label>
+        <select class="app-input" id="entry-trophy-select">
+          <option value="">— Kein Keiler-Steckbrief —</option>
+        </select>
+      </div>
     </div>
     <div class="tile-olive" id="abschuss-strecke-bridge" style="display:none; padding:12px; margin-bottom:12px;">
       <label style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:0.84rem; cursor:pointer; margin-bottom:8px;">
@@ -10073,14 +10576,69 @@
     return { bg: `linear-gradient(135deg, ${stops.join(", ")})`, border: borderMap[uniqueTypes[0]] };
   }
 
+  let currentDiaryCalKanzel = "ALL";
+
+  function getDynamicKanzelListForFilters(extraEntries = []) {
+    const map = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
+    const names = Object.keys(map).slice();
+    (extraEntries || []).forEach(e => {
+      const k = String(e?.kanzel || "").trim();
+      if (k && k !== "Revierweit" && !names.includes(k)) names.push(k);
+    });
+    return names;
+  }
+
+  function setDiaryCalKanzelFilter(kName) {
+    currentDiaryCalKanzel = kName || "ALL";
+    renderDiaryCalendar();
+  }
+  window.setDiaryCalKanzelFilter = setDiaryCalKanzelFilter;
+
+  function openDiaryEntryModalFromCal(useSelectedDay = true) {
+    openDiaryEntryModal(useSelectedDay ? selectedCalendarDateStr : getLocalISODate());
+    if (currentDiaryCalKanzel && currentDiaryCalKanzel !== "ALL") {
+      const kSel = document.getElementById("entry-kanzel-select");
+      if (kSel && Array.from(kSel.options).some(o => o.value === currentDiaryCalKanzel)) {
+        kSel.value = currentDiaryCalKanzel;
+      }
+    }
+  }
+  window.openDiaryEntryModalFromCal = openDiaryEntryModalFromCal;
+
+  function renderDiaryCalKanzelBar() {
+    const bar = document.getElementById("diary-cal-kanzel-bar");
+    if (!bar) return;
+    const names = getDynamicKanzelListForFilters(diaryLogs);
+    if (currentDiaryCalKanzel !== "ALL" && !names.includes(currentDiaryCalKanzel)) {
+      currentDiaryCalKanzel = "ALL";
+    }
+    const monthPrefix = `${currentCalYear}-${String(currentCalMonth + 1).padStart(2, "0")}-`;
+    const monthLogs = diaryLogs.filter(e => e && e.date && e.date.startsWith(monthPrefix));
+    const chips = [
+      `<button type="button" class="spot-chip ${currentDiaryCalKanzel === "ALL" ? "active" : ""}" onclick="setDiaryCalKanzelFilter('ALL')">🌲 Alle Standorte <span class="spot-chip-cnt">${monthLogs.length}</span></button>`
+    ];
+    names.forEach(kName => {
+      const cnt = monthLogs.filter(e => (e.kanzel || "Tunnel") === kName).length;
+      const safeK = escapeHTML(kName).replace(/'/g, "&#39;");
+      chips.push(
+        `<button type="button" class="spot-chip ${currentDiaryCalKanzel === kName ? "active" : ""}" onclick="setDiaryCalKanzelFilter('${safeK}')">🏯 ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
+      );
+    });
+    bar.innerHTML = chips.join("");
+  }
+
   function renderDiaryCalendar() {
     mountBlock4Views();
+    renderDiaryCalKanzelBar();
     const grid = document.getElementById("diary-calendar-grid");
     if (!grid) return;
     const mLabel = document.getElementById("cal-month-name-label");
     const yLabel = document.getElementById("cal-year-num-label");
     if (mLabel) mLabel.textContent = MONATSNAMEN_DE[currentCalMonth];
-    if (yLabel) yLabel.textContent = `${currentCalYear} · Heute`;
+    if (yLabel) {
+      const spotTag = currentDiaryCalKanzel === "ALL" ? "Alle Standorte" : currentDiaryCalKanzel;
+      yLabel.textContent = `${currentCalYear} · ${spotTag}`;
+    }
 
     grid.innerHTML = "";
     const firstDayObj = new Date(currentCalYear, currentCalMonth, 1);
@@ -10091,6 +10649,7 @@
     const entriesByDate = {};
     diaryLogs.forEach(e => {
       if (!e.date) return;
+      if (currentDiaryCalKanzel !== "ALL" && (e.kanzel || "Tunnel") !== currentDiaryCalKanzel) return;
       if (!entriesByDate[e.date]) entriesByDate[e.date] = [];
       entriesByDate[e.date].push(e);
     });
@@ -10123,10 +10682,14 @@
     const titleEl = document.getElementById("cal-selected-day-title");
     const listEl = document.getElementById("cal-selected-day-entries");
     if (!titleEl || !listEl) return;
-    titleEl.textContent = `📅 Einträge am ${formatDateDE(selectedCalendarDateStr)}`;
-    const dayEntries = diaryLogs.filter(e => e.date === selectedCalendarDateStr);
+    const spotLbl = currentDiaryCalKanzel === "ALL" ? "" : ` (${currentDiaryCalKanzel})`;
+    titleEl.textContent = `📅 Einträge am ${formatDateDE(selectedCalendarDateStr)}${spotLbl}`;
+    const dayEntries = diaryLogs.filter(e =>
+      e.date === selectedCalendarDateStr &&
+      (currentDiaryCalKanzel === "ALL" || (e.kanzel || "Tunnel") === currentDiaryCalKanzel)
+    );
     if (dayEntries.length === 0) {
-      listEl.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Keine Einträge.</div>`;
+      listEl.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Keine Einträge${spotLbl ? " für " + escapeHTML(currentDiaryCalKanzel) : ""}.</div>`;
       return;
     }
     listEl.innerHTML = dayEntries.map(e => renderSingleDiaryCardHTML(e)).join("");
@@ -10187,6 +10750,7 @@
         </div>
         <div style="font-size:0.84rem; font-weight:800; color:#fff;">${kanzelDisp} — ${escapeHTML(e.structure || meta.label)}${vergPill}</div>
         ${kirrText ? `<div style="font-size:0.75rem; color:var(--accent-yellow); font-weight:700;">${kirrText}</div>` : ""}
+        ${(e.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(e.trophyId) : ""}
         ${weatherHtml}
         ${e.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(e.note)}</div>` : ""}
         ${photoHtml}
@@ -10378,6 +10942,7 @@
 
   function openDiaryEntryModal(prefillDate = null, editId = null) {
     populateModalKanzelDropdown();
+    if (typeof populateDiaryTrophySelect === "function") populateDiaryTrophySelect("");
     const modalTitle = document.getElementById("diary-modal-title");
     document.getElementById("last-struct-preview-text").textContent = getLatestSauenStructure();
     document.getElementById("last-kirrgut-preview-text").textContent = getLatestActiveKirrgut();
@@ -10420,6 +10985,7 @@
         };
         syncRottenUI(false);
         document.getElementById("entry-anzahl-input").value = existing.structure || "";
+        if (typeof populateDiaryTrophySelect === "function") populateDiaryTrophySelect(existing.trophyId || "");
         document.getElementById("entry-note-input").value = existing.note || "";
         const chkVerg = document.getElementById("chk-ansitz-vergraemt");
         if (chkVerg) chkVerg.checked = Boolean(existing.vergraemt);
@@ -10649,6 +11215,7 @@
       status: currentEntryStatus, kanzel: kanzelVal, vergraemt: isVergraemt, structure: structVal, anzahl: structVal,
       totalStk, counts: isRotteStatus ? Object.assign({}, rottenCounts) : null, kirrgut: finalKirrgut, lockmittel: finalKirrgut,
       richtung: finalRichtung, weatherStamp: finalWeatherStamp,
+      trophyId: isRotteStatus ? (document.getElementById("entry-trophy-select")?.value || "").trim() : "",
       note: document.getElementById("entry-note-input").value.trim(),
       notiz: document.getElementById("entry-note-input").value.trim(),
       photo: currentEntryPhotoData
@@ -10688,6 +11255,11 @@
     renderStreckenliste();
     renderTab4Stats();
     if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    const trModalAfterSave = document.getElementById("modal-trophy-sightings");
+    if (trModalAfterSave && trModalAfterSave.classList.contains("open") && typeof renderTrophySightingsModal === "function") {
+      renderTrophySightingsModal();
+    }
 
     if (needsAsyncWeather) {
       enrichDiaryEntryWeatherAsync(entryObj.id, dateVal, arrVal);
@@ -10704,6 +11276,11 @@
     if (typeof updateCockpitAll === "function") updateCockpitAll();
     renderTab4Stats();
     if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    const trModalAfterDel = document.getElementById("modal-trophy-sightings");
+    if (trModalAfterDel && trModalAfterDel.classList.contains("open") && typeof renderTrophySightingsModal === "function") {
+      renderTrophySightingsModal();
+    }
   }
 
   // Streckenliste & Kühltruhe
@@ -12595,7 +13172,9 @@
       wartung: null,
       rotten: [],
       reife: [],
-      beifang: []
+      beifang: [],
+      trophaeen: [],
+      trophaeenPhotos: {}
     };
 
     const looksLikeJSON = text.startsWith("{") || text.startsWith("[");
@@ -12717,9 +13296,19 @@
           res.beifang = rawBeifang.filter(x => x && typeof x === "object");
         }
 
+        // 10. Trophäenträger-Register (sm_trophaeen_v1 + IndexedDB-Fotos)
+        const rawTrophaeen = data.trophaeen || normRoot.trophaeen || normRoot.smtrophaeenv1;
+        if (Array.isArray(rawTrophaeen)) {
+          res.trophaeen = rawTrophaeen.filter(x => x && typeof x === "object" && String(x.name || "").trim());
+        }
+        const rawTrPhotos = data.trophaeenPhotos || normRoot.trophaeenphotos;
+        if (rawTrPhotos && typeof rawTrPhotos === "object" && !Array.isArray(rawTrPhotos)) {
+          res.trophaeenPhotos = rawTrPhotos;
+        }
+
         const isSauenmatrix = Boolean(
           (typeof data.appVersion === "string" && data.appVersion.toLowerCase().includes("sauenmatrix")) ||
-          data.wartung || data.kuehltruhe || data.jagdzeiten || data.rotten || data.reife || data.beifang
+          data.wartung || data.kuehltruhe || data.jagdzeiten || data.rotten || data.reife || data.beifang || data.trophaeen
         );
         const isJB = Boolean(
           normRoot.revier || normRoot.jagdtagebuch || normRoot.beobachtungen ||
@@ -12874,6 +13463,7 @@
       merged.weatherStamp = Object.assign({}, incoming.weatherStamp);
       if (!merged.richtung && merged.weatherStamp.windDir) merged.richtung = merged.weatherStamp.windDir;
     }
+    if (!merged.trophyId && incoming.trophyId) merged.trophyId = incoming.trophyId;
     if (!merged.inboxId && incoming.inboxId) merged.inboxId = incoming.inboxId;
     if (!merged.visitId && incoming.visitId) merged.visitId = incoming.visitId;
     if (!merged.source && incoming.source) merged.source = incoming.source;
@@ -13068,6 +13658,7 @@
     if (Array.isArray(p.rotten) && p.rotten.length > 0) lines.push(`🐗 <strong>Bekannte Gesichter:</strong> ${p.rotten.length} Steckbriefe`);
     if (Array.isArray(p.reife) && p.reife.length > 0) lines.push(`🥩 <strong>Landig Reife-Timer:</strong> ${p.reife.length} Stücke`);
     if (Array.isArray(p.beifang) && p.beifang.length > 0) lines.push(`🦌 <strong>Beifang-Tagebuch:</strong> ${p.beifang.length} Einträge`);
+    if (Array.isArray(p.trophaeen) && p.trophaeen.length > 0) lines.push(`🏆 <strong>Trophäenträger:</strong> ${p.trophaeen.length} Steckbriefe`);
     if (p.jagdzeiten) lines.push(`📜 <strong>Jagdzeiten:</strong> ${p.jagdzeiten.length} Einträge`);
 
     if (sumEl) sumEl.innerHTML = lines.join("<br>");
@@ -13078,7 +13669,7 @@
     closeModal("modal-import-preview");
   }
 
-  function executePendingBackupImport(mode) {
+  async function executePendingBackupImport(mode) {
     if (!pendingBackupImport) return;
     const p = pendingBackupImport;
     const useFuzzy = document.getElementById("imp-fuzzy-dup-chk")?.checked !== false;
@@ -13162,6 +13753,21 @@
       saveBeifangEntries(mergedBf);
     }
 
+    // 10. Trophäenträger-Register (sm_trophaeen_v1 + IndexedDB-Fotos)
+    if (Array.isArray(p.trophaeen) && p.trophaeen.length > 0 && typeof mergeTrophyLists === "function") {
+      const mergedTr = mergeTrophyLists(getTrophyProfiles(), p.trophaeen, mode);
+      saveTrophyProfiles(mergedTr);
+    }
+    if (p.trophaeenPhotos && typeof p.trophaeenPhotos === "object" && typeof trPhotoSave === "function") {
+      const photoEntries = Object.entries(p.trophaeenPhotos);
+      for (let pi = 0; pi < photoEntries.length; pi++) {
+        const [pid, dataUrl] = photoEntries[pi];
+        if (pid && typeof dataUrl === "string" && dataUrl.startsWith("data:image")) {
+          try { await trPhotoSave(pid, dataUrl); } catch (e) {}
+        }
+      }
+    }
+
     pendingBackupImport = null;
     closeModal("modal-import-preview");
 
@@ -13169,7 +13775,8 @@
     renderDiaryCalendar();
     renderRottenProfiles();
     renderDiaryList();
-    if (typeof renderBeifangList === "function") renderBeifangList();
+    if (typeof renderBeifangView === "function") renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
     renderStreckenliste();
     renderReifeTimerList();
     renderKuehltruhe();
@@ -13185,10 +13792,12 @@
     const wrtCnt = getWartungData().issues.length;
     const rotCnt = getRottenProfiles().length;
     const bfCnt = (typeof getBeifangEntries === "function") ? getBeifangEntries().length : 0;
+    const trCnt = (typeof getTrophyProfiles === "function") ? getTrophyProfiles().length : 0;
     alert(
       `Import abgeschlossen (${mode === "MERGE" ? "Zusammengeführt" : "Ersetzt"})!\n` +
       `• Sauen-Tagebuch gesamt: ${diaryLogs.length} Einträge (+${dupReport.addedNew} neu, ${dupReport.totalDupsSkipped} Duplikate gefiltert)\n` +
       `• Beifang-Tagebuch: ${bfCnt} Einträge\n` +
+      `• Trophäenträger: ${trCnt} Steckbriefe\n` +
       `• Bekannte Gesichter: ${rotCnt} Steckbriefe\n` +
       `• Streckenliste: ${strCnt} Abschüsse\n` +
       `• Landig Reife-Timer: ${rfCnt} Stücke\n` +
@@ -13239,7 +13848,8 @@
           Boolean(parsed.wartung) ||
           (Array.isArray(parsed.rotten) && parsed.rotten.length > 0) ||
           (Array.isArray(parsed.reife) && parsed.reife.length > 0) ||
-          (Array.isArray(parsed.beifang) && parsed.beifang.length > 0);
+          (Array.isArray(parsed.beifang) && parsed.beifang.length > 0) ||
+          (Array.isArray(parsed.trophaeen) && parsed.trophaeen.length > 0);
 
         if (!hasAny) {
           alert("Die Datei enthält keine erkennbaren Sauenmatrix-, Alt-App- oder Jagdbegleiter-Daten.");
@@ -15528,43 +16138,136 @@
   };
 
   // =========================================================================
-  // v26.4: ÜBERLÄUFER-DURCHREICHE (sm_cam_inbox_v1) & BEIFANG-TAGEBUCH (sm_beifang_v1)
-  // STRIKTE TRENNUNG: Beifang landet NIEMALS in sm_logs_v1 / Kalender / Scoring!
+  // v27.0: ÜBERLÄUFER-DURCHREICHE (v0.5.4), BEIFANG-KALENDER & TROPHÄENTRÄGER
+  // STRIKTE TRENNUNG: Beifang (sm_beifang_v1) & Trophäen (sm_trophaeen_v1)
+  // verändern NIEMALS den Sauen-Score, Wind-Veto oder Kirrungs-Statistik!
   // =========================================================================
-  const BEIFANG_CAT_META = {
-    REHWILD:  { label: "Rehwild",  icon: "🦌", color: "#84cc16" },
-    DAMWILD:  { label: "Damwild",  icon: "🦌", color: "#eab308" },
-    RAUBWILD: { label: "Raubwild", icon: "🦊", color: "#f97316" },
-    WOLF:     { label: "Wolf",     icon: "🐺", color: "#ef4444" },
-    HAUSTIER: { label: "Haustier", icon: "🐕", color: "#38bdf8" },
-    VOGEL:    { label: "Vogel",    icon: "🐦", color: "#a78bfa" },
-    STOERUNG: { label: "Störung",  icon: "⚠️", color: "#f43f5e" },
-    UNKLAR:   { label: "Unklar",   icon: "❓", color: "#94a3b8" }
+
+  const BEIFANG_SPECIES_ORDER = [
+    "ROTWILD", "DAMWILD", "REHWILD", "FUCHS", "DACHS",
+    "MARDER", "MARDERHUND", "WASCHBAER", "WOLF", "SCHAKAL",
+    "WILDKATZE", "STOERUNG", "SONSTIGES"
+  ];
+
+  const BEIFANG_SPECIES_META = {
+    ROTWILD:    { label: "Rotwild", short: "Rotwild", icon: "🦌", color: "#ea580c", trophySpecies: "ROTHIRSCH", supportsAntler: true },
+    DAMWILD:    { label: "Damwild", short: "Damwild", icon: "🦌", color: "#eab308", trophySpecies: "DAMHIRSCH", supportsAntler: true },
+    REHWILD:    { label: "Rehwild", short: "Rehwild", icon: "🦌", color: "#84cc16", trophySpecies: "REHBOCK",   supportsAntler: true },
+    FUCHS:      { label: "Fuchs", short: "Fuchs", icon: "🦊", color: "#f97316", trophySpecies: "", supportsAntler: false },
+    DACHS:      { label: "Dachs", short: "Dachs", icon: "🦡", color: "#a3a3a3", trophySpecies: "", supportsAntler: false },
+    MARDER:     { label: "Marder", short: "Marder", icon: "🐾", color: "#d97706", trophySpecies: "", supportsAntler: false },
+    MARDERHUND: { label: "Marderhund (Enok)", short: "Marderhund", icon: "🦝", color: "#c084fc", trophySpecies: "", supportsAntler: false },
+    WASCHBAER:  { label: "Waschbär", short: "Waschbär", icon: "🦝", color: "#38bdf8", trophySpecies: "", supportsAntler: false },
+    WOLF:       { label: "Wolf", short: "Wolf", icon: "🐺", color: "#ef4444", trophySpecies: "", supportsAntler: false },
+    SCHAKAL:    { label: "Schakal (Goldschakal)", short: "Schakal", icon: "🦊", color: "#f59e0b", trophySpecies: "", supportsAntler: false },
+    WILDKATZE:  { label: "Wildkatze", short: "Wildkatze", icon: "🐱", color: "#2dd4bf", trophySpecies: "", supportsAntler: false },
+    STOERUNG:   { label: "Störung (Mensch / Fahrzeug)", short: "Störung", icon: "⚠️", color: "#f43f5e", trophySpecies: "", supportsAntler: false },
+    SONSTIGES:  { label: "Besonderes / Sonstiges", short: "Besonderes", icon: "✨", color: "#94a3b8", trophySpecies: "", supportsAntler: false }
+  };
+
+  // Rückwärtskompatible Referenz (falls Alt-Aufrufe noch BEIFANG_CAT_META erwarten)
+  const BEIFANG_CAT_META = BEIFANG_SPECIES_META;
+
+  const TROPHY_SPECIES_META = {
+    REHBOCK:   { label: "Rehbock",   plural: "Rehböcke",   icon: "🦌", color: "#84cc16", beifangKey: "REHWILD" },
+    DAMHIRSCH: { label: "Damhirsch", plural: "Damhirsche", icon: "🦌", color: "#f4c430", beifangKey: "DAMWILD" },
+    ROTHIRSCH: { label: "Rothirsch", plural: "Rothirsche", icon: "🦌", color: "#f97316", beifangKey: "ROTWILD" },
+    KEILER:    { label: "Keiler",    plural: "Keiler",     icon: "🐗", color: "#22e66b", beifangKey: "" }
   };
 
   let currentTagebuchMainSection = "SAUEN"; // "SAUEN" | "BEIFANG"
-  let currentBeifangCatFilter = "ALL";
+  let currentBeifangSubMode = "CAL";        // "CAL" | "LIST"
+  let currentBeifangSpeciesFilter = "ALL";
+  let currentBeifangKanzelFilter = "ALL";
+  let currentBfCalYear = new Date().getFullYear();
+  let currentBfCalMonth = new Date().getMonth();
+  let selectedBfCalDateStr = getLocalISODate();
 
-  function normalizeBeifangCategory(rawCat) {
-    const c = String(rawCat || "").trim().toUpperCase()
+  function _normSpeciesText(str) {
+    return String(str || "").trim().toUpperCase()
       .replace(/Ä/g, "AE").replace(/Ö/g, "OE").replace(/Ü/g, "UE").replace(/ß/g, "SS");
-    if (!c) return "SCHWARZWILD"; // Abwärtskompatibel für Überläufer v0.5.3 ohne category-Feld!
-    if (c === "SCHWARZWILD" || c === "SAU" || c === "SAUEN" || c === "WILDSCHWEIN") return "SCHWARZWILD";
-    if (BEIFANG_CAT_META[c]) return c;
-    if (c.includes("REH")) return "REHWILD";
-    if (c.includes("DAM")) return "DAMWILD";
-    if (c.includes("RAUB") || c.includes("FUCHS") || c.includes("DACHS") || c.includes("WASCH") || c.includes("MARDER")) return "RAUBWILD";
-    if (c.includes("WOLF")) return "WOLF";
-    if (c.includes("HAUS") || c.includes("HUND") || c.includes("KATZ")) return "HAUSTIER";
-    if (c.includes("VOGEL") || c.includes("FEDER") || c.includes("KRAEH") || c.includes("TAUBE") || c.includes("EULE")) return "VOGEL";
-    if (c.includes("STOER") || c.includes("MENSCH") || c.includes("FAHRZEUG") || c.includes("TRECKER") || c.includes("WANDER")) return "STOERUNG";
-    return "UNKLAR";
+  }
+
+  // Intelligente Erkennungslogik für Überläufer v0.5.4 (wertet category + speciesDetail aus)
+  // Gibt zurück: "SCHWARZWILD" | "IGNORE" (Haustier/Hase/Vogel) | eine der 13 BEIFANG_SPECIES_ORDER-Arten
+  function classifyBeifangSpecies(rawCat, rawDetail = "", rawNote = "") {
+    const cat = _normSpeciesText(rawCat);
+    const det = _normSpeciesText(rawDetail);
+    const combo = `${det} ${cat}`.trim();
+
+    // 1. Rückwärtskompatibel für Überläufer v0.5.3 ohne category-Feld
+    if (!cat && !det) return "SCHWARZWILD";
+    if (cat === "SCHWARZWILD" || cat === "SAU" || cat === "SAUEN" || cat === "WILDSCHWEIN") return "SCHWARZWILD";
+    if (!cat && /(SCHWARZWILD|WILDSCHWEIN|KEILER|BACHE|FRISCHLING|UEBERLAEUFER)/.test(det)) return "SCHWARZWILD";
+
+    // 2. Direkte Treffer auf neue exakte Schlüssel (z. B. beim Bearbeiten / Backup)
+    if (BEIFANG_SPECIES_META[cat] && !det) return cat;
+
+    // 3. Spezifische Wildarten ZUERST prüfen (vor Sammelbegriffen wie RAUBWILD / HAUSTIER / MARDER!)
+    // Marderhund / Enok strikt vor Marder und vor Hund prüfen!
+    if (/(MARDERHUND|\bENOK\b|TANUKI|NYCTEREUTES)/.test(combo)) return "MARDERHUND";
+    // Wildkatze strikt vor Hauskatze prüfen!
+    if (/(WILDKATZE|FELIS\s*SILVESTRIS)/.test(combo)) return "WILDKATZE";
+    // Goldschakal / Schakal
+    if (/(SCHAKAL|GOLDSCHAKAL)/.test(combo)) return "SCHAKAL";
+    // Wolf
+    if (/(\bWOLF\b|WOELFIN|CANIS\s*LUPUS)/.test(combo)) return "WOLF";
+    // Waschbär
+    if (/(WASCHBAER|PROCYON)/.test(combo)) return "WASCHBAER";
+    // Dachs
+    if (/(DACHS|GRIMBART)/.test(combo)) return "DACHS";
+    // Fuchs
+    if (/(FUCHS|ROTFUCHS|JUNGFUCHS)/.test(combo)) return "FUCHS";
+    // Marder (Steinmarder, Baummarder, Iltis, Hermelin, Wiesel, Mink)
+    if (/(MARDER|STEINMARDER|BAUMMARDER|ILTIS|HERMELIN|WIESEL|MINK)/.test(combo)) return "MARDER";
+
+    // Schalenwild: Rotwild / Damwild / Rehwild
+    if (/(ROTWILD|ROTHIRSCH|ROTSPIESSER|ROTKALB)/.test(combo)) return "ROTWILD";
+    if (/(DAMWILD|DAMHIRSCH|DAMTIER|DAMKALB|SCHAUFLER|DAMSPIESSER)/.test(combo)) return "DAMWILD";
+    if (/(REHWILD|REHBOCK|REHKITZ|REHGEISS|RICKE|SCHMALREH|\bKITZ\b|\bREH\b|JAEHRLING)/.test(combo)) return "REHWILD";
+
+    // Störung (Mensch / Fahrzeug)
+    if (/(STOERUNG|STOER|MENSCH|PERSON|WANDER|SPAZIER|JOGGER|RADFAHR|FAHRRAD|BIKE|FAHRZEUG|\bAUTO\b|\bPKW\b|\bLKW\b|TRECKER|TRAKTOR|FORST|MASCHINE|JAEGER|MOTORRAD|\bQUAD\b|MOPED)/.test(combo)) return "STOERUNG";
+
+    // 4. Bewusst ausgeschlossene Funde: Haustiere, Hase/Kaninchen, Vogel/Federwild (Marderhund & Wildkatze sind oben bereits abgefangen!)
+    if (
+      cat === "HAUSTIER" || cat === "VOGEL" || cat === "FEDERWILD" || cat === "HASE" ||
+      /(HAUSTIER|HUND|KATZE|PFERD|\bKUH\b|\bRIND\b|SCHAF|ZIEGE)/.test(combo) ||
+      /(FELDHASE|\bHASE\b|HASEN|KANINCHEN|WILDKANINCHEN)/.test(combo) ||
+      /(VOGEL|VOEGEL|FEDERWILD|KRAEHE|ELSTER|TAUBE|\bENTE\b|\bGANS\b|FASAN|EULE|KAUZ|BUSSARD|HABICHT|MILAN|SPECHT|HAEHER|KRANICH|STORCH|REIHER|SCHWAN|AMSEL|DROSSEL|MEISE|KORMORAN|SCHNEPFE|GREIFVOGEL)/.test(combo)
+    ) {
+      return "IGNORE";
+    }
+
+    // 5. Direkter Fallback auf exakte Schlüssel (z. B. SONSTIGES / BESONDERES / Luchs / Biber / Otter)
+    if (BEIFANG_SPECIES_META[cat]) return cat;
+    return "SONSTIGES";
+  }
+
+  function getBeifangSpeciesKey(entry) {
+    if (!entry || typeof entry !== "object") return "SONSTIGES";
+    if (entry.speciesKey && BEIFANG_SPECIES_META[entry.speciesKey]) return entry.speciesKey;
+    const res = classifyBeifangSpecies(entry.category, entry.speciesDetail, entry.note);
+    if (BEIFANG_SPECIES_META[res]) return res;
+    return "SONSTIGES";
+  }
+
+  function detectMaleTrophyHint(speciesKey, rawDetail = "", rawNote = "") {
+    if (!["ROTWILD", "DAMWILD", "REHWILD"].includes(speciesKey)) return false;
+    const t = _normSpeciesText(`${rawDetail} ${rawNote}`);
+    return /(BOCK|HIRSCH|SCHAUFLER|SPIESSER|GEWEIH|GEHOERN|GABLER|SECHSER|ACHTER|ZEHNER|\b6ER\b|\b8ER\b|\b10ER\b|MAENNLICH|TROPHAE)/.test(t);
+  }
+
+  function getCamInboxItemRole(item) {
+    if (!item || typeof item !== "object") return "IGNORE";
+    const sp = classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
+    if (sp === "SCHWARZWILD") return "SCHWARZWILD";
+    if (sp === "IGNORE") return "IGNORE";
+    return "BEIFANG";
   }
 
   function isCamInboxBeifang(item) {
-    if (!item || typeof item !== "object") return false;
-    const cat = normalizeBeifangCategory(item.category);
-    return cat !== "SCHWARZWILD";
+    return getCamInboxItemRole(item) === "BEIFANG";
   }
 
   function getCamInboxEntries() {
@@ -15612,14 +16315,8 @@
       return Math.max(0, Math.round(Number(v || 0)));
     };
     return {
-      K: num("K"),
-      B: num("B"),
-      UEB: num("UEB"),
-      UEK: num("UEK"),
-      F: num("F"),
-      GROSS: num("GROSS"),
-      KLEIN: num("KLEIN"),
-      UNBEKANNT: num("UNBEKANNT")
+      K: num("K"), B: num("B"), UEB: num("UEB"), UEK: num("UEK"),
+      F: num("F"), GROSS: num("GROSS"), KLEIN: num("KLEIN"), UNBEKANNT: num("UNBEKANNT")
     };
   }
 
@@ -15728,6 +16425,7 @@
       lockmittel: statusVal === "BLUE" ? "Körnermais" : "-- Kein Wechsel --",
       richtung: (stamp && stamp.windDir) ? stamp.windDir : "",
       weatherStamp: stamp,
+      trophyId: String(item.trophyId || "").trim(),
       note: finalNote,
       notiz: finalNote,
       photo: null
@@ -15745,13 +16443,20 @@
     }
     durVal = Math.max(0, Math.round(durVal || 0));
 
-    const catKey = normalizeBeifangCategory(item.category);
-    const finalCat = (catKey === "SCHWARZWILD") ? "UNKLAR" : catKey;
+    const spKeyRaw = item.speciesKey && BEIFANG_SPECIES_META[item.speciesKey]
+      ? item.speciesKey
+      : classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
+    const speciesKey = BEIFANG_SPECIES_META[spKeyRaw] ? spKeyRaw : "SONSTIGES";
     const kanzelVal = normalizeImportedKanzelName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel");
     const inboxIdStr = String(item.inboxId || "").trim();
     const visitIdStr = String(item.visitId || "").trim();
     const uid = inboxIdStr || visitIdStr || (`${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
     const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
+    const detailStr = String(item.speciesDetail || "").trim();
+    const noteStr = String(item.note || "").trim();
+    const maleFlag = (item.isMaleTrophy !== undefined)
+      ? Boolean(item.isMaleTrophy)
+      : detectMaleTrophyHint(speciesKey, detailStr, noteStr);
 
     return {
       id: item.id && String(item.id).startsWith("bf-") ? String(item.id) : `bf-${uid}`,
@@ -15767,21 +16472,25 @@
       kanzel: kanzelVal,
       originalSpot: String(item.originalSpot || "").trim(),
       cameraName: String(item.cameraName || "").trim(),
-      category: finalCat,
-      speciesDetail: String(item.speciesDetail || "").trim(),
+      category: speciesKey,
+      speciesKey: speciesKey,
+      speciesDetail: detailStr,
       totalCount: Math.max(1, Math.round(Number(item.totalCount || 1))),
+      isMaleTrophy: maleFlag,
+      trophyId: String(item.trophyId || "").trim(),
       ocrTempC: (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) ? Number(item.ocrTempC) : null,
       fileCount: Math.max(0, Math.round(fCnt)),
-      note: String(item.note || "").trim()
+      note: noteStr
     };
   }
 
+  // v27.0 Fix: Dublettenschutz vergleicht nach exakter Einzelart (nicht nur grob RAUBWILD!)
   function isSameBeifangEntry(a, b, toleranceMin = 15) {
     if (!a || !b) return false;
     if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
     if (a.visitId && b.visitId && String(a.visitId) === String(b.visitId)) return true;
     if (a.id && b.id && a.id === b.id) return true;
-    if (normalizeBeifangCategory(a.category) !== normalizeBeifangCategory(b.category)) return false;
+    if (getBeifangSpeciesKey(a) !== getBeifangSpeciesKey(b)) return false;
     if (normalizeKanzelCompareKey(a.kanzel) !== normalizeKanzelCompareKey(b.kanzel)) return false;
     const minA = diaryEntryToEpochMinutes(a);
     const minB = diaryEntryToEpochMinutes(b);
@@ -15810,7 +16519,9 @@
   }
 
   function checkCamInboxDuplicateStatus(item) {
-    if (isCamInboxBeifang(item)) {
+    const role = getCamInboxItemRole(item);
+    if (role === "IGNORE") return false;
+    if (role === "BEIFANG") {
       const bfCand = convertCamInboxToBeifangEntry(item);
       const list = getBeifangEntries();
       return list.some(x => isSameBeifangEntry(x, bfCand, 15));
@@ -15824,24 +16535,38 @@
     const items = getCamInboxEntries();
     let sauenCnt = 0;
     let beifangCnt = 0;
+    let ignoredCnt = 0;
     items.forEach(it => {
-      if (isCamInboxBeifang(it)) beifangCnt++;
-      else sauenCnt++;
+      const r = getCamInboxItemRole(it);
+      if (r === "SCHWARZWILD") sauenCnt++;
+      else if (r === "BEIFANG") beifangCnt++;
+      else ignoredCnt++;
     });
 
     const parts = [];
-    if (sauenCnt > 0) parts.push(`${sauenCnt} Sauen`);
-    if (beifangCnt > 0) parts.push(`${beifangCnt} Beifang`);
+    if (sauenCnt > 0) parts.push(`${sauenCnt}× Schwarzwild`);
+    if (beifangCnt > 0) parts.push(`${beifangCnt}× Beifang`);
+    if (parts.length === 0 && ignoredCnt > 0) parts.push(`${ignoredCnt}× ignoriert`);
     const summaryTxt = parts.join(" · ");
 
     const banner = document.getElementById("ul-inbox-banner");
     const bTitle = document.getElementById("ul-banner-title");
     const bSub = document.getElementById("ul-banner-sub");
+    const splitRow = document.getElementById("ul-banner-split-row");
+    const btnOnlyS = document.getElementById("ul-banner-only-sauen-btn");
+    const btnOnlyB = document.getElementById("ul-banner-only-beifang-btn");
+
     if (banner) {
       if (items.length > 0) {
         banner.style.display = "flex";
-        if (bTitle) bTitle.textContent = `📥 Überläufer: ${summaryTxt} bereit`;
-        if (bSub) bSub.textContent = `${items.length} geprüfte${items.length === 1 ? "r Besuch wartet" : " Besuche warten"} – 1 Tipp sortiert Sauen & Beifang sauber ein.`;
+        if (bTitle) bTitle.textContent = `📥 Überläufer: ${summaryTxt}`;
+        if (bSub) {
+          const ignNote = ignoredCnt > 0 ? ` · ${ignoredCnt}× Haustier/Hase/Vogel übersprungen` : "";
+          bSub.textContent = `1 Tipp sortiert Sauen & Beifang sauber mit Duplikatschutz ein${ignNote}.`;
+        }
+        if (splitRow) splitRow.style.display = (sauenCnt > 0 && beifangCnt > 0) ? "flex" : "none";
+        if (btnOnlyS) btnOnlyS.textContent = `🐗 Nur Sauen (${sauenCnt})`;
+        if (btnOnlyB) btnOnlyB.textContent = `🦌 Nur Beifang (${beifangCnt})`;
       } else {
         banner.style.display = "none";
       }
@@ -15851,7 +16576,7 @@
     if (homePill) {
       if (items.length > 0) {
         homePill.style.display = "inline-flex";
-        homePill.textContent = `📥 Überläufer: ${summaryTxt} abholen`;
+        homePill.textContent = `📥 Überläufer: ${summaryTxt}`;
       } else {
         homePill.style.display = "none";
       }
@@ -15869,6 +16594,7 @@
     let addedSauen = 0;
     let addedBeifang = 0;
     let skippedDups = 0;
+    let skippedIgnored = 0;
     const remaining = [];
     const beifangList = getBeifangEntries();
     let beifangChanged = false;
@@ -15882,7 +16608,14 @@
         return;
       }
 
-      if (isCamInboxBeifang(item)) {
+      const role = getCamInboxItemRole(item);
+      if (role === "IGNORE") {
+        // Haustier, Hase, Vogel bewusst weglassen und sauber aus der Durchreiche entfernen
+        skippedIgnored++;
+        return;
+      }
+
+      if (role === "BEIFANG") {
         const bfEntry = convertCamInboxToBeifangEntry(item);
         const isDup = beifangList.some(existing => isSameBeifangEntry(existing, bfEntry, 15));
         if (isDup) {
@@ -15896,7 +16629,6 @@
         const logEntry = convertCamInboxToSauenLog(item);
         const dupIdx = diaryLogs.findIndex(existing => isSameDiaryEntry(existing, logEntry, 15));
         if (dupIdx >= 0) {
-          // Kein Überschreiben – nur fehlende Detailinfos schonend ergänzen & als Duplikat zählen
           diaryLogs[dupIdx] = mergeDuplicateDiaryEntry(diaryLogs[dupIdx], logEntry);
           logsChanged = true;
           skippedDups++;
@@ -15920,13 +16652,13 @@
       saveBeifangEntries(beifangList);
     }
 
-    // Erfolgreich abgeholte Einträge sauber aus sm_cam_inbox_v1 entfernen
+    // Verarbeitete Einträge sauber aus sm_cam_inbox_v1 entfernen
     saveCamInboxEntries(remaining);
 
-    // Alle Ansichten aktualisieren
     renderDiaryCalendar();
     renderDiaryList();
-    renderBeifangList();
+    renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
     if (typeof updateCockpitAll === "function") updateCockpitAll();
     if (typeof window.renderTab4Stats === "function") window.renderTab4Stats();
     if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
@@ -15937,7 +16669,6 @@
       if (remaining.length === 0) closeModal("modal-ul-inbox");
     }
 
-    // Wetter-Stempel für neue Sauen-Besuche asynchron nachladen (max. 8 direkt, um API zu schonen)
     weatherEnrichQueue.slice(0, 8).forEach(q => {
       enrichDiaryEntryWeatherAsync(q.id, q.date, q.arrival);
     });
@@ -15945,8 +16676,9 @@
     if (!silentSummary) {
       const msgLines = [];
       if (addedSauen > 0) msgLines.push(`🐗 ${addedSauen} Sauen-Besuch${addedSauen === 1 ? "" : "e"} ins Tagebuch übernommen`);
-      if (addedBeifang > 0) msgLines.push(`🦌 ${addedBeifang} Beifang-Eintrag${addedBeifang === 1 ? "" : "e"} getrennt im Beifang gespeichert`);
+      if (addedBeifang > 0) msgLines.push(`🦌 ${addedBeifang} Beifang-Eintr${addedBeifang === 1 ? "ag" : "äge"} getrennt im Beifang gespeichert`);
       if (skippedDups > 0) msgLines.push(`🔁 ${skippedDups} Duplikat${skippedDups === 1 ? "" : "e"} erkannt & übersprungen`);
+      if (skippedIgnored > 0) msgLines.push(`⏭️ ${skippedIgnored}× Haustier / Hase / Vogel übersprungen`);
       if (msgLines.length === 0) msgLines.push("Keine neuen Einträge übernommen.");
       if (isHomeStartMode) {
         showHomeToast(`✅ Überläufer: +${addedSauen} Sauen, +${addedBeifang} Beifang`);
@@ -15961,6 +16693,19 @@
   }
   window.importAllFromCamInbox = importAllFromCamInbox;
 
+  function importOnlySauenFromCamInbox() {
+    importCamInboxItemsByPredicate((item) => getCamInboxItemRole(item) === "SCHWARZWILD", false);
+  }
+  window.importOnlySauenFromCamInbox = importOnlySauenFromCamInbox;
+
+  function importOnlyBeifangFromCamInbox() {
+    importCamInboxItemsByPredicate((item) => {
+      const r = getCamInboxItemRole(item);
+      return r === "BEIFANG" || r === "IGNORE";
+    }, false);
+  }
+  window.importOnlyBeifangFromCamInbox = importOnlyBeifangFromCamInbox;
+
   function showCamInboxModalFeedback(msg) {
     const fb = document.getElementById("ul-inbox-modal-feedback");
     if (!fb) return;
@@ -15972,8 +16717,8 @@
 
   function importSingleCamInboxItem(targetKey) {
     importCamInboxItemsByPredicate((item, key) => key === targetKey, true);
-    showCamInboxModalFeedback("✅ Besuch sauber übernommen & aus Posteingang entfernt.");
-    if (isHomeStartMode) showHomeToast("✅ Besuch übernommen");
+    showCamInboxModalFeedback("✅ Besuch sauber verarbeitet & aus Posteingang entfernt.");
+    if (isHomeStartMode) showHomeToast("✅ Besuch verarbeitet");
   }
   window.importSingleCamInboxItem = importSingleCamInboxItem;
 
@@ -16009,22 +16754,34 @@
     const listEl = document.getElementById("ul-inbox-modal-list");
     const impBtn = document.getElementById("ul-modal-import-all-btn");
     const disBtn = document.getElementById("ul-modal-discard-all-btn");
+    const splitBox = document.getElementById("ul-modal-split-actions");
+    const btnOnlyS = document.getElementById("ul-modal-only-sauen-btn");
+    const btnOnlyB = document.getElementById("ul-modal-only-beifang-btn");
     if (!listEl) return;
 
-    let sauenCnt = 0, bfCnt = 0;
-    items.forEach(it => { if (isCamInboxBeifang(it)) bfCnt++; else sauenCnt++; });
+    let sauenCnt = 0, bfCnt = 0, ignCnt = 0;
+    items.forEach(it => {
+      const r = getCamInboxItemRole(it);
+      if (r === "SCHWARZWILD") sauenCnt++;
+      else if (r === "BEIFANG") bfCnt++;
+      else ignCnt++;
+    });
 
     if (impBtn) impBtn.disabled = items.length === 0;
     if (disBtn) disBtn.disabled = items.length === 0;
+    if (splitBox) splitBox.style.display = (items.length > 0 && (sauenCnt > 0 || bfCnt > 0)) ? "grid" : "none";
+    if (btnOnlyS) { btnOnlyS.disabled = sauenCnt === 0; btnOnlyS.textContent = `🐗 Nur Sauen (${sauenCnt})`; }
+    if (btnOnlyB) { btnOnlyB.disabled = (bfCnt + ignCnt) === 0; btnOnlyB.textContent = `🦌 Nur Beifang (${bfCnt})`; }
 
     if (sumEl) {
       if (items.length === 0) {
         sumEl.innerHTML = "✅ Der Überläufer-Posteingang ist leer – alles abgeholt.";
       } else {
         sumEl.innerHTML =
-          `<strong>${items.length} Besuch${items.length === 1 ? "" : "e"}</strong> bereit zur Übernahme:<br>` +
-          `• 🐗 <strong>${sauenCnt} Schwarzwild</strong> → normales Tagebuch (inkl. Kalender &amp; Scoring)<br>` +
-          `• 🦌 <strong>${bfCnt} Beifang</strong> → separates Beifang-Tagebuch (ohne Einfluss auf Sauen)`;
+          `<strong>${items.length} Besuch${items.length === 1 ? "" : "e"}</strong> in der Durchreiche:<br>` +
+          `• 🐗 <strong>${sauenCnt}× Schwarzwild</strong> → Sauen-Tagebuch (Kalender &amp; Scoring)<br>` +
+          `• 🦌 <strong>${bfCnt}× Beifang</strong> → getrennter Beifang-Kalender (ohne Sauen-Score)` +
+          (ignCnt > 0 ? `<br>• ⏭️ <strong>${ignCnt}× Haustier / Hase / Vogel</strong> → wird automatisch übersprungen` : "");
       }
     }
 
@@ -16035,15 +16792,19 @@
 
     listEl.innerHTML = items.map((item, idx) => {
       const key = buildCamInboxKey(item, idx);
-      const isBf = isCamInboxBeifang(item);
+      const role = getCamInboxItemRole(item);
+      const isBf = role === "BEIFANG";
+      const isIgn = role === "IGNORE";
       const isDup = checkCamInboxDuplicateStatus(item);
-      const catKey = normalizeBeifangCategory(item.category);
-      const catMeta = BEIFANG_CAT_META[catKey] || { label: "Schwarzwild", icon: "🐗" };
+      const spKey = classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
+      const spMeta = BEIFANG_SPECIES_META[spKey] || { label: "Schwarzwild", icon: "🐗" };
 
       const counts = extractCamInboxCounts(item);
-      const structTxt = isBf
-        ? `${item.speciesDetail ? escapeHTML(item.speciesDetail) : catMeta.label}${Number(item.totalCount || 0) > 1 ? ` (${item.totalCount} Stk.)` : ""}`
-        : escapeHTML(formatCamCountsToStructure(counts, item.totalCount));
+      const structTxt = isIgn
+        ? `${escapeHTML(item.speciesDetail || item.category || "Haustier / Hase / Vogel")}`
+        : (isBf
+          ? `${spMeta.label}${item.speciesDetail && item.speciesDetail.toLowerCase() !== spMeta.label.toLowerCase() ? ` (${escapeHTML(item.speciesDetail)})` : ""}${Number(item.totalCount || 0) > 1 ? ` · ${item.totalCount} Stk.` : ""}`
+          : escapeHTML(formatCamCountsToStructure(counts, item.totalCount)));
 
       const arr = parseFlexibleTime(item.arrival) || item.arrival || "--:--";
       const dep = parseFlexibleTime(item.departure) || "";
@@ -16058,17 +16819,20 @@
       const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
       if (fCnt > 0) tags.push(`🖼️ ${fCnt} Bild${fCnt === 1 ? "" : "er"}`);
 
-      const targetBadge = isBf
-        ? `<span class="beifang-cat-pill">${catMeta.icon} Beifang: ${escapeHTML(catMeta.label)}</span>`
-        : `<span class="duration-badge-green">🐗 Sauen-Tagebuch</span>`;
+      const targetBadge = isIgn
+        ? `<span class="beifang-cat-pill" style="background:rgba(100,116,139,0.22); border-color:#64748b; color:#cbd5e1;">⏭️ Wird ignoriert</span>`
+        : (isBf
+          ? `<span class="beifang-cat-pill">${spMeta.icon} ${escapeHTML(spMeta.short)}</span>`
+          : `<span class="duration-badge-green">🐗 Sauen-Tagebuch</span>`);
 
       const dupBadge = isDup
         ? `<div style="font-size:0.72rem; color:var(--accent-yellow); font-weight:800;">🔁 Bereits im Bestand erkannt (Duplikatschutz aktiv)</div>`
         : "";
 
       const safeKeyAttr = escapeHTML(key).replace(/'/g, "&#39;");
+      const actionLabel = isIgn ? "⏭️ Entfernen" : (isDup ? "🔁 Abgleichen" : "✅ Übernehmen");
       return `
-        <div class="ul-inbox-card ${isBf ? "is-beifang" : ""} ${isDup ? "is-dup" : ""}">
+        <div class="ul-inbox-card ${isBf ? "is-beifang" : ""} ${isIgn ? "is-ignored" : ""} ${isDup ? "is-dup" : ""}">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
             <strong style="font-size:0.84rem; color:#fff;">📅 ${formatDateDE(item.date)} · 🕒 ${escapeHTML(timeStr)}${durStr ? ` (${durStr})` : ""}</strong>
             ${targetBadge}
@@ -16080,7 +16844,7 @@
           ${item.note ? `<div style="font-size:0.75rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
           ${dupBadge}
           <div class="ul-inbox-actions">
-            <button type="button" class="btn-sm btn-yes" onclick="importSingleCamInboxItem('${safeKeyAttr}')">${isDup ? "🔁 Abgleichen" : "✅ Übernehmen"}</button>
+            <button type="button" class="btn-sm btn-yes" onclick="importSingleCamInboxItem('${safeKeyAttr}')">${actionLabel}</button>
             <button type="button" class="btn-sm btn-no" style="color:#ff8fa3;" onclick="discardSingleCamInboxItem('${safeKeyAttr}')">❌ Verwerfen</button>
           </div>
         </div>
@@ -16089,7 +16853,7 @@
   }
 
   // =========================================================================
-  // BEIFANG-TAGEBUCH UI (Umschalter 🐗 Sauen | 🦌 Beifang, Filter, Edit, Delete)
+  // BEIFANG-BEREICH & DYNAMISCHER BEIFANG-KALENDER (WILDART × STANDORT)
   // =========================================================================
   function setTagebuchMainSection(sec) {
     currentTagebuchMainSection = (sec === "BEIFANG") ? "BEIFANG" : "SAUEN";
@@ -16105,40 +16869,348 @@
     if (secS) secS.style.display = (currentTagebuchMainSection === "SAUEN") ? "block" : "none";
     if (secB) secB.style.display = (currentTagebuchMainSection === "BEIFANG") ? "block" : "none";
     if (currentTagebuchMainSection === "BEIFANG") {
-      renderBeifangList();
+      renderBeifangView();
+    } else {
+      renderDiaryCalendar();
     }
   }
   window.setTagebuchMainSection = setTagebuchMainSection;
 
-  function setBeifangCatFilter(cat) {
-    currentBeifangCatFilter = cat || "ALL";
-    ["ALL", "REHWILD", "DAMWILD", "RAUBWILD", "WOLF", "HAUSTIER", "VOGEL", "STOERUNG", "UNKLAR"].forEach(k => {
-      const btn = document.getElementById(`bf-flt-${k}`);
-      if (btn) btn.classList.toggle("active", k === currentBeifangCatFilter);
+  function setBeifangSubMode(mode) {
+    currentBeifangSubMode = (mode === "LIST") ? "LIST" : "CAL";
+    ["CAL", "LIST"].forEach(k => {
+      const btn = document.getElementById(`bf-mode-${k}`);
+      const vw = document.getElementById(`bf-subview-${k}`);
+      if (btn) btn.classList.toggle("active", k === currentBeifangSubMode);
+      if (vw) vw.style.display = (k === currentBeifangSubMode) ? "block" : "none";
     });
-    renderBeifangList();
+    renderBeifangView();
   }
-  window.setBeifangCatFilter = setBeifangCatFilter;
+  window.setBeifangSubMode = setBeifangSubMode;
 
-  function populateBeifangKanzelSelects(selectedVal = null) {
-    const allBeifang = getBeifangEntries();
-    const baseSitze = (typeof getAllWartungSitze === "function")
-      ? getAllWartungSitze()
-      : Object.keys((typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} });
-    const names = baseSitze.slice();
-    allBeifang.forEach(b => {
-      const k = String(b.kanzel || "").trim();
-      if (k && !names.includes(k)) names.push(k);
+  function setBeifangKanzelFilter(kName) {
+    currentBeifangKanzelFilter = kName || "ALL";
+    renderBeifangView();
+  }
+  window.setBeifangKanzelFilter = setBeifangKanzelFilter;
+
+  function setBeifangSpeciesFilter(spKey) {
+    currentBeifangSpeciesFilter = spKey || "ALL";
+    renderBeifangView();
+  }
+  window.setBeifangSpeciesFilter = setBeifangSpeciesFilter;
+  window.setBeifangCatFilter = setBeifangSpeciesFilter;
+
+  function changeBeifangMonth(delta) {
+    currentBfCalMonth += delta;
+    if (currentBfCalMonth > 11) { currentBfCalMonth = 0; currentBfCalYear += 1; }
+    else if (currentBfCalMonth < 0) { currentBfCalMonth = 11; currentBfCalYear -= 1; }
+    renderBeifangView();
+  }
+  window.changeBeifangMonth = changeBeifangMonth;
+
+  function changeBeifangYear(delta) {
+    currentBfCalYear += delta;
+    renderBeifangView();
+  }
+  window.changeBeifangYear = changeBeifangYear;
+
+  function jumpBeifangToCurrentMonth() {
+    const now = new Date();
+    currentBfCalYear = now.getFullYear();
+    currentBfCalMonth = now.getMonth();
+    selectedBfCalDateStr = getLocalISODate(now);
+    renderBeifangView();
+  }
+  window.jumpBeifangToCurrentMonth = jumpBeifangToCurrentMonth;
+
+  function getFilteredBeifangEntries(ignoreSearch = false) {
+    const all = getBeifangEntries();
+    const q = ignoreSearch ? "" : (document.getElementById("bf-search-input")?.value || "").trim().toLowerCase();
+    return all.filter(item => {
+      const spKey = getBeifangSpeciesKey(item);
+      if (currentBeifangKanzelFilter !== "ALL" && (item.kanzel || "Tunnel") !== currentBeifangKanzelFilter) return false;
+      if (currentBeifangSpeciesFilter !== "ALL" && spKey !== currentBeifangSpeciesFilter) return false;
+      if (!q) return true;
+      const meta = BEIFANG_SPECIES_META[spKey] || BEIFANG_SPECIES_META.SONSTIGES;
+      const trName = item.trophyId ? (getTrophyById(item.trophyId)?.name || "") : "";
+      return `${item.date} ${item.kanzel} ${item.originalSpot} ${meta.label} ${item.speciesDetail} ${item.cameraName} ${trName} ${item.note}`.toLowerCase().includes(q);
     });
+  }
 
-    const fltSel = document.getElementById("bf-filter-kanzel");
-    if (fltSel) {
-      const prev = fltSel.value || "ALL";
-      fltSel.innerHTML = `<option value="ALL">Alle Standorte</option>` +
-        names.map(n => `<option value="${escapeHTML(n)}">${escapeHTML(n)}</option>`).join("");
-      fltSel.value = (prev === "ALL" || names.includes(prev)) ? prev : "ALL";
+  function renderBeifangFilterBars(allEntries) {
+    // 1. Standort-Chips (dynamisch aus sm_kanzeln_v1 + genutzte Standorte)
+    const kBar = document.getElementById("bf-kanzel-chip-bar");
+    const kNames = getDynamicKanzelListForFilters(allEntries);
+    if (currentBeifangKanzelFilter !== "ALL" && !kNames.includes(currentBeifangKanzelFilter)) {
+      currentBeifangKanzelFilter = "ALL";
+    }
+    if (kBar) {
+      const kChips = [
+        `<button type="button" class="spot-chip ${currentBeifangKanzelFilter === "ALL" ? "active-bf" : ""}" onclick="setBeifangKanzelFilter('ALL')">🌲 Alle Standorte <span class="spot-chip-cnt">${allEntries.length}</span></button>`
+      ];
+      kNames.forEach(kName => {
+        const cnt = allEntries.filter(b => (b.kanzel || "Tunnel") === kName).length;
+        const safeK = escapeHTML(kName).replace(/'/g, "&#39;");
+        kChips.push(
+          `<button type="button" class="spot-chip ${currentBeifangKanzelFilter === kName ? "active-bf" : ""}" onclick="setBeifangKanzelFilter('${safeK}')">🏯 ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
+        );
+      });
+      kBar.innerHTML = kChips.join("");
     }
 
+    // 2. Exakte Wildarten-Chips (mit Zählern im aktuellen Standort-Filter!)
+    const spBar = document.getElementById("bf-species-chip-bar");
+    if (spBar) {
+      const byStand = currentBeifangKanzelFilter === "ALL"
+        ? allEntries
+        : allEntries.filter(b => (b.kanzel || "Tunnel") === currentBeifangKanzelFilter);
+      const countsBySp = {};
+      byStand.forEach(b => {
+        const k = getBeifangSpeciesKey(b);
+        countsBySp[k] = (countsBySp[k] || 0) + 1;
+      });
+      const spChips = [
+        `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === "ALL" ? "active-bf" : ""}" onclick="setBeifangSpeciesFilter('ALL')">📋 Alle Beifänge <span class="spot-chip-cnt">${byStand.length}</span></button>`
+      ];
+      BEIFANG_SPECIES_ORDER.forEach(spKey => {
+        const meta = BEIFANG_SPECIES_META[spKey];
+        const cnt = countsBySp[spKey] || 0;
+        spChips.push(
+          `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === spKey ? "active-bf" : ""}" onclick="setBeifangSpeciesFilter('${spKey}')">${meta.icon} ${escapeHTML(meta.short)} <span class="spot-chip-cnt">${cnt}</span></button>`
+        );
+      });
+      spBar.innerHTML = spChips.join("");
+    }
+  }
+
+  function renderBeifangActivitySummary(filteredEntries) {
+    const now = new Date();
+    const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0).getTime();
+    let last7 = 0;
+    let prev7 = 0;
+    const hourBuckets = Array(24).fill(0);
+
+    filteredEntries.forEach(item => {
+      if (item.date && /^\d{4}-\d{2}-\d{2}$/.test(item.date)) {
+        const [yy, mm, dd] = item.date.split("-").map(Number);
+        const t = new Date(yy, mm - 1, dd, 12, 0, 0).getTime();
+        const ageDays = Math.round((todayMid - t) / 86400000);
+        if (ageDays >= 0 && ageDays <= 6) last7++;
+        else if (ageDays >= 7 && ageDays <= 13) prev7++;
+      }
+      const mTime = String(item.arrival || "").match(/^(\d{1,2}):/);
+      if (mTime) {
+        const hh = Number(mTime[1]);
+        if (hh >= 0 && hh <= 23) hourBuckets[hh]++;
+      }
+    });
+
+    // Trend
+    const tVal = document.getElementById("bf-act-trend-val");
+    const tSub = document.getElementById("bf-act-trend-sub");
+    if (tVal && tSub) {
+      const diff = last7 - prev7;
+      if (last7 === 0 && prev7 === 0) {
+        tVal.textContent = "0 (7 Tg.)";
+        tVal.style.color = "var(--text-muted)";
+        tSub.textContent = "ruhig (0 Vorwoche)";
+      } else if (diff > 0) {
+        tVal.textContent = `📈 +${diff}`;
+        tVal.style.color = "var(--accent-green)";
+        tSub.textContent = `${last7} vs. ${prev7} Vorwoche`;
+      } else if (diff < 0) {
+        tVal.textContent = `📉 ${diff}`;
+        tVal.style.color = "#ff8fa3";
+        tSub.textContent = `${last7} vs. ${prev7} Vorwoche`;
+      } else {
+        tVal.textContent = `➡️ ${last7}`;
+        tVal.style.color = "var(--accent-yellow)";
+        tSub.textContent = `stabil (${prev7} Vorwoche)`;
+      }
+    }
+
+    // Häufigste Besuchszeit
+    const pVal = document.getElementById("bf-act-peak-val");
+    const pSub = document.getElementById("bf-act-peak-sub");
+    if (pVal && pSub) {
+      let bestH = -1, bestCnt = 0;
+      hourBuckets.forEach((c, h) => { if (c > bestCnt) { bestCnt = c; bestH = h; } });
+      if (bestH >= 0) {
+        const nextH = (bestH + 1) % 24;
+        pVal.textContent = `${String(bestH).padStart(2, "0")}–${String(nextH).padStart(2, "0")}h`;
+        pSub.textContent = `${bestCnt}× in dieser Std.`;
+      } else {
+        pVal.textContent = "--:--";
+        pSub.textContent = "noch keine Zeiten";
+      }
+    }
+
+    // Monat & Gesamt
+    const totVal = document.getElementById("bf-act-total-val");
+    const totSub = document.getElementById("bf-act-total-sub");
+    if (totVal && totSub) {
+      const mPref = `${currentBfCalYear}-${String(currentBfCalMonth + 1).padStart(2, "0")}-`;
+      const mCnt = filteredEntries.filter(e => e.date && e.date.startsWith(mPref)).length;
+      totVal.textContent = `${filteredEntries.length}×`;
+      totSub.textContent = `${mCnt}× im ${MONATSNAMEN_DE[currentBfCalMonth].slice(0, 3)}.`;
+    }
+  }
+
+  function buildBeifangHeatColor(cnt) {
+    if (!cnt || cnt <= 0) return { bg: "#132216", border: "#2c462f" };
+    if (cnt === 1) return { bg: "#3e5725", border: "#76a33e" };
+    if (cnt === 2) return { bg: "#856817", border: "#eab308" };
+    if (cnt <= 4) return { bg: "#c47a14", border: "#fbbf24" };
+    return { bg: "#ea580c", border: "#fdba74" };
+  }
+
+  function renderSingleBeifangCardHTML(item) {
+    const spKey = getBeifangSpeciesKey(item);
+    const meta = BEIFANG_SPECIES_META[spKey] || BEIFANG_SPECIES_META.SONSTIGES;
+    const timeRange = (item.departure && item.departure !== item.arrival)
+      ? `${item.arrival || "--:--"} – ${item.departure} Uhr`
+      : `${item.arrival || "--:--"} Uhr`;
+    const durBadge = Number(item.durationMin || 0) > 0
+      ? `<span class="duration-badge-green">⏱️ ${item.durationMin} Min.</span>`
+      : "";
+    const showDetail = item.speciesDetail && item.speciesDetail.toLowerCase() !== meta.label.toLowerCase() && item.speciesDetail.toLowerCase() !== meta.short.toLowerCase();
+    const titleDetail = showDetail ? `${meta.short} · ${item.speciesDetail}` : meta.label;
+    const stkTxt = `${Math.max(1, Number(item.totalCount || 1))} Stk.`;
+    const metaBits = [];
+    if (item.cameraName) metaBits.push(`📷 ${escapeHTML(item.cameraName)}`);
+    if (item.ocrTempC !== null && item.ocrTempC !== undefined) metaBits.push(`🌡️ ${item.ocrTempC} °C`);
+    if (Number(item.fileCount || 0) > 0) metaBits.push(`🖼️ ${item.fileCount} Datei${item.fileCount === 1 ? "" : "en"}`);
+    const safeId = escapeHTML(item.id).replace(/'/g, "&#39;");
+    const maleBadge = item.isMaleTrophy ? `<span class="male-horn-pill">♂ Geweih/Gehörn</span>` : "";
+    const trophyPill = (item.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(item.trophyId) : "";
+
+    return `
+      <div class="beifang-card" style="border-left-color:${meta.color};">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+          <span style="font-weight:800; font-size:0.83rem;">${meta.icon} ${formatDateDE(item.date)} · ${escapeHTML(timeRange)}</span>
+          <div style="display:flex; gap:5px; align-items:center;">
+            ${durBadge}
+            <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="openBeifangModal('${safeId}')">✏️</button>
+            <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteBeifangEntry('${safeId}')">🗑️</button>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+          <span style="font-size:0.86rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(item.kanzel || "Tunnel")} — ${escapeHTML(titleDetail)}</span>
+          <span class="beifang-cat-pill">${stkTxt}</span>
+        </div>
+        ${(maleBadge || trophyPill) ? `<div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-top:2px;">${maleBadge}${trophyPill}</div>` : ""}
+        ${metaBits.length > 0 ? `<div class="ul-inbox-meta-row" style="margin-top:2px;">${metaBits.map(b => `<span class="ul-inbox-tag">${b}</span>`).join("")}</div>` : ""}
+        ${item.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
+      </div>
+    `;
+  }
+
+  function renderBeifangCalendar(filteredEntries) {
+    const grid = document.getElementById("bf-calendar-grid");
+    if (!grid) return;
+    const mLbl = document.getElementById("bf-cal-month-label");
+    const yLbl = document.getElementById("bf-cal-year-label");
+    if (mLbl) mLbl.textContent = MONATSNAMEN_DE[currentBfCalMonth];
+    if (yLbl) {
+      const spTxt = currentBeifangSpeciesFilter === "ALL" ? "Alle Arten" : (BEIFANG_SPECIES_META[currentBeifangSpeciesFilter]?.short || "Beifang");
+      const kTxt = currentBeifangKanzelFilter === "ALL" ? "Alle Standorte" : currentBeifangKanzelFilter;
+      yLbl.textContent = `${currentBfCalYear} · ${spTxt} · ${kTxt}`;
+    }
+
+    const byDate = {};
+    filteredEntries.forEach(item => {
+      if (!item.date) return;
+      if (!byDate[item.date]) byDate[item.date] = [];
+      byDate[item.date].push(item);
+    });
+
+    grid.innerHTML = "";
+    const firstDayObj = new Date(currentBfCalYear, currentBfCalMonth, 1);
+    const daysInMonth = new Date(currentBfCalYear, currentBfCalMonth + 1, 0).getDate();
+    const startOffset = (firstDayObj.getDay() + 6) % 7;
+    const todayStr = getLocalISODate();
+
+    for (let i = 0; i < startOffset; i++) {
+      const emptyCell = document.createElement("div");
+      emptyCell.className = "cal-day-cell empty";
+      grid.appendChild(emptyCell);
+    }
+
+    const validTrophyIds = new Set(getTrophyProfiles().map(t => t.id));
+    for (let day = 1; day <= daysInMonth; day++) {
+      const isoDate = `${currentBfCalYear}-${String(currentBfCalMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const dayItems = byDate[isoDate] || [];
+      const heat = buildBeifangHeatColor(dayItems.length);
+      const hasTrophy = dayItems.some(x => Boolean(x.trophyId && validTrophyIds.has(x.trophyId)));
+
+      const cell = document.createElement("div");
+      cell.className = "cal-day-cell";
+      if (isoDate === todayStr) cell.classList.add("today-ring");
+      if (isoDate === selectedBfCalDateStr) cell.classList.add("selected-ring");
+      cell.style.background = heat.bg;
+      cell.style.borderColor = heat.border;
+      cell.innerHTML = `${hasTrophy ? `<span class="bf-trophy-dot">🏆</span>` : ""}<div class="cal-day-num">${day}</div>${dayItems.length > 0 ? `<div class="cal-day-cnt">${dayItems.length}x</div>` : ""}`;
+      cell.onclick = () => {
+        selectedBfCalDateStr = isoDate;
+        renderBeifangView();
+      };
+      grid.appendChild(cell);
+    }
+
+    // Ausgewählter Tag unter dem Beifang-Kalender
+    const titleEl = document.getElementById("bf-selected-day-title");
+    const listEl = document.getElementById("bf-selected-day-entries");
+    if (titleEl && listEl) {
+      titleEl.textContent = `🦌 Sichtungen am ${formatDateDE(selectedBfCalDateStr)}`;
+      const selItems = byDate[selectedBfCalDateStr] || [];
+      if (selItems.length === 0) {
+        listEl.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Keine Beifang-Sichtungen für diesen Tag im aktuellen Filter.</div>`;
+      } else {
+        listEl.innerHTML = selItems.map(item => renderSingleBeifangCardHTML(item)).join("");
+      }
+    }
+  }
+
+  function renderBeifangView() {
+    mountBlock4Views();
+    const all = getBeifangEntries();
+    const badge = document.getElementById("beifang-tab-count-badge");
+    if (badge) badge.textContent = String(all.length);
+
+    renderBeifangFilterBars(all);
+    const calFiltered = getFilteredBeifangEntries(true);
+    const listFiltered = getFilteredBeifangEntries(false);
+
+    const fBadge = document.getElementById("bf-filtered-count-badge");
+    if (fBadge) fBadge.textContent = String(listFiltered.length);
+
+    renderBeifangActivitySummary(calFiltered);
+    renderBeifangCalendar(calFiltered);
+
+    const sumBar = document.getElementById("beifang-summary-bar");
+    if (sumBar) {
+      sumBar.textContent = all.length === 0
+        ? "Getrennter Speicher – kein Einfluss auf Sauen-Kalender oder Prognose."
+        : `Zeige ${listFiltered.length} von ${all.length} Beifang-Einträgen (streng getrennt von Sauen).`;
+    }
+
+    const container = document.getElementById("beifang-entries-container");
+    if (!container) return;
+    if (listFiltered.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:22px 12px; color:var(--text-muted); font-size:0.83rem; line-height:1.45;">
+        ${all.length === 0 ? "Noch keine Beifang-Einträge vorhanden.<br>Beifänge aus dem Überläufer landen automatisch hier." : "Keine Beifang-Einträge für diese Filter-Kombination gefunden."}
+      </div>`;
+      return;
+    }
+    container.innerHTML = listFiltered.slice(0, 150).map(item => renderSingleBeifangCardHTML(item)).join("")
+      + (listFiltered.length > 150 ? `<div style="text-align:center; padding:10px; font-size:0.76rem; color:var(--text-muted);">Zeige die neuesten 150 von ${listFiltered.length} Treffern – Filter oder Suche nutzen.</div>` : "");
+  }
+  window.renderBeifangView = renderBeifangView;
+  window.renderBeifangList = renderBeifangView;
+
+  function populateBeifangKanzelSelects(selectedVal = null) {
+    const names = getDynamicKanzelListForFilters(getBeifangEntries());
     const modalSel = document.getElementById("bf-kanzel-input");
     if (modalSel) {
       const opts = names.slice();
@@ -16148,6 +17220,29 @@
       modalSel.value = selectedVal || fallback;
     }
   }
+
+  function syncBeifangModalTrophyControls(selectedTrophyId = null) {
+    const spKey = document.getElementById("bf-category-input")?.value || "REHWILD";
+    const meta = BEIFANG_SPECIES_META[spKey];
+    const wrap = document.getElementById("bf-trophy-link-wrap");
+    const sel = document.getElementById("bf-trophy-input");
+    const show = Boolean(meta && meta.supportsAntler);
+    if (wrap) wrap.style.display = show ? "block" : "none";
+    if (!sel) return;
+    const prevVal = selectedTrophyId !== null ? selectedTrophyId : (sel.value || "");
+    const allTr = getTrophyProfiles();
+    const compatible = allTr.filter(t => t.species !== "KEILER");
+    const exactMatch = meta?.trophySpecies ? compatible.filter(t => t.species === meta.trophySpecies) : [];
+    const others = compatible.filter(t => !exactMatch.includes(t));
+    const ordered = exactMatch.concat(others);
+    sel.innerHTML = `<option value="">— Kein Trophäenträger —</option>` +
+      ordered.map(t => {
+        const tm = TROPHY_SPECIES_META[t.species] || { icon: "🏆", label: t.species };
+        return `<option value="${escapeHTML(t.id)}">${tm.icon} ${escapeHTML(t.name)} (${tm.label})</option>`;
+      }).join("");
+    sel.value = ordered.some(t => t.id === prevVal) ? prevVal : "";
+  }
+  window.syncBeifangModalTrophyControls = syncBeifangModalTrophyControls;
 
   function autoCalcBeifangDuration() {
     const arr = document.getElementById("bf-arrival-input")?.value || "";
@@ -16159,14 +17254,24 @@
   }
   window.autoCalcBeifangDuration = autoCalcBeifangDuration;
 
-  function openBeifangModal(editId = null) {
+  function openBeifangModalFromCal(useSelectedDay = false) {
+    openBeifangModal(null, {
+      date: useSelectedDay ? selectedBfCalDateStr : getLocalISODate(),
+      kanzel: currentBeifangKanzelFilter !== "ALL" ? currentBeifangKanzelFilter : activeKanzel,
+      speciesKey: currentBeifangSpeciesFilter !== "ALL" ? currentBeifangSpeciesFilter : "REHWILD"
+    });
+  }
+  window.openBeifangModalFromCal = openBeifangModalFromCal;
+
+  function openBeifangModal(editId = null, prefillObj = null) {
     const titleEl = document.getElementById("bf-modal-title");
     if (editId) {
       const existing = getBeifangEntries().find(x => x.id === editId);
       if (!existing) return;
+      const spKey = getBeifangSpeciesKey(existing);
       if (titleEl) titleEl.textContent = "✏️ Beifang bearbeiten";
       document.getElementById("bf-edit-id").value = existing.id;
-      document.getElementById("bf-category-input").value = BEIFANG_CAT_META[existing.category] ? existing.category : "UNKLAR";
+      document.getElementById("bf-category-input").value = BEIFANG_SPECIES_META[spKey] ? spKey : "SONSTIGES";
       document.getElementById("bf-detail-input").value = existing.speciesDetail || "";
       document.getElementById("bf-date-input").value = existing.date || getLocalISODate();
       populateBeifangKanzelSelects(existing.kanzel || "Tunnel");
@@ -16176,19 +17281,26 @@
       document.getElementById("bf-count-input").value = String(Math.max(1, Number(existing.totalCount || 1)));
       document.getElementById("bf-camera-input").value = existing.cameraName || "";
       document.getElementById("bf-note-input").value = existing.note || "";
+      const maleChk = document.getElementById("bf-male-trophy-chk");
+      if (maleChk) maleChk.checked = Boolean(existing.isMaleTrophy);
+      syncBeifangModalTrophyControls(existing.trophyId || "");
     } else {
       if (titleEl) titleEl.textContent = "🦌 Beifang eintragen";
       document.getElementById("bf-edit-id").value = "";
-      document.getElementById("bf-category-input").value = "REHWILD";
-      document.getElementById("bf-detail-input").value = "";
-      document.getElementById("bf-date-input").value = getLocalISODate();
-      populateBeifangKanzelSelects();
+      const spInit = (prefillObj && prefillObj.speciesKey && BEIFANG_SPECIES_META[prefillObj.speciesKey]) ? prefillObj.speciesKey : "REHWILD";
+      document.getElementById("bf-category-input").value = spInit;
+      document.getElementById("bf-detail-input").value = (prefillObj && prefillObj.speciesDetail) ? prefillObj.speciesDetail : "";
+      document.getElementById("bf-date-input").value = (prefillObj && prefillObj.date) ? prefillObj.date : getLocalISODate();
+      populateBeifangKanzelSelects((prefillObj && prefillObj.kanzel) ? prefillObj.kanzel : activeKanzel);
       document.getElementById("bf-arrival-input").value = getLocalHHMM();
       document.getElementById("bf-departure-input").value = "";
       document.getElementById("bf-duration-input").value = "";
       document.getElementById("bf-count-input").value = "1";
       document.getElementById("bf-camera-input").value = "";
       document.getElementById("bf-note-input").value = "";
+      const maleChk = document.getElementById("bf-male-trophy-chk");
+      if (maleChk) maleChk.checked = Boolean(prefillObj && prefillObj.isMaleTrophy);
+      syncBeifangModalTrophyControls((prefillObj && prefillObj.trophyId) ? prefillObj.trophyId : "");
     }
     openModal("modal-beifang-entry");
   }
@@ -16202,6 +17314,11 @@
     const depVal = document.getElementById("bf-departure-input")?.value || "";
     const durRaw = Number(document.getElementById("bf-duration-input")?.value || 0);
     const durVal = durRaw > 0 ? Math.round(durRaw) : (depVal ? calcDurationBetweenTimes(arrVal, depVal) : 0);
+    const spKey = document.getElementById("bf-category-input")?.value || "SONSTIGES";
+    const meta = BEIFANG_SPECIES_META[spKey];
+    const trophyVal = (meta && meta.supportsAntler) ? (document.getElementById("bf-trophy-input")?.value || "").trim() : "";
+    const maleVal = (meta && meta.supportsAntler) ? (Boolean(document.getElementById("bf-male-trophy-chk")?.checked) || Boolean(trophyVal)) : false;
+    const dateVal = document.getElementById("bf-date-input")?.value || getLocalISODate();
 
     const entry = {
       id: editId || (`bf-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`),
@@ -16210,16 +17327,19 @@
       source: prev?.source || "MANUAL",
       sourceVersion: prev?.sourceVersion || "",
       createdAt: prev?.createdAt || getLocalISODateTime(),
-      date: document.getElementById("bf-date-input")?.value || getLocalISODate(),
+      date: dateVal,
       arrival: arrVal,
       departure: depVal,
       durationMin: durVal,
       kanzel: document.getElementById("bf-kanzel-input")?.value || "Tunnel",
       originalSpot: prev?.originalSpot || "",
       cameraName: (document.getElementById("bf-camera-input")?.value || "").trim(),
-      category: document.getElementById("bf-category-input")?.value || "UNKLAR",
+      category: spKey,
+      speciesKey: spKey,
       speciesDetail: (document.getElementById("bf-detail-input")?.value || "").trim(),
       totalCount: Math.max(1, Math.round(Number(document.getElementById("bf-count-input")?.value || 1))),
+      isMaleTrophy: maleVal,
+      trophyId: trophyVal,
       ocrTempC: prev?.ocrTempC ?? null,
       fileCount: prev?.fileCount || 0,
       note: (document.getElementById("bf-note-input")?.value || "").trim()
@@ -16230,8 +17350,14 @@
     else list.unshift(entry);
 
     saveBeifangEntries(list);
+    selectedBfCalDateStr = dateVal;
     closeModal("modal-beifang-entry");
-    renderBeifangList();
+    renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    const trModal = document.getElementById("modal-trophy-sightings");
+    if (trModal && trModal.classList.contains("open") && activeTrophySightingsId) {
+      renderTrophySightingsModal();
+    }
   }
   window.saveBeifangEntryFromModal = saveBeifangEntryFromModal;
 
@@ -16239,84 +17365,747 @@
     if (!confirm("Diesen Beifang-Eintrag wirklich löschen?")) return;
     const list = getBeifangEntries().filter(x => x.id !== id);
     saveBeifangEntries(list);
-    renderBeifangList();
+    renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    const trModal = document.getElementById("modal-trophy-sightings");
+    if (trModal && trModal.classList.contains("open") && activeTrophySightingsId) {
+      renderTrophySightingsModal();
+    }
   }
   window.deleteBeifangEntry = deleteBeifangEntry;
 
-  function renderBeifangList() {
-    mountBlock4Views();
-    const all = getBeifangEntries();
-    const badge = document.getElementById("beifang-tab-count-badge");
-    if (badge) badge.textContent = String(all.length);
+  // =========================================================================
+  // TROPHÄENTRÄGER-REGISTER (sm_trophaeen_v1 + IndexedDB FOTO-SPEICHER)
+  // =========================================================================
+  const TR_IDB_NAME = "sm_trophaeen_photos_db";
+  const TR_IDB_STORE = "photos";
+  const __trPhotoCache = new Map();
+  let __trIdbPromise = null;
 
-    populateBeifangKanzelSelects();
-    const kFlt = document.getElementById("bf-filter-kanzel")?.value || "ALL";
-    const q = (document.getElementById("bf-search-input")?.value || "").trim().toLowerCase();
+  function trPhotoDbOpen() {
+    if (__trIdbPromise) return __trIdbPromise;
+    __trIdbPromise = new Promise((resolve) => {
+      if (typeof indexedDB === "undefined") {
+        resolve(null);
+        return;
+      }
+      try {
+        const req = indexedDB.open(TR_IDB_NAME, 1);
+        req.onupgradeneeded = (ev) => {
+          const db = ev.target.result;
+          if (!db.objectStoreNames.contains(TR_IDB_STORE)) {
+            db.createObjectStore(TR_IDB_STORE);
+          }
+        };
+        req.onsuccess = (ev) => resolve(ev.target.result);
+        req.onerror = () => resolve(null);
+      } catch (e) {
+        resolve(null);
+      }
+    });
+    return __trIdbPromise;
+  }
 
-    const filtered = all.filter(item => {
-      if (currentBeifangCatFilter !== "ALL" && item.category !== currentBeifangCatFilter) return false;
-      if (kFlt !== "ALL" && item.kanzel !== kFlt) return false;
-      if (!q) return true;
-      const meta = BEIFANG_CAT_META[item.category] || BEIFANG_CAT_META.UNKLAR;
-      return `${item.date} ${item.kanzel} ${item.originalSpot} ${meta.label} ${item.speciesDetail} ${item.cameraName} ${item.note}`.toLowerCase().includes(q);
+  async function trPhotoSave(photoId, dataUrl) {
+    if (!photoId || !dataUrl) return false;
+    __trPhotoCache.set(photoId, dataUrl);
+    const db = await trPhotoDbOpen();
+    if (!db) return false;
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(TR_IDB_STORE, "readwrite");
+        tx.objectStore(TR_IDB_STORE).put(dataUrl, photoId);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  }
+  window.trPhotoSave = trPhotoSave;
+
+  async function trPhotoGet(photoId) {
+    if (!photoId) return null;
+    if (__trPhotoCache.has(photoId)) return __trPhotoCache.get(photoId);
+    const db = await trPhotoDbOpen();
+    if (!db) return null;
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(TR_IDB_STORE, "readonly");
+        const req = tx.objectStore(TR_IDB_STORE).get(photoId);
+        req.onsuccess = () => {
+          const val = req.result || null;
+          if (val) __trPhotoCache.set(photoId, val);
+          resolve(val);
+        };
+        req.onerror = () => resolve(null);
+      } catch (e) {
+        resolve(null);
+      }
+    });
+  }
+
+  async function trPhotoDelete(photoId) {
+    if (!photoId) return;
+    __trPhotoCache.delete(photoId);
+    const db = await trPhotoDbOpen();
+    if (!db) return;
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(TR_IDB_STORE, "readwrite");
+        tx.objectStore(TR_IDB_STORE).delete(photoId);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  }
+
+  async function trPhotoGetAllMap() {
+    const out = {};
+    __trPhotoCache.forEach((v, k) => { out[k] = v; });
+    const db = await trPhotoDbOpen();
+    if (!db) return out;
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(TR_IDB_STORE, "readonly");
+        const store = tx.objectStore(TR_IDB_STORE);
+        const req = store.openCursor();
+        req.onsuccess = (ev) => {
+          const cursor = ev.target.result;
+          if (cursor) {
+            if (typeof cursor.value === "string") {
+              out[String(cursor.key)] = cursor.value;
+              __trPhotoCache.set(String(cursor.key), cursor.value);
+            }
+            cursor.continue();
+          } else {
+            resolve(out);
+          }
+        };
+        req.onerror = () => resolve(out);
+      } catch (e) {
+        resolve(out);
+      }
+    });
+  }
+  window.trPhotoGetAllMap = trPhotoGetAllMap;
+
+  let currentTrophySpeciesFilter = "ALL";
+  let pendingTrophyPhotoDataUrl = null;
+  let pendingTrophyPhotoRemoved = false;
+  let activeTrophySightingsId = null;
+  let trCalYear = new Date().getFullYear();
+  let trCalMonth = new Date().getMonth();
+  let trCalSelectedDate = null;
+
+  function getTrophyProfiles() {
+    try {
+      const parsed = JSON.parse(safeGetItem("sm_trophaeen_v1", "[]"));
+      return Array.isArray(parsed) ? parsed.filter(x => x && typeof x === "object" && x.id) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  window.getTrophyProfiles = getTrophyProfiles;
+
+  function saveTrophyProfiles(list) {
+    safeSetItem("sm_trophaeen_v1", JSON.stringify(Array.isArray(list) ? list : []));
+  }
+
+  function getTrophyById(id) {
+    if (!id) return null;
+    return getTrophyProfiles().find(t => t.id === id) || null;
+  }
+
+  function mergeTrophyLists(existingList, incomingList, mode = "MERGE") {
+    const sanitize = (item) => {
+      if (!item || typeof item !== "object") return null;
+      const name = String(item.name || "").trim();
+      if (!name) return null;
+      const sp = TROPHY_SPECIES_META[item.species] ? item.species : "REHBOCK";
+      return {
+        id: String(item.id || (`tr-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`)),
+        name: name,
+        species: sp,
+        ageEstimate: String(item.ageEstimate || "").trim(),
+        traits: String(item.traits || "").trim(),
+        note: String(item.note || "").trim(),
+        photoId: String(item.photoId || "").trim(),
+        createdAt: String(item.createdAt || getLocalISODateTime()),
+        updatedAt: String(item.updatedAt || getLocalISODateTime())
+      };
+    };
+    const cleanIn = (incomingList || []).map(sanitize).filter(Boolean);
+    if (mode === "REPLACE") return cleanIn;
+    const result = (existingList || []).map(sanitize).filter(Boolean);
+    cleanIn.forEach(item => {
+      const hitIdx = result.findIndex(r => r.id === item.id || (r.name.toLowerCase() === item.name.toLowerCase() && r.species === item.species));
+      if (hitIdx >= 0) {
+        const cur = result[hitIdx];
+        if (!cur.traits && item.traits) cur.traits = item.traits;
+        if (!cur.ageEstimate && item.ageEstimate) cur.ageEstimate = item.ageEstimate;
+        if (!cur.note && item.note) cur.note = item.note;
+        if (!cur.photoId && item.photoId) cur.photoId = item.photoId;
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  }
+  window.mergeTrophyLists = mergeTrophyLists;
+
+  function populateDiaryTrophySelect(selectedVal = "") {
+    const sel = document.getElementById("entry-trophy-select");
+    if (!sel) return;
+    const allTr = getTrophyProfiles();
+    const keiler = allTr.filter(t => t.species === "KEILER");
+    const others = allTr.filter(t => t.species !== "KEILER" && t.id === selectedVal);
+    const list = keiler.concat(others);
+    sel.innerHTML = `<option value="">— Kein Keiler-Steckbrief —</option>` +
+      list.map(t => `<option value="${escapeHTML(t.id)}">🐗 ${escapeHTML(t.name)}${t.ageEstimate ? ` (${escapeHTML(t.ageEstimate)})` : ""}</option>`).join("");
+    sel.value = list.some(t => t.id === selectedVal) ? selectedVal : "";
+  }
+  window.populateDiaryTrophySelect = populateDiaryTrophySelect;
+
+  function renderTrophyLinkPillHTML(trophyId) {
+    const tr = getTrophyById(trophyId);
+    if (!tr) return "";
+    const meta = TROPHY_SPECIES_META[tr.species] || { icon: "🏆", label: "Trophäe" };
+    const safeId = escapeHTML(tr.id).replace(/'/g, "&#39;");
+    return `<button type="button" class="trophy-link-pill" onclick="event.stopPropagation(); openTrophySightingsModal('${safeId}')">🏆 ${escapeHTML(tr.name)} (${meta.label})</button>`;
+  }
+  window.renderTrophyLinkPillHTML = renderTrophyLinkPillHTML;
+
+  function collectSightingsForTrophy(trophyId) {
+    if (!trophyId) return [];
+    const results = [];
+    // 1. Aus Beifang (Rehbock, Damhirsch, Rothirsch)
+    getBeifangEntries().forEach(b => {
+      if (b && b.trophyId === trophyId) {
+        results.push({
+          sourceType: "BEIFANG",
+          id: b.id,
+          date: b.date || "",
+          arrival: b.arrival || "",
+          departure: b.departure || "",
+          durationMin: Number(b.durationMin || 0),
+          kanzel: b.kanzel || "Tunnel",
+          detail: b.speciesDetail || (BEIFANG_SPECIES_META[getBeifangSpeciesKey(b)]?.label || ""),
+          note: b.note || ""
+        });
+      }
+    });
+    // 2. Aus Schwarzwild-Tagebuch (Keiler)
+    diaryLogs.forEach(e => {
+      if (e && e.trophyId === trophyId) {
+        results.push({
+          sourceType: "DIARY",
+          id: e.id,
+          date: e.date || "",
+          arrival: e.arrival || "",
+          departure: e.departure || "",
+          durationMin: Number(e.durationMin || 0),
+          kanzel: e.kanzel || "Tunnel",
+          detail: e.structure || "Keiler",
+          note: e.note || ""
+        });
+      }
+    });
+    results.sort((a, b) => `${b.date}T${b.arrival || "00:00"}`.localeCompare(`${a.date}T${a.arrival || "00:00"}`));
+    return results;
+  }
+
+  function computeTrophyStats(trophyId) {
+    const sightings = collectSightingsForTrophy(trophyId);
+    const count = sightings.length;
+    const latest = count > 0 ? sightings[0] : null;
+
+    // Standorte zählen
+    const spotCounts = {};
+    let sinSum = 0, cosSum = 0, timeN = 0;
+    sightings.forEach(s => {
+      const k = s.kanzel || "Tunnel";
+      spotCounts[k] = (spotCounts[k] || 0) + 1;
+      const m = String(s.arrival || "").match(/^(\d{1,2}):(\d{2})/);
+      if (m) {
+        const mins = Number(m[1]) * 60 + Number(m[2]);
+        const ang = (mins / 1440) * 2 * Math.PI;
+        sinSum += Math.sin(ang);
+        cosSum += Math.cos(ang);
+        timeN++;
+      }
     });
 
-    const sumBar = document.getElementById("beifang-summary-bar");
-    if (sumBar) {
-      sumBar.textContent = all.length === 0
-        ? "Getrennter Speicher – kein Einfluss auf Sauen-Kalender oder Prognose."
-        : `Zeige ${filtered.length} von ${all.length} Beifang-Einträgen (streng getrennt von Sauen).`;
+    const spotParts = Object.entries(spotCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([k, c]) => `${c}× ${k}`);
+
+    let prefTimeStr = "--:--";
+    if (timeN > 0) {
+      let meanAng = Math.atan2(sinSum / timeN, cosSum / timeN);
+      if (meanAng < 0) meanAng += 2 * Math.PI;
+      const totMins = Math.round((meanAng / (2 * Math.PI)) * 1440) % 1440;
+      prefTimeStr = `~${String(Math.floor(totMins / 60)).padStart(2, "0")}:${String(totMins % 60).padStart(2, "0")} Uhr`;
     }
 
-    const container = document.getElementById("beifang-entries-container");
+    return {
+      sightings,
+      count,
+      latest,
+      spotsText: spotParts.length > 0 ? spotParts.join(" · ") : "Noch keine verknüpften Sichtungen",
+      prefTimeStr
+    };
+  }
+
+  function mountTrophaeenView() {
+    const view = document.getElementById("trophaeen-view");
+    const tpl = document.getElementById("tpl-block4-trophaeen");
+    if (view && tpl && !document.getElementById("tr-profiles-container")) {
+      view.innerHTML = "";
+      view.appendChild(tpl.content.cloneNode(true));
+    }
+  }
+
+  function setTrophySpeciesFilter(sp) {
+    currentTrophySpeciesFilter = sp || "ALL";
+    renderTrophaeenView();
+  }
+  window.setTrophySpeciesFilter = setTrophySpeciesFilter;
+
+  function hydrateTrophyThumbImages(profiles) {
+    (profiles || []).forEach(tr => {
+      if (!tr || !tr.photoId) return;
+      const box = document.getElementById(`tr-thumb-${tr.id}`);
+      if (!box) return;
+      trPhotoGet(tr.photoId).then(dataUrl => {
+        if (!dataUrl) return;
+        const curBox = document.getElementById(`tr-thumb-${tr.id}`);
+        if (curBox) {
+          curBox.innerHTML = `<img src="${dataUrl}" alt="${escapeHTML(tr.name)}">`;
+        }
+      });
+    });
+  }
+
+  function openTrophyPhotoLightbox(trophyId) {
+    const tr = getTrophyById(trophyId);
+    if (!tr || !tr.photoId) return;
+    trPhotoGet(tr.photoId).then(dataUrl => {
+      if (!dataUrl) return;
+      const titleEl = document.getElementById("lightbox-photo-title");
+      const imgEl = document.getElementById("lightbox-photo-img");
+      if (titleEl) titleEl.textContent = `🏆 ${tr.name}`;
+      if (imgEl) imgEl.src = dataUrl;
+      openModal("modal-photo-lightbox");
+    });
+  }
+  window.openTrophyPhotoLightbox = openTrophyPhotoLightbox;
+
+  function renderTrophaeenView() {
+    mountTrophaeenView();
+    const all = getTrophyProfiles();
+    const totalBadge = document.getElementById("tr-total-badge");
+    if (totalBadge) totalBadge.textContent = String(all.length);
+
+    // Filter-Chips mit Zählern
+    const fltBar = document.getElementById("tr-species-filter-bar");
+    if (fltBar) {
+      const cnts = { ALL: all.length, REHBOCK: 0, DAMHIRSCH: 0, ROTHIRSCH: 0, KEILER: 0 };
+      all.forEach(t => { if (cnts[t.species] !== undefined) cnts[t.species]++; });
+      const chipDefs = [
+        { k: "ALL", lbl: "🏆 Alle" },
+        { k: "REHBOCK", lbl: "🦌 Rehböcke" },
+        { k: "DAMHIRSCH", lbl: "🦌 Damhirsche" },
+        { k: "ROTHIRSCH", lbl: "🦌 Rothirsche" },
+        { k: "KEILER", lbl: "🐗 Keiler" }
+      ];
+      fltBar.innerHTML = chipDefs.map(c =>
+        `<button type="button" class="spot-chip ${currentTrophySpeciesFilter === c.k ? "active-bf" : ""}" onclick="setTrophySpeciesFilter('${c.k}')">${c.lbl} <span class="spot-chip-cnt">${cnts[c.k]}</span></button>`
+      ).join("");
+    }
+
+    const q = (document.getElementById("tr-search-input")?.value || "").trim().toLowerCase();
+    const enriched = all.map(tr => ({ tr, stats: computeTrophyStats(tr.id) }));
+    const filtered = enriched.filter(({ tr, stats }) => {
+      if (currentTrophySpeciesFilter !== "ALL" && tr.species !== currentTrophySpeciesFilter) return false;
+      if (!q) return true;
+      const meta = TROPHY_SPECIES_META[tr.species] || { label: "" };
+      return `${tr.name} ${meta.label} ${tr.traits} ${tr.ageEstimate} ${tr.note} ${stats.spotsText}`.toLowerCase().includes(q);
+    });
+
+    // Nach letzter Sichtung sortieren (neueste zuerst), sonst Erstellungsdatum
+    filtered.sort((a, b) => {
+      const dA = a.stats.latest ? `${a.stats.latest.date}T${a.stats.latest.arrival || "00:00"}` : (a.tr.updatedAt || "");
+      const dB = b.stats.latest ? `${b.stats.latest.date}T${b.stats.latest.arrival || "00:00"}` : (b.tr.updatedAt || "");
+      return dB.localeCompare(dA);
+    });
+
+    const container = document.getElementById("tr-profiles-container");
     if (!container) return;
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding:22px 12px; color:var(--text-muted); font-size:0.83rem; line-height:1.45;">
-        ${all.length === 0 ? "Noch keine Beifang-Einträge vorhanden.<br>Beifänge aus dem Überläufer landen automatisch hier." : "Keine Beifang-Einträge für diesen Filter gefunden."}
+      container.innerHTML = `<div style="text-align:center; padding:24px 14px; color:var(--text-muted); font-size:0.84rem; line-height:1.45;">
+        ${all.length === 0
+          ? "Noch keine Trophäenträger angelegt.<br>Tippe oben auf <strong>„➕ Neuer Trophäenträger“</strong>, um Rehböcke, Damhirsche, Rothirsche oder Keiler inkl. Foto zu verfolgen."
+          : "Keine Trophäenträger für diesen Filter gefunden."}
       </div>`;
       return;
     }
 
-    container.innerHTML = filtered.slice(0, 150).map(item => {
-      const meta = BEIFANG_CAT_META[item.category] || BEIFANG_CAT_META.UNKLAR;
-      const timeRange = (item.departure && item.departure !== item.arrival)
-        ? `${item.arrival || "--:--"} – ${item.departure} Uhr`
-        : `${item.arrival || "--:--"} Uhr`;
-      const durBadge = Number(item.durationMin || 0) > 0
-        ? `<span class="duration-badge-green">⏱️ ${item.durationMin} Min.</span>`
-        : "";
-      const titleDetail = item.speciesDetail
-        ? `${meta.label} · ${item.speciesDetail}`
-        : meta.label;
-      const stkTxt = `${Math.max(1, Number(item.totalCount || 1))} Stk.`;
-      const metaBits = [];
-      if (item.cameraName) metaBits.push(`📷 ${escapeHTML(item.cameraName)}`);
-      if (item.ocrTempC !== null && item.ocrTempC !== undefined) metaBits.push(`🌡️ ${item.ocrTempC} °C`);
-      if (Number(item.fileCount || 0) > 0) metaBits.push(`🖼️ ${item.fileCount} Datei${item.fileCount === 1 ? "" : "en"}`);
-      const safeId = escapeHTML(item.id).replace(/'/g, "&#39;");
+    container.innerHTML = filtered.map(({ tr, stats }) => {
+      const meta = TROPHY_SPECIES_META[tr.species] || { icon: "🏆", label: tr.species, color: "var(--accent-yellow)" };
+      const safeId = escapeHTML(tr.id).replace(/'/g, "&#39;");
+      const cachedPhoto = tr.photoId ? __trPhotoCache.get(tr.photoId) : null;
+      const thumbInner = cachedPhoto
+        ? `<img src="${cachedPhoto}" alt="${escapeHTML(tr.name)}">`
+        : `${meta.icon}`;
+      const lastSeenTxt = stats.latest
+        ? `${formatDateDE(stats.latest.date)}${stats.latest.arrival ? ` · ${stats.latest.arrival}` : ""}`
+        : "noch offen";
+      const lastSpotSub = stats.latest ? ` (${stats.latest.kanzel})` : "";
 
       return `
-        <div class="beifang-card" style="border-left-color:${meta.color};">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-            <span style="font-weight:800; font-size:0.83rem;">${meta.icon} ${formatDateDE(item.date)} · ${escapeHTML(timeRange)}</span>
-            <div style="display:flex; gap:5px; align-items:center;">
-              ${durBadge}
-              <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="openBeifangModal('${safeId}')">✏️</button>
-              <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteBeifangEntry('${safeId}')">🗑️</button>
+        <div class="trophy-card sp-${tr.species}">
+          <div class="trophy-card-top">
+            <div class="trophy-thumb-box" id="tr-thumb-${escapeHTML(tr.id)}" onclick="openTrophyPhotoLightbox('${safeId}')" title="${tr.photoId ? "Tippen für Vollbild" : "Kein Foto"}">${thumbInner}</div>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                <div style="min-width:0;">
+                  <span class="beifang-cat-pill" style="margin-bottom:3px; border-color:${meta.color};">${meta.icon} ${meta.label}${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}</span>
+                  <div style="font-weight:900; font-size:0.95rem; color:#fff; line-height:1.25;">${escapeHTML(tr.name)}</div>
+                </div>
+                <div style="display:flex; gap:4px; flex-shrink:0;">
+                  <button type="button" class="btn-sm btn-no" style="padding:3px 7px; font-size:0.72rem;" onclick="openTrophyModal('${safeId}')" title="Bearbeiten">✏️</button>
+                  <button type="button" class="btn-sm btn-no" style="padding:3px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteTrophyProfile('${safeId}')" title="Löschen">🗑️</button>
+                </div>
+              </div>
+              ${tr.traits ? `<div style="font-size:0.76rem; color:#e6f4ea; margin-top:4px; line-height:1.35;">🔎 ${escapeHTML(tr.traits)}</div>` : ""}
+              ${tr.note ? `<div style="font-size:0.73rem; color:var(--text-muted); margin-top:2px; line-height:1.3;">📝 ${escapeHTML(tr.note)}</div>` : ""}
             </div>
           </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-            <span style="font-size:0.86rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(item.kanzel || "Tunnel")} — ${escapeHTML(titleDetail)}</span>
-            <span class="beifang-cat-pill">${stkTxt}</span>
+
+          <div class="trophy-stats-grid">
+            <div class="trophy-stat-mini">
+              <span style="color:var(--text-muted);">👁️ Sichtungen</span>
+              <strong style="color:var(--accent-green);">${stats.count}× · ${stats.prefTimeStr}</strong>
+            </div>
+            <div class="trophy-stat-mini">
+              <span style="color:var(--text-muted);">📅 Zuletzt gesehen</span>
+              <strong>${escapeHTML(lastSeenTxt)}${escapeHTML(lastSpotSub)}</strong>
+            </div>
           </div>
-          ${metaBits.length > 0 ? `<div class="ul-inbox-meta-row" style="margin-top:2px;">${metaBits.map(b => `<span class="ul-inbox-tag">${b}</span>`).join("")}</div>` : ""}
-          ${item.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
+
+          <div class="trophy-spots-line">🏯 Standorte: ${escapeHTML(stats.spotsText)}</div>
+
+          <div class="trophy-actions-row">
+            <button type="button" class="btn-sm btn-yes" style="flex:1; padding:6px 10px; font-size:0.76rem;" onclick="openTrophySightingsModal('${safeId}')">📅 Sichtungen &amp; Kalender (${stats.count})</button>
+            <button type="button" class="btn-sm btn-no" style="padding:6px 10px; font-size:0.76rem; border-color:var(--accent-yellow); color:#fff3bf;" onclick="addSightingForTrophy('${safeId}')">➕ Sichtung</button>
+          </div>
         </div>
       `;
-    }).join("") + (filtered.length > 150 ? `<div style="text-align:center; padding:10px; font-size:0.76rem; color:var(--text-muted);">Zeige die neuesten 150 von ${filtered.length} Treffern – Filter nutzen.</div>` : "");
+    }).join("");
+
+    hydrateTrophyThumbImages(filtered.map(x => x.tr));
   }
-  window.renderBeifangList = renderBeifangList;
+  window.renderTrophaeenView = renderTrophaeenView;
+
+  function syncTrophyModalPhotoPreview(dataUrl) {
+    const wrap = document.getElementById("tr-photo-preview-wrap");
+    const img = document.getElementById("tr-photo-preview-img");
+    const st = document.getElementById("tr-photo-status");
+    if (dataUrl && wrap && img) {
+      img.src = dataUrl;
+      wrap.style.display = "block";
+      if (st) st.textContent = "✅ Foto bereit (komprimiert in lokaler Bild-Datenbank)";
+    } else if (wrap && img) {
+      img.src = "";
+      wrap.style.display = "none";
+      if (st) st.textContent = "Automatisch verkleinert in lokaler Bild-Datenbank (schont Speicher)";
+    }
+  }
+
+  async function handleTrophyPhotoUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    if (typeof window.compressImageFile === "function") {
+      const compressed = await window.compressImageFile(file, 640, 0.70);
+      pendingTrophyPhotoDataUrl = compressed;
+      pendingTrophyPhotoRemoved = false;
+      syncTrophyModalPhotoPreview(compressed);
+    }
+    event.target.value = "";
+  }
+  window.handleTrophyPhotoUpload = handleTrophyPhotoUpload;
+
+  function clearTrophyModalPhoto() {
+    pendingTrophyPhotoDataUrl = null;
+    pendingTrophyPhotoRemoved = true;
+    syncTrophyModalPhotoPreview(null);
+  }
+  window.clearTrophyModalPhoto = clearTrophyModalPhoto;
+
+  async function openTrophyModal(editId = null) {
+    const titleEl = document.getElementById("tr-modal-title");
+    pendingTrophyPhotoDataUrl = null;
+    pendingTrophyPhotoRemoved = false;
+    syncTrophyModalPhotoPreview(null);
+
+    if (editId) {
+      const existing = getTrophyById(editId);
+      if (!existing) return;
+      if (titleEl) titleEl.textContent = "✏️ Trophäenträger bearbeiten";
+      document.getElementById("tr-edit-id").value = existing.id;
+      document.getElementById("tr-name-input").value = existing.name || "";
+      document.getElementById("tr-species-input").value = TROPHY_SPECIES_META[existing.species] ? existing.species : "REHBOCK";
+      document.getElementById("tr-age-input").value = existing.ageEstimate || "";
+      document.getElementById("tr-traits-input").value = existing.traits || "";
+      document.getElementById("tr-note-input").value = existing.note || "";
+      if (existing.photoId) {
+        const loaded = await trPhotoGet(existing.photoId);
+        if (loaded) syncTrophyModalPhotoPreview(loaded);
+      }
+    } else {
+      if (titleEl) titleEl.textContent = "🏆 Trophäenträger anlegen";
+      document.getElementById("tr-edit-id").value = "";
+      document.getElementById("tr-name-input").value = "";
+      document.getElementById("tr-species-input").value =
+        (currentTrophySpeciesFilter !== "ALL" && TROPHY_SPECIES_META[currentTrophySpeciesFilter])
+          ? currentTrophySpeciesFilter
+          : "REHBOCK";
+      document.getElementById("tr-age-input").value = "";
+      document.getElementById("tr-traits-input").value = "";
+      document.getElementById("tr-note-input").value = "";
+    }
+    openModal("modal-trophy-entry");
+  }
+  window.openTrophyModal = openTrophyModal;
+
+  async function saveTrophyProfileFromModal() {
+    const name = (document.getElementById("tr-name-input")?.value || "").trim();
+    if (!name) {
+      alert("Bitte einen Namen oder Spitznamen eingeben (z. B. Ungerader 6er Bahndamm).");
+      return;
+    }
+    const editId = (document.getElementById("tr-edit-id")?.value || "").trim();
+    const list = getTrophyProfiles();
+    const prev = editId ? list.find(x => x.id === editId) : null;
+    const id = editId || (`tr-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`);
+
+    let photoId = prev?.photoId || "";
+    if (pendingTrophyPhotoDataUrl) {
+      photoId = photoId || (`trp-${id}`);
+      await trPhotoSave(photoId, pendingTrophyPhotoDataUrl);
+    } else if (pendingTrophyPhotoRemoved && photoId) {
+      await trPhotoDelete(photoId);
+      photoId = "";
+    }
+
+    const obj = {
+      id: id,
+      name: name,
+      species: document.getElementById("tr-species-input")?.value || "REHBOCK",
+      ageEstimate: (document.getElementById("tr-age-input")?.value || "").trim(),
+      traits: (document.getElementById("tr-traits-input")?.value || "").trim(),
+      note: (document.getElementById("tr-note-input")?.value || "").trim(),
+      photoId: photoId,
+      createdAt: prev?.createdAt || getLocalISODateTime(),
+      updatedAt: getLocalISODateTime()
+    };
+
+    const idx = list.findIndex(x => x.id === obj.id);
+    if (idx >= 0) list[idx] = obj;
+    else list.unshift(obj);
+
+    saveTrophyProfiles(list);
+    pendingTrophyPhotoDataUrl = null;
+    pendingTrophyPhotoRemoved = false;
+    closeModal("modal-trophy-entry");
+    renderTrophaeenView();
+    renderBeifangView();
+    renderDiaryCalendar();
+  }
+  window.saveTrophyProfileFromModal = saveTrophyProfileFromModal;
+
+  async function deleteTrophyProfile(id) {
+    const tr = getTrophyById(id);
+    if (!tr) return;
+    if (!confirm(`Steckbrief „${tr.name}“ wirklich löschen? (Die Sichtungen selbst bleiben erhalten.)`)) return;
+    if (tr.photoId) await trPhotoDelete(tr.photoId);
+    const nextList = getTrophyProfiles().filter(x => x.id !== id);
+    saveTrophyProfiles(nextList);
+    renderTrophaeenView();
+    renderBeifangView();
+    renderDiaryCalendar();
+  }
+  window.deleteTrophyProfile = deleteTrophyProfile;
+
+  function addSightingForTrophy(trophyId) {
+    const tr = getTrophyById(trophyId);
+    if (!tr) return;
+    const meta = TROPHY_SPECIES_META[tr.species];
+    if (tr.species === "KEILER") {
+      openDiaryEntryModal(getLocalISODate());
+      selectEntryStatus("GREEN");
+      rottenCounts = { K: 1, B: 0, UEB: 0, UEK: 0, F: 0, GROSS: 0, KLEIN: 0, UNBEKANNT: 0 };
+      syncRottenUI(true);
+      populateDiaryTrophySelect(tr.id);
+    } else {
+      openBeifangModal(null, {
+        date: getLocalISODate(),
+        kanzel: activeKanzel,
+        speciesKey: meta?.beifangKey || "REHWILD",
+        speciesDetail: meta?.label || "",
+        isMaleTrophy: true,
+        trophyId: tr.id
+      });
+    }
+  }
+  window.addSightingForTrophy = addSightingForTrophy;
+
+  function addSightingForActiveTrophy() {
+    if (!activeTrophySightingsId) return;
+    addSightingForTrophy(activeTrophySightingsId);
+  }
+  window.addSightingForActiveTrophy = addSightingForActiveTrophy;
+
+  function openTrophySightingsModal(trophyId) {
+    const tr = getTrophyById(trophyId);
+    if (!tr) return;
+    activeTrophySightingsId = trophyId;
+    trCalSelectedDate = null;
+    const stats = computeTrophyStats(trophyId);
+    if (stats.latest && /^\d{4}-\d{2}-\d{2}$/.test(stats.latest.date)) {
+      const [yy, mm] = stats.latest.date.split("-").map(Number);
+      trCalYear = yy;
+      trCalMonth = mm - 1;
+    } else {
+      const now = new Date();
+      trCalYear = now.getFullYear();
+      trCalMonth = now.getMonth();
+    }
+    renderTrophySightingsModal();
+    openModal("modal-trophy-sightings");
+  }
+  window.openTrophySightingsModal = openTrophySightingsModal;
+
+  function changeTrophyCalMonth(delta) {
+    trCalMonth += delta;
+    if (trCalMonth > 11) { trCalMonth = 0; trCalYear++; }
+    else if (trCalMonth < 0) { trCalMonth = 11; trCalYear--; }
+    trCalSelectedDate = null;
+    renderTrophySightingsModal();
+  }
+  window.changeTrophyCalMonth = changeTrophyCalMonth;
+
+  function jumpTrophyCalToLatest() {
+    if (!activeTrophySightingsId) return;
+    const stats = computeTrophyStats(activeTrophySightingsId);
+    if (stats.latest && /^\d{4}-\d{2}-\d{2}$/.test(stats.latest.date)) {
+      const [yy, mm] = stats.latest.date.split("-").map(Number);
+      trCalYear = yy;
+      trCalMonth = mm - 1;
+    }
+    trCalSelectedDate = null;
+    renderTrophySightingsModal();
+  }
+  window.jumpTrophyCalToLatest = jumpTrophyCalToLatest;
+
+  function renderTrophySightingsModal() {
+    const tr = getTrophyById(activeTrophySightingsId);
+    if (!tr) return;
+    const meta = TROPHY_SPECIES_META[tr.species] || { icon: "🏆", label: tr.species };
+    const stats = computeTrophyStats(tr.id);
+
+    const titleEl = document.getElementById("tr-sightings-modal-title");
+    if (titleEl) titleEl.textContent = `${meta.icon} ${tr.name}`;
+
+    const sumEl = document.getElementById("tr-sightings-modal-summary");
+    if (sumEl) {
+      sumEl.innerHTML =
+        `<strong>${meta.label}</strong>${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}<br>` +
+        `👁️ <strong>${stats.count} Sichtung${stats.count === 1 ? "" : "en"}</strong> · 🕒 ${stats.prefTimeStr}<br>` +
+        `🏯 ${escapeHTML(stats.spotsText)}`;
+    }
+
+    const mLbl = document.getElementById("tr-cal-month-label");
+    const yLbl = document.getElementById("tr-cal-year-label");
+    if (mLbl) mLbl.textContent = MONATSNAMEN_DE[trCalMonth];
+    if (yLbl) yLbl.textContent = `${trCalYear} · Tippen für letzte Sichtung`;
+
+    const byDate = {};
+    stats.sightings.forEach(s => {
+      if (!s.date) return;
+      if (!byDate[s.date]) byDate[s.date] = [];
+      byDate[s.date].push(s);
+    });
+
+    const grid = document.getElementById("tr-cal-days-grid");
+    if (grid) {
+      grid.innerHTML = "";
+      const firstDayObj = new Date(trCalYear, trCalMonth, 1);
+      const daysInMonth = new Date(trCalYear, trCalMonth + 1, 0).getDate();
+      const startOffset = (firstDayObj.getDay() + 6) % 7;
+      const todayStr = getLocalISODate();
+
+      for (let i = 0; i < startOffset; i++) {
+        const ec = document.createElement("div");
+        ec.className = "cal-day-cell empty";
+        grid.appendChild(ec);
+      }
+      for (let day = 1; day <= daysInMonth; day++) {
+        const iso = `${trCalYear}-${String(trCalMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const hits = byDate[iso] || [];
+        const heat = buildBeifangHeatColor(hits.length);
+        const cell = document.createElement("div");
+        cell.className = "cal-day-cell";
+        if (iso === todayStr) cell.classList.add("today-ring");
+        if (iso === trCalSelectedDate) cell.classList.add("selected-ring");
+        cell.style.background = heat.bg;
+        cell.style.borderColor = heat.border;
+        cell.innerHTML = `<div class="cal-day-num">${day}</div>${hits.length > 0 ? `<div class="cal-day-cnt">${hits.length}x</div>` : ""}`;
+        cell.onclick = () => {
+          trCalSelectedDate = (trCalSelectedDate === iso) ? null : iso;
+          renderTrophySightingsModal();
+        };
+        grid.appendChild(cell);
+      }
+    }
+
+    const headEl = document.getElementById("tr-sightings-list-heading");
+    const listEl = document.getElementById("tr-sightings-list");
+    const visible = trCalSelectedDate ? (byDate[trCalSelectedDate] || []) : stats.sightings;
+    if (headEl) {
+      headEl.textContent = trCalSelectedDate
+        ? `Sichtungen am ${formatDateDE(trCalSelectedDate)} (${visible.length})`
+        : `Alle Sichtungen (${visible.length})`;
+    }
+    if (listEl) {
+      if (visible.length === 0) {
+        listEl.innerHTML = `<div style="text-align:center; padding:14px; color:var(--text-muted); font-size:0.8rem;">Keine Sichtungen für diese Auswahl. Tippe auf „+ Sichtung“ oder verknüpfe bestehende Einträge.</div>`;
+      } else {
+        listEl.innerHTML = visible.map(s => {
+          const safeId = escapeHTML(s.id).replace(/'/g, "&#39;");
+          const editCall = s.sourceType === "DIARY"
+            ? `openDiaryEntryModal(null, '${safeId}')`
+            : `openBeifangModal('${safeId}')`;
+          const timeRange = (s.departure && s.departure !== s.arrival) ? `${s.arrival} – ${s.departure} Uhr` : `${s.arrival || "--:--"} Uhr`;
+          const durTxt = s.durationMin > 0 ? ` (${s.durationMin} Min.)` : "";
+          return `
+            <div class="beifang-card" style="border-left-color:${meta.color};">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                <strong style="font-size:0.82rem;">📅 ${formatDateDE(s.date)} · 🕒 ${escapeHTML(timeRange)}${durTxt}</strong>
+                <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="${editCall}">✏️</button>
+              </div>
+              <div style="font-size:0.83rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(s.kanzel)} — ${escapeHTML(s.detail)}</div>
+              ${s.note ? `<div style="font-size:0.74rem; color:#cfe3d5;">📝 ${escapeHTML(s.note)}</div>` : ""}
+            </div>
+          `;
+        }).join("");
+      }
+    }
+  }
 
   // Live-Prüfung auf neue Überläufer-Einträge beim Zurückkehren aus dem Überläufer-Tab
   window.addEventListener("focus", () => {
@@ -17105,7 +18894,9 @@
     }
     setTagebuchMainSection("SAUEN");
     setTagebuchSubMode("CAL");
-    if (typeof renderBeifangList === "function") renderBeifangList();
+    setBeifangSubMode("CAL");
+    if (typeof renderBeifangView === "function") renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
     if (typeof refreshCamInboxBanner === "function") refreshCamInboxBanner();
     setWartungSubMode("ISSUES");
     renderWartungView();

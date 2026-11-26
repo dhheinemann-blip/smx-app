@@ -1,0 +1,19 @@
+{
+  "name": "Sauenmatrix",
+  "short_name": "Sauenmatrix",
+  "description": "24h Jagd- & Schwarzwild-Auswertung",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b130e",
+  "theme_color": "#0b130e",
+  "icons": [
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

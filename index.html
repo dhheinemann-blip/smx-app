@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Sauenmatrix">
-  <link id="dynamic-favicon" rel="icon" type="image/png">
-  <link id="dynamic-touch-icon" rel="apple-touch-icon">
-  <link id="dynamic-manifest" rel="manifest">
-  <title>Sauenmatrix v27.1 (Überläufer v0.5.6, Freie Orte &amp; Trophäen-Brücke)</title>
+  <link id="dynamic-favicon" rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+  <link id="dynamic-touch-icon" rel="apple-touch-icon" href="./icon-512.png">
+  <link rel="manifest" href="./manifest.json">
+  <title>Sauenmatrix v27.2 (Überläufer v0.6.0, Freie Spots &amp; Trophäen-Tiefenprüfung)</title>
   <style>
     :root {
       --bg-main: #0b130e;
@@ -1477,6 +1477,90 @@
     #modal-date-swap-checker {
       z-index: 2180;
     }
+    /* v27.2: Überläufer v0.6.0 Trophäen-Tiefenprüfung, Sichtbarkeits-Ampel & Best-Foto */
+    .tr-v06-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      margin-top: 3px;
+    }
+    .tr-v06-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      border-radius: 7px;
+      padding: 2px 6px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: rgba(15, 31, 22, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #e2e8f0;
+    }
+    .tr-v06-pill.is-deep {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: rgba(56, 189, 248, 0.65);
+      color: #bae6fd;
+    }
+    .tr-v06-pill.is-class {
+      background: rgba(244, 196, 48, 0.18);
+      border-color: rgba(244, 196, 48, 0.65);
+      color: #fff3bf;
+    }
+    .tr-v06-pill.is-bast {
+      background: rgba(132, 204, 22, 0.16);
+      border-color: rgba(132, 204, 22, 0.55);
+      color: #d9f99d;
+    }
+    .tr-v06-pill.conf-SICHER {
+      background: rgba(34, 230, 107, 0.18);
+      border-color: rgba(34, 230, 107, 0.7);
+      color: #8ce99a;
+    }
+    .tr-v06-pill.conf-TEILWEISE {
+      background: rgba(244, 196, 48, 0.18);
+      border-color: rgba(244, 196, 48, 0.7);
+      color: #fff3bf;
+    }
+    .tr-v06-pill.conf-UNKLAR {
+      background: rgba(230, 57, 70, 0.22);
+      border-color: rgba(230, 57, 70, 0.75);
+      color: #ffb3be;
+    }
+    .tr-v06-body-notes {
+      font-size: 0.73rem;
+      color: #cbd5e1;
+      line-height: 1.32;
+      margin-top: 2px;
+    }
+    .tr-v06-thumb-strip {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tr-v06-mini-photo {
+      width: 66px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1.5px solid rgba(244, 196, 48, 0.65);
+      background: #08110c;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .spot-manage-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: #13251a;
+      border: 1px solid #2e553d;
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body class="home-mode">
@@ -2624,6 +2708,17 @@
           <option value="FREIFLAECHE">🦌 Freifläche / Reiner Ansitz (ohne Kirrung)</option>
         </select>
       </div>
+      <div style="border-top:1px solid #294c38; padding-top:12px; margin-top:12px;">
+        <div style="font-size:0.84rem; font-weight:800; color:#fff; margin-bottom:3px;">📍 Freie Kamerapunkte (Überläufer-Sync)</div>
+        <div style="font-size:0.71rem; color:var(--text-muted); margin-bottom:8px; line-height:1.3;">
+          Orte ohne Hochsitz (z. B. Malbaum, Wechsel, Forstecke) – geteilt mit Überläufer, <strong>ohne</strong> Einfluss auf Sauen-Prognose &amp; Wind.
+        </div>
+        <div id="free-spots-list-container" style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px;"></div>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="new-free-spot-input" placeholder="z. B. Malbaum Süd, Wechsel" style="flex:1; background:#0d1811; border:1px solid #385a44; color:#fff; padding:8px 11px; border-radius:10px; font-size:0.82rem;">
+          <button type="button" class="btn-sm btn-no" style="border-color:var(--accent-green); color:var(--accent-green);" onclick="addNewFreeSpotFromModal()">+ Ort</button>
+        </div>
+      </div>
       <div class="modal-footer-back">
         <button class="back-pill-btn" onclick="closeModal('modal-kanzel-select')">◀ Zurück</button>
       </div>
@@ -2965,9 +3060,37 @@
           <button type="button" class="btn-sm btn-yes" style="padding:4px 9px; font-size:0.74rem;" onclick="saveAndTransferTrophyToStrecke()">🎯 In Streckenliste</button>
         </div>
       </div>
-      <div style="margin-bottom:10px;">
-        <label class="app-label">⏳ Geschätztes Alter</label>
-        <input type="text" class="app-input" id="tr-age-input" placeholder="z. B. 4–5 Jahre">
+      <div class="form-row-2col">
+        <div>
+          <label class="app-label">⏳ Geschätztes Alter</label>
+          <input type="text" class="app-input" id="tr-age-input" placeholder="z. B. 4–5 Jahre">
+        </div>
+        <div>
+          <label class="app-label">🏅 Güte- / Altersklasse</label>
+          <input type="text" class="app-input" id="tr-class-input" placeholder="z. B. IIa, Ia, IIIb, Reifer Keiler">
+        </div>
+      </div>
+      <div class="form-row-2col">
+        <div>
+          <label class="app-label">🦌 Geweih- / Gehörnstatus</label>
+          <select class="app-input" id="tr-antler-status-input">
+            <option value="">— Offen / nicht festgelegt —</option>
+            <option value="VERFEGT">🦌 Verfegt</option>
+            <option value="BAST">🌿 Bast</option>
+            <option value="ABGEWORFEN">🍂 Abgeworfen</option>
+            <option value="UNKLAR">❓ Unklar</option>
+          </select>
+        </div>
+        <div>
+          <label class="app-label">🎨 Farbschlag (Damwild)</label>
+          <select class="app-input" id="tr-coat-color-input">
+            <option value="">— Standard / Offen —</option>
+            <option value="Normal/Rotbraun">Normal / Rotbraun</option>
+            <option value="Schwarz">Schwarz</option>
+            <option value="Weiß">Weiß</option>
+            <option value="Menil">Menil</option>
+          </select>
+        </div>
       </div>
       <div style="margin-bottom:10px;">
         <label class="app-label">🔎 Merkmale / Geweih- bzw. Gehörnbeschreibung</label>
@@ -3625,6 +3748,7 @@
       if (lbl) lbl.textContent = activeKanzel;
       document.querySelectorAll(".kanzel-name-sync").forEach(el => el.textContent = activeKanzel);
       renderKanzelSelectList();
+      if (typeof renderFreeSpotsSelectList === "function") renderFreeSpotsSelectList();
       renderKanzelConfigModal();
       if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
       if (typeof renderBeifangView === "function") renderBeifangView();
@@ -3899,26 +4023,18 @@
     }
 
     function setupPWAAndIcons(customDataUrl, rawSvgHtml) {
-      let iconUrl = customDataUrl || DEFAULT_ORIGINAL_LOGO_DATA_URL;
-      if (iconUrl) {
-        const fav = document.getElementById("dynamic-favicon");
-        const touch = document.getElementById("dynamic-touch-icon");
-        const manif = document.getElementById("dynamic-manifest");
-        if (fav) fav.href = iconUrl;
-        if (touch) touch.href = iconUrl;
-        if (manif) {
-          const manifestObj = {
-            name: "Sauenmatrix",
-            short_name: "Sauenmatrix",
-            start_url: ".",
-            display: "standalone",
-            background_color: "#0b130e",
-            theme_color: "#0b130e",
-            icons: [{ src: iconUrl, sizes: "512x512", type: (customDataUrl && customDataUrl.startsWith("data:image/jpeg")) ? "image/jpeg" : "image/png" }]
-          };
-          const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: "application/json" });
-          manif.href = URL.createObjectURL(manifestBlob);
-        }
+      // Statische manifest.json & icon-512.png bleiben unangetastet; bei lokalem file:// oder Custom-Logo Data-URL setzen
+      const fav = document.getElementById("dynamic-favicon");
+      const touch = document.getElementById("dynamic-touch-icon");
+      const isLocalFile = (location.protocol === "file:" || location.protocol === "content:");
+      const resolvedIcon = customDataUrl || (isLocalFile ? DEFAULT_ORIGINAL_LOGO_DATA_URL : "./icon-512.png");
+      if (fav) fav.href = resolvedIcon;
+      if (touch) touch.href = resolvedIcon;
+    }
+
+    function registerSauenmatrixServiceWorker() {
+      if (typeof navigator !== "undefined" && "serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     }
 
@@ -4226,6 +4342,7 @@
       const reife = (typeof getReifeEntries === "function") ? getReifeEntries() : safeGetJSON("sm_reife_v1", []);
       const beifang = (typeof getBeifangEntries === "function") ? getBeifangEntries() : safeGetJSON("sm_beifang_v1", []);
       const trophaeen = (typeof getTrophyProfiles === "function") ? getTrophyProfiles() : safeGetJSON("sm_trophaeen_v1", []);
+      const spots = (typeof getSpotsList === "function") ? getSpotsList() : safeGetJSON("sm_spots_v1", []);
       let trophaeenPhotos = {};
       if (typeof trPhotoGetAllMap === "function") {
         try { trophaeenPhotos = await trPhotoGetAllMap(); } catch (e) { trophaeenPhotos = {}; }
@@ -4233,7 +4350,7 @@
 
       const dateStr = getLocalISODate();
       const backupPayload = {
-        appVersion: "Sauenmatrix-v27.1",
+        appVersion: "Sauenmatrix-v27.2",
         exportDatum: getLocalISODateTime(),
         activeKanzel: activeKanzel,
         logs: logs,
@@ -4241,6 +4358,7 @@
         trophaeen: trophaeen,
         trophaeenPhotos: trophaeenPhotos,
         kanzeln: kanzeln,
+        spots: spots,
         strecke: strecke,
         kuehltruhe: truhe,
         jagdzeiten: jagdzeiten,
@@ -4277,6 +4395,7 @@
         document.body.classList.add("night-dimmed");
       }
       applyLogoEverywhere();
+      registerSauenmatrixServiceWorker();
       showHomeStartScreen(false);
 
       history.pushState({ Protected: true }, "");
@@ -4757,9 +4876,12 @@
           const kanzelGreen = allLogs.filter(e =>
             isGreenSightingLog(e) && ((e.kanzel || e.sitz || e.standort || "Tunnel") === kanzelName)
           );
-          const allKirrungGreen = allLogs.filter(e =>
-            isGreenSightingLog(e) && !isFreiflaecheKanzel(e.kanzel || e.sitz || e.standort || "Tunnel")
-          );
+          const allKirrungGreen = allLogs.filter(e => {
+            if (!isGreenSightingLog(e)) return false;
+            const seat = e.kanzel || e.sitz || e.standort || "Tunnel";
+            if (typeof isKnownKanzelSpot === "function" && !isKnownKanzelSpot(seat)) return false;
+            return !isFreiflaecheKanzel(seat);
+          });
           const revierSource = allKirrungGreen.length >= 10 ? allKirrungGreen : allLogs.filter(e => isGreenSightingLog(e));
 
           const revStats = extractCurveStatsFromGreenEntries(revierSource);
@@ -9597,7 +9719,11 @@
     </div>
     <div class="form-row-2col">
       <div><label class="app-label">📅 Datum</label><div class="date-swap-row"><input type="date" class="app-input" id="entry-date-input"><button type="button" class="btn-date-swap" onclick="swapDateDayMonthInInput('entry-date-input')" title="Tag und Monat tauschen (bei Datumsdreher)">🔄 T↔M</button></div></div>
-      <div id="entry-kanzel-field-wrap"><label class="app-label">🏯 Hochsitz</label><select class="app-input" id="entry-kanzel-select"></select></div>
+      <div id="entry-kanzel-field-wrap"><label class="app-label">🏯 Sitz / Kamerapunkt</label><select class="app-input" id="entry-kanzel-select" onchange="syncDiaryFreeSpotVisibility()"></select></div>
+    </div>
+    <div id="entry-free-spot-wrap" style="display:none; background:#102217; border:1px solid #356045; border-radius:12px; padding:9px 10px; margin-bottom:10px;">
+      <label class="app-label">📍 Neuer freier Kamerapunkt (wird auch in Überläufer übernommen)</label>
+      <input type="text" class="app-input" id="entry-free-spot-input" placeholder="z. B. Malbaum Süd, Wechsel, Forstecke">
     </div>
     <div style="display:grid; grid-template-columns:1fr 1fr 92px; gap:8px; margin-bottom:12px;">
       <div><label class="app-label">🕒 Ankunft</label><input type="time" class="app-input" id="entry-arrival-input" oninput="autoCalcEntryDuration()"></div>
@@ -10873,10 +10999,19 @@
       inboxId: String(item.inboxId || "").trim(),
       source: String(item.source || "").trim(),
       sourceVersion: String(item.sourceVersion || "").trim(),
+      originalSpot: String(item.originalSpot || "").trim(),
       isTrophy: Boolean(item.isTrophy),
       trophyType: String(item.trophyType || "").trim(),
       trophyDetail: String(item.trophyDetail || "").trim(),
       trophyTag: String(item.trophyTag || "").trim(),
+      trophyClass: String(item.trophyClass || "").trim(),
+      trophyStatus: String(item.trophyStatus || "").trim().toUpperCase(),
+      trophyCoatColor: String(item.trophyCoatColor || "").trim(),
+      trophyAgeEstimate: String(item.trophyAgeEstimate || "").trim(),
+      trophyConfidence: String(item.trophyConfidence || "").trim().toUpperCase(),
+      trophyBodyNotes: String(item.trophyBodyNotes || "").trim(),
+      trophyDeepChecked: Boolean(item.trophyDeepChecked),
+      trophyPhotoDataUrl: (typeof item.trophyPhotoDataUrl === "string" && item.trophyPhotoDataUrl.startsWith("data:image")) ? item.trophyPhotoDataUrl : "",
       isMaleTrophy: Boolean(item.isMaleTrophy),
       trophyId: String(item.trophyId || "").trim(),
       trophyIgnored: Boolean(item.trophyIgnored),
@@ -11009,9 +11144,22 @@
   function getDynamicKanzelListForFilters(extraEntries = []) {
     const map = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
     const names = Object.keys(map).slice();
+    const seenLower = new Set(names.map(n => n.toLowerCase()));
+    if (typeof getSpotsList === "function") {
+      getSpotsList().forEach(sp => {
+        const sName = String(sp?.name || "").trim();
+        if (sName && sName !== "Revierweit" && !seenLower.has(sName.toLowerCase())) {
+          seenLower.add(sName.toLowerCase());
+          names.push(sName);
+        }
+      });
+    }
     (extraEntries || []).forEach(e => {
       const k = String(e?.kanzel || "").trim();
-      if (k && k !== "Revierweit" && !names.includes(k)) names.push(k);
+      if (k && k !== "Revierweit" && !seenLower.has(k.toLowerCase())) {
+        seenLower.add(k.toLowerCase());
+        names.push(k);
+      }
     });
     return names;
   }
@@ -11173,6 +11321,7 @@
     const photoHtml = e.photo ? `<div style="margin-top:6px;"><img src="${e.photo}" alt="Foto" style="max-height:110px; border-radius:8px;"></div>` : "";
     const kanzelDisp = (e.status === "DRUECKJAGD") ? "🌲 Revierweit (alle Kirrungen)" : escapeHTML((typeof formatSpotLabel === "function") ? formatSpotLabel(e.kanzel || "Tunnel") : `🏯 ${e.kanzel || "Tunnel"}`);
     const vergPill = isVerg ? `<span class="vergraemt-pill">⚠️ Wild vergrämt</span>` : "";
+    const trophyV06Html = (typeof renderTrophyv06DetailsHTML === "function") ? renderTrophyv06DetailsHTML(e, { skipPhotoIfMainPhoto: Boolean(e.photo) }) : "";
 
     return `
       <div class="diary-entry-card type-${e.status || 'GREEN'}">
@@ -11186,6 +11335,7 @@
         </div>
         <div style="font-size:0.84rem; font-weight:800; color:#fff;">${kanzelDisp} — ${escapeHTML(e.structure || meta.label)}${vergPill}</div>
         ${kirrText ? `<div style="font-size:0.75rem; color:var(--accent-yellow); font-weight:700;">${kirrText}</div>` : ""}
+        ${trophyV06Html}
         ${(() => {
           const pill = (e.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(e.trophyId) : "";
           if (pill) return pill;
@@ -11233,17 +11383,53 @@
     container.innerHTML = filtered.slice(0, 150).map(e => renderSingleDiaryCardHTML(e)).join("") + moreHint;
   }
 
-  function populateModalKanzelDropdown() {
+  function syncDiaryFreeSpotVisibility() {
     const sel = document.getElementById("entry-kanzel-select");
+    const wrap = document.getElementById("entry-free-spot-wrap");
+    if (!sel || !wrap) return;
+    wrap.style.display = (currentEntryStatus !== "DRUECKJAGD" && sel.value === "__FREE_SPOT__") ? "block" : "none";
+  }
+  window.syncDiaryFreeSpotVisibility = syncDiaryFreeSpotVisibility;
+
+  function populateModalKanzelDropdown(selectedVal = null) {
+    const sel = document.getElementById("entry-kanzel-select");
+    const freeInp = document.getElementById("entry-free-spot-input");
     if (!sel) return;
     const map = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
+    const kNames = Object.keys(map);
+    const spots = (typeof getSpotsList === "function") ? getSpotsList() : [];
     sel.innerHTML = "";
-    Object.keys(map).forEach(k => {
+    kNames.forEach(k => {
       const opt = document.createElement("option");
-      opt.value = k; opt.textContent = k;
+      opt.value = k;
+      opt.textContent = `🏯 ${k}`;
       sel.appendChild(opt);
     });
-    sel.value = (typeof activeKanzel !== "undefined") ? activeKanzel : "Tunnel";
+    spots.forEach(sp => {
+      if (!sp || !sp.name || kNames.some(k => k.toLowerCase() === sp.name.toLowerCase())) return;
+      const opt = document.createElement("option");
+      opt.value = sp.name;
+      opt.textContent = `📍 ${sp.name}`;
+      sel.appendChild(opt);
+    });
+    const freeOpt = document.createElement("option");
+    freeOpt.value = "__FREE_SPOT__";
+    freeOpt.textContent = "📍 Freier Kamerapunkt (neu)...";
+    sel.appendChild(freeOpt);
+
+    const target = String(selectedVal || (typeof activeKanzel !== "undefined" ? activeKanzel : "Tunnel")).trim();
+    const matchOpt = Array.from(sel.options).find(o => o.value.toLowerCase() === target.toLowerCase() && o.value !== "__FREE_SPOT__");
+    if (matchOpt) {
+      sel.value = matchOpt.value;
+      if (freeInp) freeInp.value = "";
+    } else if (target && target !== "Revierweit") {
+      sel.value = "__FREE_SPOT__";
+      if (freeInp) freeInp.value = target;
+    } else {
+      sel.value = (typeof activeKanzel !== "undefined") ? activeKanzel : "Tunnel";
+      if (freeInp) freeInp.value = "";
+    }
+    syncDiaryFreeSpotVisibility();
   }
 
   function selectEntryStatus(st) {
@@ -11272,6 +11458,7 @@
     if (kWrap) kWrap.style.opacity = (st === "DRUECKJAGD") ? "0.45" : "1";
     const kSel = document.getElementById("entry-kanzel-select");
     if (kSel) kSel.disabled = (st === "DRUECKJAGD");
+    syncDiaryFreeSpotVisibility();
   }
 
   function syncRottenUI(clearIfEmpty = false) {
@@ -11400,19 +11587,10 @@
         document.getElementById("entry-edit-id").value = existing.id;
         selectEntryStatus(existing.status || "GREEN");
         document.getElementById("entry-date-input").value = existing.date || getLocalISODate();
-        const kSel = document.getElementById("entry-kanzel-select");
         const kVal = (existing.status === "DRUECKJAGD" || existing.kanzel === "Revierweit")
           ? ((typeof activeKanzel !== "undefined" && activeKanzel) ? activeKanzel : "Tunnel")
           : (existing.kanzel || "Tunnel");
-        if (kSel) {
-          if (!Array.from(kSel.options).some(o => o.value === kVal)) {
-            const o = document.createElement("option");
-            o.value = kVal;
-            o.textContent = kVal;
-            kSel.appendChild(o);
-          }
-          kSel.value = kVal;
-        }
+        populateModalKanzelDropdown(kVal);
         document.getElementById("entry-arrival-input").value = existing.arrival || getLocalHHMM();
         document.getElementById("entry-departure-input").value = existing.departure || "";
         document.getElementById("entry-duration-input").value = existing.durationMin || "";
@@ -11613,7 +11791,15 @@
     const isDrueckjagd = (currentEntryStatus === "DRUECKJAGD");
     const isVergraemt = (currentEntryStatus === "YELLOW" && Boolean(document.getElementById("chk-ansitz-vergraemt")?.checked));
     const rawSelK = document.getElementById("entry-kanzel-select").value || "Tunnel";
-    const kanzelVal = isDrueckjagd ? "Revierweit" : (rawSelK === "Revierweit" ? (typeof activeKanzel !== "undefined" ? activeKanzel : "Tunnel") : rawSelK);
+    let resolvedSelK = rawSelK;
+    if (rawSelK === "__FREE_SPOT__") {
+      const freeTxt = String(document.getElementById("entry-free-spot-input")?.value || "").trim().replace(/\s+/g, " ");
+      resolvedSelK = freeTxt || (typeof activeKanzel !== "undefined" ? activeKanzel : "Tunnel");
+      if (freeTxt && typeof upsertFreeSpot === "function") {
+        upsertFreeSpot(freeTxt, "", "SAUENMATRIX");
+      }
+    }
+    const kanzelVal = isDrueckjagd ? "Revierweit" : (resolvedSelK === "Revierweit" ? (typeof activeKanzel !== "undefined" ? activeKanzel : "Tunnel") : resolvedSelK);
     const arrVal = document.getElementById("entry-arrival-input").value || getLocalHHMM();
     const depVal = document.getElementById("entry-departure-input").value || "";
     const durVal = Number(document.getElementById("entry-duration-input").value || 0);
@@ -11670,10 +11856,19 @@
       totalStk, counts: isRotteStatus ? Object.assign({}, rottenCounts) : null, kirrgut: finalKirrgut, lockmittel: finalKirrgut,
       richtung: finalRichtung, weatherStamp: finalWeatherStamp,
       ocrTempC: (prevEntry && prevEntry.ocrTempC !== undefined) ? prevEntry.ocrTempC : null,
+      originalSpot: prevEntry?.originalSpot || "",
       isTrophy: Boolean((prevEntry && prevEntry.isTrophy) || (isRotteStatus && rottenCounts.K > 0)),
       trophyType: (prevEntry && prevEntry.trophyType) ? prevEntry.trophyType : (isRotteStatus && rottenCounts.K > 0 ? "KEILER" : ""),
       trophyDetail: prevEntry?.trophyDetail || "",
       trophyTag: prevEntry?.trophyTag || "",
+      trophyClass: prevEntry?.trophyClass || "",
+      trophyStatus: prevEntry?.trophyStatus || "",
+      trophyCoatColor: prevEntry?.trophyCoatColor || "",
+      trophyAgeEstimate: prevEntry?.trophyAgeEstimate || "",
+      trophyConfidence: prevEntry?.trophyConfidence || "",
+      trophyBodyNotes: prevEntry?.trophyBodyNotes || "",
+      trophyDeepChecked: Boolean(prevEntry && prevEntry.trophyDeepChecked),
+      trophyPhotoDataUrl: prevEntry?.trophyPhotoDataUrl || "",
       isMaleTrophy: Boolean((prevEntry && prevEntry.isMaleTrophy) || (isRotteStatus && rottenCounts.K > 0)),
       trophyId: isRotteStatus ? (document.getElementById("entry-trophy-select")?.value || "").trim() : "",
       trophyIgnored: Boolean(prevEntry && prevEntry.trophyIgnored),
@@ -13642,6 +13837,7 @@
       wartung: null,
       rotten: [],
       reife: [],
+      spots: [],
       beifang: [],
       trophaeen: [],
       trophaeenPhotos: {}
@@ -13760,6 +13956,12 @@
           res.reife = rawReife.filter(x => x && typeof x === "object");
         }
 
+        // 8b. Freie Kamerapunkte (sm_spots_v1)
+        const rawSpots = data.spots || normRoot.spots || normRoot.smspotsv1 || normRoot.kamerapunkte;
+        if (Array.isArray(rawSpots)) {
+          res.spots = rawSpots.filter(x => x && typeof x === "object" && String(x.name || "").trim());
+        }
+
         // 9. Beifang-Tagebuch (sm_beifang_v1)
         const rawBeifang = data.beifang || normRoot.beifang || normRoot.smbeifangv1;
         if (Array.isArray(rawBeifang)) {
@@ -13834,9 +14036,13 @@
     const stB = b.status || "GREEN";
     if (stA !== stB) return false;
 
-    const kA = normalizeKanzelCompareKey(a.kanzel);
-    const kB = normalizeKanzelCompareKey(b.kanzel);
-    if (kA !== kB) return false;
+    if (typeof isSameSpotForDuplicate === "function") {
+      if (!isSameSpotForDuplicate(a, b, "Tunnel")) return false;
+    } else {
+      const kA = normalizeKanzelCompareKey(a.kanzel);
+      const kB = normalizeKanzelCompareKey(b.kanzel);
+      if (kA !== kB) return false;
+    }
 
     const minA = diaryEntryToEpochMinutes(a);
     const minB = diaryEntryToEpochMinutes(b);
@@ -13933,11 +14139,20 @@
       merged.weatherStamp = Object.assign({}, incoming.weatherStamp);
       if (!merged.richtung && merged.weatherStamp.windDir) merged.richtung = merged.weatherStamp.windDir;
     }
+    if (!merged.originalSpot && incoming.originalSpot) merged.originalSpot = incoming.originalSpot;
     if (incoming.isTrophy) merged.isTrophy = true;
     if (incoming.isMaleTrophy) merged.isMaleTrophy = true;
     if (!merged.trophyType && incoming.trophyType) merged.trophyType = incoming.trophyType;
     if (!merged.trophyDetail && incoming.trophyDetail) merged.trophyDetail = incoming.trophyDetail;
     if (!merged.trophyTag && incoming.trophyTag) merged.trophyTag = incoming.trophyTag;
+    if (!merged.trophyClass && incoming.trophyClass) merged.trophyClass = incoming.trophyClass;
+    if (!merged.trophyStatus && incoming.trophyStatus) merged.trophyStatus = incoming.trophyStatus;
+    if (!merged.trophyCoatColor && incoming.trophyCoatColor) merged.trophyCoatColor = incoming.trophyCoatColor;
+    if (!merged.trophyAgeEstimate && incoming.trophyAgeEstimate) merged.trophyAgeEstimate = incoming.trophyAgeEstimate;
+    if (!merged.trophyConfidence && incoming.trophyConfidence) merged.trophyConfidence = incoming.trophyConfidence;
+    if (!merged.trophyBodyNotes && incoming.trophyBodyNotes) merged.trophyBodyNotes = incoming.trophyBodyNotes;
+    if (incoming.trophyDeepChecked) merged.trophyDeepChecked = true;
+    if (!merged.trophyPhotoDataUrl && incoming.trophyPhotoDataUrl) merged.trophyPhotoDataUrl = incoming.trophyPhotoDataUrl;
     if (!merged.trophyId && incoming.trophyId) merged.trophyId = incoming.trophyId;
     if (incoming.ocrTempC !== null && incoming.ocrTempC !== undefined && incoming.ocrTempC !== "" && !isNaN(Number(incoming.ocrTempC))) {
       merged.ocrTempC = Number(incoming.ocrTempC);
@@ -14133,6 +14348,7 @@
     if (p.strecke.length > 0) lines.push(`🎯 <strong>Streckenliste:</strong> ${p.strecke.length} Abschüsse`);
     if (p.kuehltruhe.length > 0) lines.push(`❄️ <strong>Kühltruhe:</strong> ${p.kuehltruhe.length} Pakete`);
     if (p.kanzeln) lines.push(`🏯 <strong>Hochsitze / Kanzeln:</strong> ${Object.keys(p.kanzeln).length} Sitze`);
+    if (Array.isArray(p.spots) && p.spots.length > 0) lines.push(`📍 <strong>Freie Kamerapunkte:</strong> ${p.spots.length} Orte`);
     if (p.wartung) lines.push(`🛠️ <strong>Wartung / Reparaturen:</strong> ${p.wartung.issues.length} Einträge` + (p.wartung.extraSitze.length ? `, ${p.wartung.extraSitze.length} Extra-Sitze` : ""));
     if (Array.isArray(p.rotten) && p.rotten.length > 0) lines.push(`🐗 <strong>Bekannte Gesichter:</strong> ${p.rotten.length} Steckbriefe`);
     if (Array.isArray(p.reife) && p.reife.length > 0) lines.push(`🥩 <strong>Landig Reife-Timer:</strong> ${p.reife.length} Stücke`);
@@ -14224,6 +14440,14 @@
     if (Array.isArray(p.reife) && p.reife.length > 0) {
       const mergedRf = mergeReifeLists(getReifeEntries(), p.reife, mode);
       saveReifeEntries(mergedRf);
+    }
+
+    // 8b. Freie Kamerapunkte (sm_spots_v1)
+    if (Array.isArray(p.spots) && p.spots.length > 0 && typeof upsertFreeSpot === "function") {
+      if (mode === "REPLACE") safeSetItem("sm_spots_v1", "[]");
+      p.spots.forEach(sp => {
+        if (sp && sp.name) upsertFreeSpot(sp.name, sp.mappedKanzel || "", sp.source || "BACKUP");
+      });
     }
 
     // 9. Beifang-Tagebuch (sm_beifang_v1)
@@ -16711,6 +16935,318 @@
 
   const REV_ALLGEMEIN_LABEL = "Revier allgemein";
 
+  // =========================================================================
+  // v27.2: BIDIREKTIONALE FREIE KAMERAPUNKTE (sm_spots_v1 · ÜBERLÄUFER v0.6.0)
+  // Streng getrennt von sm_kanzeln_v1, Sauen-Prognose und Wind-Auswertung!
+  // =========================================================================
+  function isSameSpotForDuplicate(a, b, defaultSpot = REV_ALLGEMEIN_LABEL) {
+    const rawKA = String(a?.kanzel || "").trim() || defaultSpot;
+    const rawKB = String(b?.kanzel || "").trim() || defaultSpot;
+    const kA = normalizeKanzelCompareKey(rawKA);
+    const kB = normalizeKanzelCompareKey(rawKB);
+    if (kA === kB) return true;
+    const rawOA = String(a?.originalSpot || "").trim();
+    const rawOB = String(b?.originalSpot || "").trim();
+    const oA = rawOA ? normalizeKanzelCompareKey(rawOA) : "";
+    const oB = rawOB ? normalizeKanzelCompareKey(rawOB) : "";
+    if (oA && oB && oA === oB) return true;
+    if (oA && oA === kB) return true;
+    if (oB && oB === kA) return true;
+    return false;
+  }
+
+  function getSpotsList() {
+    try {
+      const parsed = JSON.parse(safeGetItem("sm_spots_v1", "[]"));
+      if (!Array.isArray(parsed)) return [];
+      const seen = new Set();
+      const out = [];
+      parsed.forEach(item => {
+        if (!item || typeof item !== "object") return;
+        const name = String(item.name || "").trim().replace(/\s+/g, " ");
+        if (!name || isRevierAllgemeinSpot(name) || name === "Revierweit" || isKnownKanzelSpot(name)) return;
+        const low = name.toLowerCase();
+        if (seen.has(low)) return;
+        seen.add(low);
+        out.push({
+          id: String(item.id || ("spot-" + Math.random().toString(36).slice(2, 8))),
+          name: name,
+          mappedKanzel: String(item.mappedKanzel || "").trim(),
+          source: String(item.source || "SAUENMATRIX").trim(),
+          createdAt: String(item.createdAt || getLocalISODateTime()),
+          updatedAt: String(item.updatedAt || getLocalISODateTime())
+        });
+      });
+      return out.sort((a, b) => a.name.localeCompare(b.name, "de"));
+    } catch (e) {
+      return [];
+    }
+  }
+  window.getSpotsList = getSpotsList;
+
+  function saveSpotsList(list) {
+    const seen = new Set();
+    const clean = [];
+    (Array.isArray(list) ? list : []).forEach(item => {
+      if (!item || typeof item !== "object") return;
+      const name = String(item.name || "").trim().replace(/\s+/g, " ");
+      if (!name || isRevierAllgemeinSpot(name) || name === "Revierweit" || isKnownKanzelSpot(name)) return;
+      const low = name.toLowerCase();
+      if (seen.has(low)) return;
+      seen.add(low);
+      clean.push({
+        id: String(item.id || ("spot-" + Date.now() + "-" + Math.random().toString(36).slice(2, 5))),
+        name: name,
+        mappedKanzel: String(item.mappedKanzel || "").trim(),
+        source: String(item.source || "SAUENMATRIX").trim(),
+        createdAt: String(item.createdAt || getLocalISODateTime()),
+        updatedAt: String(item.updatedAt || getLocalISODateTime())
+      });
+    });
+    clean.sort((a, b) => a.name.localeCompare(b.name, "de"));
+    safeSetItem("sm_spots_v1", JSON.stringify(clean));
+    return clean;
+  }
+
+  function upsertFreeSpot(name, mappedKanzel = "", source = "SAUENMATRIX") {
+    const cleanName = String(name || "").trim().replace(/\s+/g, " ");
+    if (!cleanName || isRevierAllgemeinSpot(cleanName) || cleanName === "Revierweit" || isKnownKanzelSpot(cleanName)) {
+      return null;
+    }
+    const list = getSpotsList();
+    const nowIso = getLocalISODateTime();
+    const idx = list.findIndex(s => s.name.toLowerCase() === cleanName.toLowerCase());
+    if (idx >= 0) {
+      list[idx].updatedAt = nowIso;
+      if (mappedKanzel && !list[idx].mappedKanzel) list[idx].mappedKanzel = String(mappedKanzel).trim();
+      saveSpotsList(list);
+      return list[idx];
+    }
+    const created = {
+      id: "spot-" + Date.now() + "-" + Math.random().toString(36).slice(2, 5),
+      name: cleanName,
+      mappedKanzel: String(mappedKanzel || "").trim(),
+      source: String(source || "SAUENMATRIX").trim(),
+      createdAt: nowIso,
+      updatedAt: nowIso
+    };
+    list.push(created);
+    saveSpotsList(list);
+    return created;
+  }
+  window.upsertFreeSpot = upsertFreeSpot;
+
+  function syncFreeSpotsFromExistingEntries() {
+    const existing = getSpotsList();
+    const seen = new Set(existing.map(s => s.name.toLowerCase()));
+    let changed = false;
+    const consider = (rawSpot, srcTag) => {
+      const clean = String(rawSpot || "").trim().replace(/\s+/g, " ");
+      if (!clean || isRevierAllgemeinSpot(clean) || clean === "Revierweit" || isKnownKanzelSpot(clean)) return;
+      if (seen.has(clean.toLowerCase())) return;
+      seen.add(clean.toLowerCase());
+      existing.push({
+        id: "spot-" + Date.now() + "-" + Math.random().toString(36).slice(2, 5),
+        name: clean,
+        mappedKanzel: "",
+        source: srcTag,
+        createdAt: getLocalISODateTime(),
+        updatedAt: getLocalISODateTime()
+      });
+      changed = true;
+    };
+    getBeifangEntries().forEach(b => consider(b?.kanzel, b?.source || "SAUENMATRIX"));
+    diaryLogs.forEach(e => consider(e?.kanzel, e?.source || "SAUENMATRIX"));
+    if (changed) saveSpotsList(existing);
+  }
+
+  function renderFreeSpotsSelectList() {
+    const box = document.getElementById("free-spots-list-container");
+    if (!box) return;
+    const spots = getSpotsList();
+    if (spots.length === 0) {
+      box.innerHTML = `<div style="font-size:0.76rem; color:var(--text-muted); padding:2px 0;">Noch keine freien Kamerapunkte angelegt.</div>`;
+      return;
+    }
+    box.innerHTML = spots.map(sp => {
+      const sid = escapeHTML(sp.id).replace(/'/g, "&#39;");
+      const mapTag = sp.mappedKanzel ? `<span style="font-size:0.7rem; color:var(--text-muted);">→ ${escapeHTML(sp.mappedKanzel)}</span>` : "";
+      return `
+        <div class="spot-manage-row">
+          <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">📍 ${escapeHTML(sp.name)} ${mapTag}</span>
+          <button type="button" class="btn-sm btn-no" style="padding:3px 7px; font-size:0.72rem; color:#ff8fa3; flex-shrink:0;" onclick="deleteFreeSpotFromModal('${sid}')" title="Freien Kamerapunkt löschen">🗑️</button>
+        </div>`;
+    }).join("");
+  }
+  window.renderFreeSpotsSelectList = renderFreeSpotsSelectList;
+
+  function addNewFreeSpotFromModal() {
+    const inp = document.getElementById("new-free-spot-input");
+    if (!inp) return;
+    const name = inp.value.trim().replace(/\s+/g, " ");
+    if (!name) return;
+    if (isKnownKanzelSpot(name)) {
+      alert(`„${name}“ ist bereits als Hochsitz angelegt.`);
+      return;
+    }
+    upsertFreeSpot(name, "", "SAUENMATRIX");
+    inp.value = "";
+    renderFreeSpotsSelectList();
+    if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
+    if (typeof renderBeifangView === "function") renderBeifangView();
+  }
+  window.addNewFreeSpotFromModal = addNewFreeSpotFromModal;
+
+  function deleteFreeSpotFromModal(spotId) {
+    const spots = getSpotsList();
+    const target = spots.find(s => s.id === spotId);
+    if (!target) return;
+    if (!confirm(`Freien Kamerapunkt „${target.name}“ entfernen? (Bestehende Einträge bleiben erhalten.)`)) return;
+    saveSpotsList(spots.filter(s => s.id !== spotId));
+    renderFreeSpotsSelectList();
+    if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
+    if (typeof renderBeifangView === "function") renderBeifangView();
+  }
+  window.deleteFreeSpotFromModal = deleteFreeSpotFromModal;
+
+  // =========================================================================
+  // v27.2: ÜBERLÄUFER v0.6.0 FELDER, <4MB SPEICHERSCHUTZ & TROPHÄEN-DETAILS
+  // =========================================================================
+  function normalizeTrophyv06Fields(item) {
+    const rawStatus = String(item?.trophyStatus || "").trim().toUpperCase();
+    const validStatus = ["VERFEGT", "BAST", "ABGEWORFEN", "UNKLAR"].includes(rawStatus) ? rawStatus : "";
+    const rawConf = String(item?.trophyConfidence || "").trim().toUpperCase();
+    const validConf = ["SICHER", "TEILWEISE", "UNKLAR"].includes(rawConf) ? rawConf : "";
+    const rawPhoto = (typeof item?.trophyPhotoDataUrl === "string" && item.trophyPhotoDataUrl.startsWith("data:image"))
+      ? item.trophyPhotoDataUrl
+      : "";
+    return {
+      trophyClass: String(item?.trophyClass || "").trim(),
+      trophyStatus: validStatus,
+      trophyCoatColor: String(item?.trophyCoatColor || "").trim(),
+      trophyAgeEstimate: String(item?.trophyAgeEstimate || item?.ageEstimate || "").trim(),
+      trophyConfidence: validConf,
+      trophyBodyNotes: String(item?.trophyBodyNotes || "").trim(),
+      trophyDeepChecked: Boolean(item?.trophyDeepChecked),
+      trophyPhotoDataUrl: rawPhoto
+    };
+  }
+
+  function formatTrophyStatusLabel(st) {
+    const up = String(st || "").trim().toUpperCase();
+    if (up === "VERFEGT") return "🦌 Verfegt";
+    if (up === "BAST") return "🌿 Bast";
+    if (up === "ABGEWORFEN") return "🍂 Abgeworfen";
+    if (up === "UNKLAR") return "❓ Status unklar";
+    return "";
+  }
+
+  function formatTrophyConfidencePillHTML(conf) {
+    const up = String(conf || "").trim().toUpperCase();
+    if (up === "SICHER") return `<span class="tr-v06-pill conf-SICHER">🟢 Sicher</span>`;
+    if (up === "TEILWEISE") return `<span class="tr-v06-pill conf-TEILWEISE">🟡 Teilweise</span>`;
+    if (up === "UNKLAR") return `<span class="tr-v06-pill conf-UNKLAR">🔴 Unklar</span>`;
+    return "";
+  }
+
+  function openRawPhotoLightbox(dataUrl, title = "📷 Aufnahme", caption = "") {
+    if (!dataUrl || !String(dataUrl).startsWith("data:image")) return;
+    trLightboxState = {
+      trophyName: title,
+      items: [{ photoId: "", dataUrl: dataUrl, label: caption }],
+      idx: 0
+    };
+    renderTrophyLightboxView();
+    openModal("modal-photo-lightbox");
+  }
+  window.openRawPhotoLightbox = openRawPhotoLightbox;
+
+  function renderTrophyv06DetailsHTML(obj, opts = {}) {
+    if (!obj || typeof obj !== "object") return "";
+    const pills = [];
+    if (obj.trophyDeepChecked) {
+      pills.push(`<span class="tr-v06-pill is-deep">🔬 Tiefenprüfung</span>`);
+    }
+    const confPill = formatTrophyConfidencePillHTML(obj.trophyConfidence);
+    if (confPill) pills.push(confPill);
+    if (obj.trophyClass) {
+      pills.push(`<span class="tr-v06-pill is-class">🏅 Kl. ${escapeHTML(obj.trophyClass)}</span>`);
+    }
+    const stLbl = formatTrophyStatusLabel(obj.trophyStatus);
+    if (stLbl) {
+      const extraCls = String(obj.trophyStatus).toUpperCase() === "BAST" ? " is-bast" : "";
+      pills.push(`<span class="tr-v06-pill${extraCls}">${stLbl}</span>`);
+    }
+    if (obj.trophyCoatColor) {
+      pills.push(`<span class="tr-v06-pill">🎨 ${escapeHTML(obj.trophyCoatColor)}</span>`);
+    }
+    if (obj.trophyAgeEstimate) {
+      pills.push(`<span class="tr-v06-pill">⏳ ${escapeHTML(obj.trophyAgeEstimate)}</span>`);
+    }
+
+    const pillsHtml = pills.length > 0 ? `<div class="tr-v06-row">${pills.join("")}</div>` : "";
+    const bodyNotesHtml = obj.trophyBodyNotes
+      ? `<div class="tr-v06-body-notes">🦴 ${escapeHTML(obj.trophyBodyNotes)}</div>`
+      : "";
+    const showPhoto = Boolean(
+      !opts.skipPhotoIfMainPhoto &&
+      typeof obj.trophyPhotoDataUrl === "string" &&
+      obj.trophyPhotoDataUrl.startsWith("data:image")
+    );
+    const photoHtml = showPhoto
+      ? `<div class="tr-v06-thumb-strip"><img class="tr-v06-mini-photo" src="${obj.trophyPhotoDataUrl}" alt="Trophäen-Foto" onclick="event.stopPropagation(); openRawPhotoLightbox(this.src, '${escapeHTML(String(obj.trophyDetail || obj.speciesDetail || obj.structure || "Trophäen-Aufnahme")).replace(/'/g, "&#39;")}', '${escapeHTML(formatDateDE(obj.date || ""))}')"></div>`
+      : "";
+
+    return pillsHtml + bodyNotesHtml + photoHtml;
+  }
+
+  function estimateLocalStorageTotalBytes() {
+    let total = 0;
+    try {
+      for (let i = 0; i < window.localStorage.length; i++) {
+        const k = window.localStorage.key(i) || "";
+        const v = window.localStorage.getItem(k) || "";
+        total += (k.length + v.length) * 2;
+      }
+    } catch (e) {
+      Object.entries(__smMemoryStorage).forEach(([k, v]) => {
+        total += (String(k).length + String(v).length) * 2;
+      });
+    }
+    return total;
+  }
+
+  function saveListWithLocalStoragePhotoGuard(storageKey, list, maxTotalBytes = 3850000) {
+    const arr = Array.isArray(list) ? list : [];
+    const oldRaw = safeGetItem(storageKey, "") || "";
+    const oldBytes = (storageKey.length + oldRaw.length) * 2;
+    const baseOtherBytes = Math.max(0, estimateLocalStorageTotalBytes() - oldBytes);
+
+    let serialized = JSON.stringify(arr);
+    let projected = baseOtherBytes + (storageKey.length + serialized.length) * 2;
+
+    if (projected > maxTotalBytes) {
+      // Älteste trophyPhotoDataUrl schrittweise freigeben, um < 4 MB sicher einzuhalten
+      for (let i = arr.length - 1; i >= 0 && projected > maxTotalBytes; i--) {
+        if (arr[i] && arr[i].trophyPhotoDataUrl) {
+          arr[i].trophyPhotoDataUrl = "";
+          serialized = JSON.stringify(arr);
+          projected = baseOtherBytes + (storageKey.length + serialized.length) * 2;
+        }
+      }
+    }
+    if (!safeSetItem(storageKey, serialized)) {
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] && arr[i].trophyPhotoDataUrl) {
+          arr[i].trophyPhotoDataUrl = "";
+          if (safeSetItem(storageKey, JSON.stringify(arr))) return true;
+        }
+      }
+      return false;
+    }
+    return true;
+  }
+
   function isRevierAllgemeinSpot(name) {
     return String(name || "").trim().toLowerCase() === REV_ALLGEMEIN_LABEL.toLowerCase();
   }
@@ -16929,7 +17465,7 @@
     const sorted = (Array.isArray(list) ? list : []).slice().sort((a, b) =>
       `${b.date || ""}T${b.arrival || "00:00"}`.localeCompare(`${a.date || ""}T${a.arrival || "00:00"}`)
     );
-    safeSetItem("sm_beifang_v1", JSON.stringify(sorted));
+    saveListWithLocalStoragePhotoGuard("sm_beifang_v1", sorted, 3850000);
     return sorted;
   }
 
@@ -17013,10 +17549,11 @@
 
     const ocrTempVal = parseOcrTempValue(item.ocrTempC);
     const stamp = buildLocalWeatherStampSync(dateVal, arrVal);
+    const tv06 = normalizeTrophyv06Fields(item);
     const trophyTypeStr = String(item.trophyType || "").trim();
     const trophyDetailStr = String(item.trophyDetail || "").trim();
     const trophyTagStr = String(item.trophyTag || "").trim();
-    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr || counts.K > 0);
+    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr || tv06.trophyClass || tv06.trophyDeepChecked || counts.K > 0);
     const isMaleTrophyFlag = (item.isMaleTrophy !== undefined && item.isMaleTrophy !== null)
       ? Boolean(item.isMaleTrophy)
       : isTrophyFlag;
@@ -17055,10 +17592,19 @@
       richtung: (stamp && stamp.windDir) ? stamp.windDir : "",
       weatherStamp: stamp,
       ocrTempC: ocrTempVal,
+      originalSpot: String(item.originalSpot || "").trim(),
       isTrophy: isTrophyFlag,
       trophyType: trophyTypeStr || (counts.K > 0 ? "KEILER" : ""),
       trophyDetail: trophyDetailStr,
       trophyTag: trophyTagStr,
+      trophyClass: tv06.trophyClass,
+      trophyStatus: tv06.trophyStatus,
+      trophyCoatColor: tv06.trophyCoatColor,
+      trophyAgeEstimate: tv06.trophyAgeEstimate,
+      trophyConfidence: tv06.trophyConfidence,
+      trophyBodyNotes: tv06.trophyBodyNotes,
+      trophyDeepChecked: tv06.trophyDeepChecked,
+      trophyPhotoDataUrl: tv06.trophyPhotoDataUrl,
       isMaleTrophy: isMaleTrophyFlag,
       trophyId: linkedTrophyId,
       note: finalNote,
@@ -17089,10 +17635,11 @@
     const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
     const detailStr = String(item.speciesDetail || "").trim();
     const noteStr = String(item.note || "").trim();
+    const tv06 = normalizeTrophyv06Fields(item);
     const trophyDetailStr = String(item.trophyDetail || "").trim();
     const trophyTagStr = String(item.trophyTag || "").trim();
     const trophyTypeStr = String(item.trophyType || "").trim();
-    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr);
+    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr || tv06.trophyClass || tv06.trophyDeepChecked);
     const maleFlag = (item.isMaleTrophy !== undefined && item.isMaleTrophy !== null)
       ? Boolean(item.isMaleTrophy)
       : (isTrophyFlag || detectMaleTrophyHint(speciesKey, `${detailStr} ${trophyDetailStr} ${trophyTagStr}`, noteStr));
@@ -17120,6 +17667,14 @@
       trophyType: trophyTypeStr,
       trophyDetail: trophyDetailStr,
       trophyTag: trophyTagStr,
+      trophyClass: tv06.trophyClass,
+      trophyStatus: tv06.trophyStatus,
+      trophyCoatColor: tv06.trophyCoatColor,
+      trophyAgeEstimate: tv06.trophyAgeEstimate,
+      trophyConfidence: tv06.trophyConfidence,
+      trophyBodyNotes: tv06.trophyBodyNotes,
+      trophyDeepChecked: tv06.trophyDeepChecked,
+      trophyPhotoDataUrl: tv06.trophyPhotoDataUrl,
       isMaleTrophy: maleFlag,
       trophyId: linkedTrophyId,
       ocrTempC: parseOcrTempValue(item.ocrTempC),
@@ -17136,7 +17691,7 @@
     if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
     if (a.id && b.id && a.id === b.id) return true;
     if (getBeifangSpeciesKey(a) !== getBeifangSpeciesKey(b)) return false;
-    if (normalizeKanzelCompareKey(a.kanzel) !== normalizeKanzelCompareKey(b.kanzel)) return false;
+    if (!isSameSpotForDuplicate(a, b, REV_ALLGEMEIN_LABEL)) return false;
     const minA = diaryEntryToEpochMinutes(a);
     const minB = diaryEntryToEpochMinutes(b);
     if (minA !== null && minB !== null) {
@@ -17160,6 +17715,14 @@
     if (!merged.trophyType && incoming.trophyType) merged.trophyType = incoming.trophyType;
     if (!merged.trophyDetail && incoming.trophyDetail) merged.trophyDetail = incoming.trophyDetail;
     if (!merged.trophyTag && incoming.trophyTag) merged.trophyTag = incoming.trophyTag;
+    if (!merged.trophyClass && incoming.trophyClass) merged.trophyClass = incoming.trophyClass;
+    if (!merged.trophyStatus && incoming.trophyStatus) merged.trophyStatus = incoming.trophyStatus;
+    if (!merged.trophyCoatColor && incoming.trophyCoatColor) merged.trophyCoatColor = incoming.trophyCoatColor;
+    if (!merged.trophyAgeEstimate && incoming.trophyAgeEstimate) merged.trophyAgeEstimate = incoming.trophyAgeEstimate;
+    if (!merged.trophyConfidence && incoming.trophyConfidence) merged.trophyConfidence = incoming.trophyConfidence;
+    if (!merged.trophyBodyNotes && incoming.trophyBodyNotes) merged.trophyBodyNotes = incoming.trophyBodyNotes;
+    if (incoming.trophyDeepChecked) merged.trophyDeepChecked = true;
+    if (!merged.trophyPhotoDataUrl && incoming.trophyPhotoDataUrl) merged.trophyPhotoDataUrl = incoming.trophyPhotoDataUrl;
     if (!merged.trophyId && incoming.trophyId) merged.trophyId = incoming.trophyId;
     if (incoming.ocrTempC !== null && incoming.ocrTempC !== undefined && !isNaN(Number(incoming.ocrTempC))) {
       merged.ocrTempC = Number(incoming.ocrTempC);
@@ -17296,6 +17859,12 @@
 
       if (role === "BEIFANG") {
         const bfEntry = convertCamInboxToBeifangEntry(item);
+        if (bfEntry.kanzel && !isKnownKanzelSpot(bfEntry.kanzel) && !isRevierAllgemeinSpot(bfEntry.kanzel)) {
+          upsertFreeSpot(bfEntry.kanzel, "", bfEntry.source || "UEBERLAEUFER");
+        }
+        if (bfEntry.trophyId && typeof enrichTrophyProfileFromSighting === "function") {
+          enrichTrophyProfileFromSighting(bfEntry.trophyId, bfEntry);
+        }
         const dupIdx = beifangList.findIndex(existing => isSameBeifangEntry(existing, bfEntry, 15));
         if (dupIdx >= 0) {
           beifangList[dupIdx] = mergeDuplicateBeifangEntry(beifangList[dupIdx], bfEntry);
@@ -17308,6 +17877,12 @@
         }
       } else {
         const logEntry = convertCamInboxToSauenLog(item);
+        if (logEntry.kanzel && !isKnownKanzelSpot(logEntry.kanzel) && !isRevierAllgemeinSpot(logEntry.kanzel)) {
+          upsertFreeSpot(logEntry.kanzel, "", logEntry.source || "UEBERLAEUFER");
+        }
+        if (logEntry.trophyId && typeof enrichTrophyProfileFromSighting === "function") {
+          enrichTrophyProfileFromSighting(logEntry.trophyId, logEntry);
+        }
         const dupIdx = diaryLogs.findIndex(existing => isSameDiaryEntry(existing, logEntry, 15));
         if (dupIdx >= 0) {
           diaryLogs[dupIdx] = mergeDuplicateDiaryEntry(diaryLogs[dupIdx], logEntry);
@@ -17327,7 +17902,7 @@
     if (logsChanged) {
       diaryLogs.sort((a, b) => `${b.date}T${b.arrival || "00:00"}`.localeCompare(`${a.date}T${a.arrival || "00:00"}`));
       window.TAGEBUCH_EINTRAEGE = diaryLogs;
-      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+      saveListWithLocalStoragePhotoGuard("sm_logs_v1", diaryLogs, 3850000);
     }
     if (beifangChanged) {
       saveBeifangEntries(beifangList);
@@ -17503,6 +18078,11 @@
       const isSpecial = isBf && isSpecialBeifangKey(spKey);
       const trInfo = String(item.trophyDetail || item.trophyTag || item.trophyId || "").trim();
       if (trInfo) tags.push(`🏆 ${escapeHTML(trInfo)}`);
+      const inboxV06Html = renderTrophyv06DetailsHTML(item);
+      const isInboxTrophyCand = !isIgn && Boolean(
+        item.isTrophy || item.isMaleTrophy || item.trophyClass || item.trophyDeepChecked ||
+        trInfo || counts.K > 0 || (isBf && ["REHWILD", "DAMWILD", "ROTWILD"].includes(spKey) && detectMaleTrophyHint(spKey, `${item.speciesDetail || ""} ${trInfo}`, item.note || ""))
+      );
       const targetBadge = isIgn
         ? `<span class="beifang-cat-pill" style="background:rgba(100,116,139,0.22); border-color:#64748b; color:#cbd5e1;">⏭️ Wird ignoriert</span>`
         : (isSpecial
@@ -17526,7 +18106,9 @@
           <div style="font-size:0.85rem; font-weight:800; color:#fff;">
             ${formatSpotLabel(kanzelDisp)} — ${structTxt}
           </div>
+          ${inboxV06Html}
           ${tags.length > 0 ? `<div class="ul-inbox-meta-row">${tags.map(t => `<span class="ul-inbox-tag">${t}</span>`).join("")}</div>` : ""}
+          ${isInboxTrophyCand ? `<div style="margin-top:2px;"><button type="button" class="trophy-quick-btn" onclick="openTrophyQuickAssignModal('INBOX', '${safeKeyAttr}')">🏆 Direkt als Trophäen-Steckbrief</button></div>` : ""}
           ${item.note ? `<div style="font-size:0.75rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
           ${dupBadge}
           <div class="ul-inbox-actions">
@@ -17792,6 +18374,7 @@
     const isSpecialBf = isSpecialBeifangKey(spKey);
     const spotLabelTxt = formatSpotLabel(item.kanzel || REV_ALLGEMEIN_LABEL);
     const specialBadge = isSpecialBf ? `<span class="special-alert-pill">🚨 Sonderfund</span>` : "";
+    const bfV06Html = renderTrophyv06DetailsHTML(item);
     return `
       <div class="beifang-card ${isSpecialBf ? "is-special" : ""}" style="border-left-color:${isSpecialBf ? "#fb7185" : meta.color};">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
@@ -17807,6 +18390,7 @@
           <span style="font-size:0.86rem; font-weight:800; color:#fff;">${escapeHTML(spotLabelTxt)} — ${escapeHTML(titleDetail)}</span>
           <span class="beifang-cat-pill">${stkTxt}</span>
         </div>
+        ${bfV06Html}
         ${(() => {
           const canQuickAssign = !trophyPill && ["REHWILD", "DAMWILD", "ROTWILD"].includes(spKey);
           const quickBtn = canQuickAssign
@@ -17940,16 +18524,20 @@
   function populateBeifangKanzelSelects(selectedVal = null) {
     const kMap = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
     const kanzelNames = Object.keys(kMap);
+    const spotObjs = (typeof getSpotsList === "function") ? getSpotsList() : [];
+    const spotNames = spotObjs.map(s => s.name).filter(n => !kanzelNames.some(k => k.toLowerCase() === n.toLowerCase()));
     const modalSel = document.getElementById("bf-kanzel-input");
     const freeInp = document.getElementById("bf-free-spot-input");
     if (!modalSel) return;
 
     const cleanSel = String(selectedVal || "").trim();
     const isKnownK = kanzelNames.some(k => k.toLowerCase() === cleanSel.toLowerCase());
+    const isKnownSpot = spotNames.some(s => s.toLowerCase() === cleanSel.toLowerCase());
     const isRevAll = isRevierAllgemeinSpot(cleanSel);
 
     const optsHtml = [
       ...kanzelNames.map(n => `<option value="${escapeHTML(n)}">🏯 ${escapeHTML(n)}</option>`),
+      ...spotNames.map(n => `<option value="${escapeHTML(n)}">📍 ${escapeHTML(n)}</option>`),
       `<option value="${escapeHTML(REV_ALLGEMEIN_LABEL)}">🌲 ${escapeHTML(REV_ALLGEMEIN_LABEL)}</option>`,
       `<option value="${FREE_SPOT_OPT_VALUE}">📍 Freier Ort (eigener Name)...</option>`
     ];
@@ -17961,6 +18549,10 @@
     } else if (isKnownK) {
       const hitK = kanzelNames.find(k => k.toLowerCase() === cleanSel.toLowerCase()) || cleanSel;
       modalSel.value = hitK;
+      if (freeInp) freeInp.value = "";
+    } else if (isKnownSpot) {
+      const hitS = spotNames.find(s => s.toLowerCase() === cleanSel.toLowerCase()) || cleanSel;
+      modalSel.value = hitS;
       if (freeInp) freeInp.value = "";
     } else {
       modalSel.value = FREE_SPOT_OPT_VALUE;
@@ -18083,6 +18675,9 @@
         const chosen = document.getElementById("bf-kanzel-input")?.value || REV_ALLGEMEIN_LABEL;
         if (chosen === FREE_SPOT_OPT_VALUE) {
           const freeTxt = String(document.getElementById("bf-free-spot-input")?.value || "").trim().replace(/\s+/g, " ");
+          if (freeTxt && typeof upsertFreeSpot === "function") {
+            upsertFreeSpot(freeTxt, "", "SAUENMATRIX");
+          }
           return freeTxt || REV_ALLGEMEIN_LABEL;
         }
         return chosen;
@@ -18097,6 +18692,14 @@
       trophyType: prev?.trophyType || (maleVal && meta?.trophySpecies ? meta.trophySpecies : ""),
       trophyDetail: prev?.trophyDetail || "",
       trophyTag: prev?.trophyTag || "",
+      trophyClass: prev?.trophyClass || "",
+      trophyStatus: prev?.trophyStatus || "",
+      trophyCoatColor: prev?.trophyCoatColor || "",
+      trophyAgeEstimate: prev?.trophyAgeEstimate || "",
+      trophyConfidence: prev?.trophyConfidence || "",
+      trophyBodyNotes: prev?.trophyBodyNotes || "",
+      trophyDeepChecked: Boolean(prev?.trophyDeepChecked),
+      trophyPhotoDataUrl: prev?.trophyPhotoDataUrl || "",
       isMaleTrophy: maleVal,
       trophyId: trophyVal,
       trophyIgnored: Boolean(prev?.trophyIgnored),
@@ -18110,6 +18713,9 @@
     else list.unshift(entry);
 
     saveBeifangEntries(list);
+    if (trophyVal && typeof enrichTrophyProfileFromSighting === "function") {
+      enrichTrophyProfileFromSighting(trophyVal, entry);
+    }
     selectedBfCalDateStr = dateVal;
     closeModal("modal-beifang-entry");
     renderBeifangView();
@@ -18436,15 +19042,73 @@
   }
   window.restoreIgnoredTrophyCandidates = restoreIgnoredTrophyCandidates;
 
+  async function enrichTrophyProfileFromSighting(trophyId, sightingObj) {
+    if (!trophyId || !sightingObj || typeof sightingObj !== "object") return false;
+    const list = getTrophyProfiles();
+    const idx = list.findIndex(t => t.id === trophyId);
+    if (idx < 0) return false;
+    const tr = list[idx];
+    let changed = false;
+
+    const tv06 = normalizeTrophyv06Fields(sightingObj);
+    if (!tr.trophyClass && tv06.trophyClass) { tr.trophyClass = tv06.trophyClass; changed = true; }
+    if (!tr.trophyStatus && tv06.trophyStatus) { tr.trophyStatus = tv06.trophyStatus; changed = true; }
+    if (!tr.trophyCoatColor && tv06.trophyCoatColor) { tr.trophyCoatColor = tv06.trophyCoatColor; changed = true; }
+    if (!tr.ageEstimate && tv06.trophyAgeEstimate) { tr.ageEstimate = tv06.trophyAgeEstimate; changed = true; }
+
+    const traitAdd = [String(sightingObj.trophyDetail || "").trim(), tv06.trophyBodyNotes].filter(Boolean).join(" · ");
+    if (!tr.traits && traitAdd) {
+      tr.traits = traitAdd;
+      changed = true;
+    }
+
+    if (tv06.trophyPhotoDataUrl && typeof trPhotoSave === "function") {
+      const pIds = getTrophyPhotoIds(tr);
+      const pLabels = getTrophyPhotoLabels(tr);
+      if (pIds.length < 4) {
+        const pid = `trp-${tr.id}-${Date.now()}-ul`;
+        const ok = await trPhotoSave(pid, tv06.trophyPhotoDataUrl);
+        if (ok) {
+          pIds.push(pid);
+          const lbl = sightingObj.date ? `Überläufer ${formatDateDE(sightingObj.date)}` : "Überläufer";
+          pLabels.push(lbl);
+          tr.photoIds = pIds;
+          tr.photoLabels = pLabels;
+          tr.photoId = pIds[0] || "";
+          changed = true;
+        }
+      }
+    }
+
+    if (changed) {
+      tr.updatedAt = getLocalISODateTime();
+      list[idx] = tr;
+      saveTrophyProfiles(list);
+      if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    }
+    return changed;
+  }
+  window.enrichTrophyProfileFromSighting = enrichTrophyProfileFromSighting;
+
   function linkEntryToTrophyId(sourceType, entryId, trophyId) {
     if (!sourceType || !entryId || !trophyId) return false;
+    if (sourceType === "INBOX") {
+      const inbox = getCamInboxEntries();
+      const idx = inbox.findIndex((it, i) => buildCamInboxKey(it, i) === entryId);
+      if (idx < 0) return false;
+      inbox[idx].trophyId = trophyId;
+      saveCamInboxEntries(inbox);
+      importCamInboxItemsByPredicate((it, k) => k === entryId, true);
+      return true;
+    }
     if (sourceType === "DIARY") {
       const idx = diaryLogs.findIndex(x => x.id === entryId);
       if (idx < 0) return false;
       diaryLogs[idx].trophyId = trophyId;
       diaryLogs[idx].trophyIgnored = false;
       window.TAGEBUCH_EINTRAEGE = diaryLogs;
-      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+      saveListWithLocalStoragePhotoGuard("sm_logs_v1", diaryLogs, 3850000);
+      enrichTrophyProfileFromSighting(trophyId, diaryLogs[idx]);
     } else if (sourceType === "BEIFANG") {
       const list = getBeifangEntries();
       const idx = list.findIndex(x => x.id === entryId);
@@ -18454,6 +19118,7 @@
       list[idx].isTrophy = true;
       list[idx].trophyIgnored = false;
       saveBeifangEntries(list);
+      enrichTrophyProfileFromSighting(trophyId, list[idx]);
     } else {
       return false;
     }
@@ -18465,9 +19130,37 @@
   }
 
   function getAssignSourceEntryInfo(sourceType, entryId) {
+    if (sourceType === "INBOX") {
+      const inbox = getCamInboxEntries();
+      const item = inbox.find((it, i) => buildCamInboxKey(it, i) === entryId);
+      if (!item) return null;
+      const role = getCamInboxItemRole(item);
+      const spKey = classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
+      const trSp = (role === "SCHWARZWILD")
+        ? "KEILER"
+        : (normalizeTrophySpeciesFromType(item.trophyType, `${item.trophyDetail || ""} ${item.speciesDetail || ""}`, spKey) || "REHBOCK");
+      const tv06 = normalizeTrophyv06Fields(item);
+      return {
+        sourceType: "INBOX",
+        id: entryId,
+        species: trSp,
+        date: item.date || "",
+        arrival: item.arrival || "",
+        kanzel: item.kanzel || item.originalSpot || REV_ALLGEMEIN_LABEL,
+        detail: String(item.trophyDetail || item.trophyTag || item.speciesDetail || TROPHY_SPECIES_META[trSp]?.label || "").trim(),
+        trophyClass: tv06.trophyClass,
+        trophyStatus: tv06.trophyStatus,
+        trophyCoatColor: tv06.trophyCoatColor,
+        trophyAgeEstimate: tv06.trophyAgeEstimate,
+        trophyBodyNotes: tv06.trophyBodyNotes,
+        trophyPhotoDataUrl: tv06.trophyPhotoDataUrl,
+        note: String(item.note || "").trim()
+      };
+    }
     if (sourceType === "DIARY") {
       const e = diaryLogs.find(x => x.id === entryId);
       if (!e) return null;
+      const tv06 = normalizeTrophyv06Fields(e);
       return {
         sourceType: "DIARY",
         id: e.id,
@@ -18476,6 +19169,12 @@
         arrival: e.arrival || "",
         kanzel: e.kanzel || "Tunnel",
         detail: String(e.trophyDetail || e.trophyTag || e.structure || "Keiler").trim(),
+        trophyClass: tv06.trophyClass,
+        trophyStatus: tv06.trophyStatus,
+        trophyCoatColor: tv06.trophyCoatColor,
+        trophyAgeEstimate: tv06.trophyAgeEstimate,
+        trophyBodyNotes: tv06.trophyBodyNotes,
+        trophyPhotoDataUrl: tv06.trophyPhotoDataUrl,
         note: String(e.note || "").trim()
       };
     }
@@ -18484,6 +19183,7 @@
       if (!b) return null;
       const spKey = getBeifangSpeciesKey(b);
       const trSp = BEIFANG_SPECIES_META[spKey]?.trophySpecies || "REHBOCK";
+      const tv06 = normalizeTrophyv06Fields(b);
       return {
         sourceType: "BEIFANG",
         id: b.id,
@@ -18492,6 +19192,12 @@
         arrival: b.arrival || "",
         kanzel: b.kanzel || REV_ALLGEMEIN_LABEL,
         detail: String(b.trophyDetail || b.trophyTag || b.speciesDetail || TROPHY_SPECIES_META[trSp]?.label || "").trim(),
+        trophyClass: tv06.trophyClass,
+        trophyStatus: tv06.trophyStatus,
+        trophyCoatColor: tv06.trophyCoatColor,
+        trophyAgeEstimate: tv06.trophyAgeEstimate,
+        trophyBodyNotes: tv06.trophyBodyNotes,
+        trophyPhotoDataUrl: tv06.trophyPhotoDataUrl,
         note: String(b.note || "").trim()
       };
     }
@@ -18559,11 +19265,22 @@
     const nameSuggestion = cleanSpot && !cleanDetail.toLowerCase().includes(cleanSpot.toLowerCase())
       ? `${cleanDetail} ${cleanSpot}`
       : cleanDetail;
+    const traitParts = [];
+    if (info.detail && info.detail !== spMeta.label) traitParts.push(info.detail);
+    if (info.trophyBodyNotes && !traitParts.join(" ").toLowerCase().includes(info.trophyBodyNotes.toLowerCase())) {
+      traitParts.push(info.trophyBodyNotes);
+    }
     openTrophyModal(null, {
       name: nameSuggestion,
       species: info.species,
-      traits: (info.detail && info.detail !== spMeta.label) ? info.detail : "",
+      trophyClass: info.trophyClass || "",
+      trophyStatus: info.trophyStatus || "",
+      trophyCoatColor: info.trophyCoatColor || "",
+      ageEstimate: info.trophyAgeEstimate || "",
+      traits: traitParts.join(" · "),
       note: info.note,
+      photoDataUrl: info.trophyPhotoDataUrl || "",
+      photoLabel: info.date ? `Überläufer ${formatDateDE(info.date)}` : "Überläufer",
       linkAfterSave: { sourceType: info.sourceType, entryId: info.id }
     });
   }
@@ -18578,11 +19295,16 @@
       const photoIds = getTrophyPhotoIds(item);
       const photoLabels = getTrophyPhotoLabels(item);
       const st = getTrophyStatusKey(item);
+      const rawAntSt = String(item.trophyStatus || "").trim().toUpperCase();
+      const validAntSt = ["VERFEGT", "BAST", "ABGEWORFEN", "UNKLAR"].includes(rawAntSt) ? rawAntSt : "";
       return {
         id: String(item.id || (`tr-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`)),
         name: name,
         species: sp,
         status: st,
+        trophyClass: String(item.trophyClass || "").trim(),
+        trophyStatus: validAntSt,
+        trophyCoatColor: String(item.trophyCoatColor || "").trim(),
         ageEstimate: String(item.ageEstimate || "").trim(),
         traits: String(item.traits || "").trim(),
         note: String(item.note || "").trim(),
@@ -18600,6 +19322,9 @@
       const hitIdx = result.findIndex(r => r.id === item.id || (r.name.toLowerCase() === item.name.toLowerCase() && r.species === item.species));
       if (hitIdx >= 0) {
         const cur = result[hitIdx];
+        if (!cur.trophyClass && item.trophyClass) cur.trophyClass = item.trophyClass;
+        if (!cur.trophyStatus && item.trophyStatus) cur.trophyStatus = item.trophyStatus;
+        if (!cur.trophyCoatColor && item.trophyCoatColor) cur.trophyCoatColor = item.trophyCoatColor;
         if (!cur.traits && item.traits) cur.traits = item.traits;
         if (!cur.ageEstimate && item.ageEstimate) cur.ageEstimate = item.ageEstimate;
         if (!cur.note && item.note) cur.note = item.note;
@@ -18994,7 +19719,7 @@
       if (!q) return true;
       const meta = TROPHY_SPECIES_META[tr.species] || { label: "" };
       const stLabel = TROPHY_STATUS_META[stKey]?.label || "";
-      return `${tr.name} ${meta.label} ${stLabel} ${tr.traits} ${tr.ageEstimate} ${tr.note} ${stats.spotsText}`.toLowerCase().includes(q);
+      return `${tr.name} ${meta.label} ${stLabel} ${tr.trophyClass || ""} ${tr.trophyStatus || ""} ${tr.trophyCoatColor || ""} ${tr.traits} ${tr.ageEstimate} ${tr.note} ${stats.spotsText}`.toLowerCase().includes(q);
     });
 
     // Sortierung: Aktive zuerst, dann nach letzter Sichtung (neueste zuerst)
@@ -19057,6 +19782,9 @@
                   <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-bottom:3px;">
                     <span class="beifang-cat-pill" style="border-color:${meta.color};">${meta.icon} ${meta.label}${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}</span>
                     <span class="tr-status-pill ${stMeta.cls}">${stMeta.icon} ${stMeta.label}</span>
+                    ${tr.trophyClass ? `<span class="tr-v06-pill is-class">🏅 Kl. ${escapeHTML(tr.trophyClass)}</span>` : ""}
+                    ${tr.trophyStatus ? `<span class="tr-v06-pill${tr.trophyStatus === "BAST" ? " is-bast" : ""}">${formatTrophyStatusLabel(tr.trophyStatus)}</span>` : ""}
+                    ${tr.trophyCoatColor ? `<span class="tr-v06-pill">🎨 ${escapeHTML(tr.trophyCoatColor)}</span>` : ""}
                   </div>
                   <div style="font-weight:900; font-size:0.95rem; color:#fff; line-height:1.25;">${escapeHTML(tr.name)}</div>
                 </div>
@@ -19199,6 +19927,9 @@
       document.getElementById("tr-species-input").value = TROPHY_SPECIES_META[existing.species] ? existing.species : "REHBOCK";
       document.getElementById("tr-status-input").value = getTrophyStatusKey(existing);
       document.getElementById("tr-age-input").value = existing.ageEstimate || "";
+      if (document.getElementById("tr-class-input")) document.getElementById("tr-class-input").value = existing.trophyClass || "";
+      if (document.getElementById("tr-antler-status-input")) document.getElementById("tr-antler-status-input").value = existing.trophyStatus || "";
+      if (document.getElementById("tr-coat-color-input")) document.getElementById("tr-coat-color-input").value = existing.trophyCoatColor || "";
       document.getElementById("tr-traits-input").value = existing.traits || "";
       document.getElementById("tr-note-input").value = existing.note || "";
       const pIds = getTrophyPhotoIds(existing);
@@ -19220,8 +19951,20 @@
       document.getElementById("tr-species-input").value = spInit;
       document.getElementById("tr-status-input").value = "ACTIVE";
       document.getElementById("tr-age-input").value = (prefillObj && prefillObj.ageEstimate) ? prefillObj.ageEstimate : "";
+      if (document.getElementById("tr-class-input")) document.getElementById("tr-class-input").value = (prefillObj && prefillObj.trophyClass) ? prefillObj.trophyClass : "";
+      if (document.getElementById("tr-antler-status-input")) document.getElementById("tr-antler-status-input").value = (prefillObj && prefillObj.trophyStatus) ? prefillObj.trophyStatus : "";
+      if (document.getElementById("tr-coat-color-input")) document.getElementById("tr-coat-color-input").value = (prefillObj && prefillObj.trophyCoatColor) ? prefillObj.trophyCoatColor : "";
       document.getElementById("tr-traits-input").value = (prefillObj && prefillObj.traits) ? prefillObj.traits : "";
       document.getElementById("tr-note-input").value = (prefillObj && prefillObj.note) ? prefillObj.note : "";
+      if (prefillObj && typeof prefillObj.photoDataUrl === "string" && prefillObj.photoDataUrl.startsWith("data:image")) {
+        pendingTrophyPhotos.push({
+          photoId: "",
+          dataUrl: prefillObj.photoDataUrl,
+          label: String(prefillObj.photoLabel || "").trim(),
+          isNew: true
+        });
+        renderTrophyModalPhotoGrid();
+      }
     }
     syncTrophyModalStreckeHint();
     openModal("modal-trophy-entry");
@@ -19260,6 +20003,9 @@
       name: name,
       species: document.getElementById("tr-species-input")?.value || "REHBOCK",
       status: document.getElementById("tr-status-input")?.value || "ACTIVE",
+      trophyClass: (document.getElementById("tr-class-input")?.value || "").trim(),
+      trophyStatus: (document.getElementById("tr-antler-status-input")?.value || "").trim().toUpperCase(),
+      trophyCoatColor: (document.getElementById("tr-coat-color-input")?.value || "").trim(),
       ageEstimate: (document.getElementById("tr-age-input")?.value || "").trim(),
       traits: (document.getElementById("tr-traits-input")?.value || "").trim(),
       note: (document.getElementById("tr-note-input")?.value || "").trim(),
@@ -19755,8 +20501,13 @@
     if (sumEl) {
       const stM = TROPHY_STATUS_META[getTrophyStatusKey(tr)] || TROPHY_STATUS_META.ACTIVE;
       const todLine = `🌅 ${stats.tod.morgen} · ☀️ ${stats.tod.tag} · 🌇 ${stats.tod.abend} · 🌙 ${stats.tod.nacht}`;
+      const v06ExtraBits = [
+        tr.trophyClass ? `🏅 Kl. ${escapeHTML(tr.trophyClass)}` : "",
+        tr.trophyStatus ? formatTrophyStatusLabel(tr.trophyStatus) : "",
+        tr.trophyCoatColor ? `🎨 ${escapeHTML(tr.trophyCoatColor)}` : ""
+      ].filter(Boolean).join(" · ");
       sumEl.innerHTML =
-        `<strong>${meta.label}</strong>${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""} · <span class="tr-status-pill ${stM.cls}">${stM.icon} ${stM.label}</span><br>` +
+        `<strong>${meta.label}</strong>${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}${v06ExtraBits ? ` · ${v06ExtraBits}` : ""} · <span class="tr-status-pill ${stM.cls}">${stM.icon} ${stM.label}</span><br>` +
         `👁️ <strong>${stats.count} Sichtung${stats.count === 1 ? "" : "en"}</strong> · 🕒 2h-Fenster: <strong>${escapeHTML(stats.peakWindowStr)}</strong><br>` +
         `${todLine} · ⏱️ ${escapeHTML(stats.recency.text)}<br>` +
         `${escapeHTML(stats.spotsText)}`;
@@ -19831,7 +20582,7 @@
                 <strong style="font-size:0.82rem;">📅 ${formatDateDE(s.date)} · 🕒 ${escapeHTML(timeRange)}${durTxt}</strong>
                 <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="${editCall}">✏️</button>
               </div>
-              <div style="font-size:0.83rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(s.kanzel)} — ${escapeHTML(s.detail)}</div>
+              <div style="font-size:0.83rem; font-weight:800; color:#fff;">${escapeHTML(formatSpotLabel(s.kanzel))} — ${escapeHTML(s.detail)}</div>
               ${s.note ? `<div style="font-size:0.74rem; color:#cfe3d5;">📝 ${escapeHTML(s.note)}</div>` : ""}
             </div>
           `;
@@ -19848,8 +20599,11 @@
     if (!document.hidden) refreshCamInboxBanner();
   });
   window.addEventListener("storage", (e) => {
-    if (!e || !e.key || e.key === "sm_cam_inbox_v1") {
+    if (!e || !e.key || e.key === "sm_cam_inbox_v1" || e.key === "sm_spots_v1") {
       refreshCamInboxBanner();
+      if (typeof renderFreeSpotsSelectList === "function") renderFreeSpotsSelectList();
+      if (typeof renderDiaryCalendar === "function") renderDiaryCalendar();
+      if (typeof renderBeifangView === "function") renderBeifangView();
     }
   });
 
@@ -20607,6 +21361,7 @@
 
   window.initSauenmatrixApp = function() {
     if (typeof initBlock1Core === "function") initBlock1Core();
+    if (typeof syncFreeSpotsFromExistingEntries === "function") syncFreeSpotsFromExistingEntries();
     mountBlock4Views();
     mountBlock5Views();
     if (typeof mountSauenmatrixView === "function") mountSauenmatrixView();

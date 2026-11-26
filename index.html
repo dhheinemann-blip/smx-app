@@ -11,7 +11,7 @@
   <link id="dynamic-favicon" rel="icon" type="image/png">
   <link id="dynamic-touch-icon" rel="apple-touch-icon">
   <link id="dynamic-manifest" rel="manifest">
-  <title>Sauenmatrix v27.0 (Überläufer v0.5.4, Beifang-Kalender &amp; Trophäenträger)</title>
+  <title>Sauenmatrix v27.1 (Überläufer v0.5.6, Freie Orte &amp; Trophäen-Brücke)</title>
   <style>
     :root {
       --bg-main: #0b130e;
@@ -900,6 +900,30 @@
       border-left-color: #64748b;
       opacity: 0.72;
     }
+.ul-inbox-card.is-special {
+      background: linear-gradient(135deg, #2b1a2e 0%, #192622 100%);
+      border-color: #f43f5e;
+      border-left: 6px solid #fb7185;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.22);
+    }
+    .beifang-card.is-special {
+      background: linear-gradient(135deg, #2b1a2e 0%, #18271e 100%);
+      border-color: #fb7185;
+      border-left-width: 6px;
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.18);
+    }
+    .special-alert-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(244, 63, 94, 0.24);
+      border: 1.5px solid #fb7185;
+      color: #ffe4e6;
+      border-radius: 9px;
+      padding: 2px 8px;
+      font-size: 0.71rem;
+      font-weight: 900;
+    }
     .spot-chip-row {
       display: flex;
       gap: 6px;
@@ -1138,6 +1162,320 @@
       border-radius: 12px;
       background: #08110c;
       display: block;
+    }
+/* v27.1 Etappe 2: Trophäenträger-Brücke, 4 Fotos, Status, 4-Zeiten & Offene Sichtungen */
+    .trophy-quick-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(244, 196, 48, 0.14);
+      border: 1px dashed rgba(244, 196, 48, 0.72);
+      color: #fff3bf;
+      border-radius: 9px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .trophy-quick-btn:active {
+      transform: scale(0.96);
+      background: rgba(244, 196, 48, 0.28);
+    }
+    .tr-open-box {
+      background: #13251b;
+      border: 1.5px solid #4a7c5d;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .tr-open-box-head {
+      width: 100%;
+      background: linear-gradient(135deg, #1b3826 0%, #13281c 100%);
+      color: var(--text-main);
+      border: none;
+      padding: 9px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: left;
+    }
+    .tr-open-box-body {
+      padding: 8px 10px 10px;
+      border-top: 1px solid rgba(67, 135, 93, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .tr-open-item {
+      background: rgba(9, 18, 12, 0.65);
+      border: 1px solid rgba(67, 135, 93, 0.38);
+      border-radius: 11px;
+      padding: 8px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tr-open-item-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .tr-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      border-radius: 8px;
+      padding: 2px 7px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      border: 1px solid transparent;
+    }
+    .tr-status-pill.st-ACTIVE {
+      background: rgba(34, 230, 107, 0.16);
+      border-color: rgba(34, 230, 107, 0.6);
+      color: #8ce99a;
+    }
+    .tr-status-pill.st-HARVESTED {
+      background: rgba(230, 57, 70, 0.2);
+      border-color: rgba(230, 57, 70, 0.7);
+      color: #ffb3be;
+    }
+    .tr-status-pill.st-ARCHIVED {
+      background: rgba(148, 163, 184, 0.16);
+      border-color: rgba(148, 163, 184, 0.5);
+      color: #cbd5e1;
+    }
+    .trophy-card.st-HARVESTED {
+      opacity: 0.92;
+      background: linear-gradient(180deg, #1b2220 0%, #141f19 100%);
+    }
+    .trophy-card.st-ARCHIVED {
+      opacity: 0.78;
+      background: #121d17;
+    }
+    .tr-recency-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      border-radius: 8px;
+      padding: 2px 7px;
+      font-size: 0.69rem;
+      font-weight: 800;
+    }
+    .tr-recency-pill.is-fresh {
+      background: rgba(34, 230, 107, 0.18);
+      border: 1px solid rgba(34, 230, 107, 0.65);
+      color: var(--accent-green);
+    }
+    .tr-recency-pill.is-mid {
+      background: rgba(244, 196, 48, 0.16);
+      border: 1px solid rgba(244, 196, 48, 0.55);
+      color: #fff3bf;
+    }
+    .tr-recency-pill.is-old {
+      background: rgba(148, 163, 184, 0.14);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #94a3b8;
+    }
+    .tr-timeofday-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      margin-top: 2px;
+    }
+    .tr-tod-cell {
+      background: rgba(9, 18, 12, 0.62);
+      border: 1px solid rgba(67, 135, 93, 0.28);
+      border-radius: 8px;
+      padding: 4px 3px;
+      text-align: center;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .tr-tod-cell.has-hits {
+      border-color: rgba(34, 230, 107, 0.5);
+      color: #e6f4ea;
+      background: rgba(34, 230, 107, 0.11);
+    }
+    .tr-tod-cell.is-peak {
+      border-color: var(--accent-yellow);
+      color: #fff3bf;
+      background: rgba(244, 196, 48, 0.16);
+    }
+    .tr-thumb-wrap-rel {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .tr-photo-count-badge {
+      position: absolute;
+      bottom: 3px;
+      right: 3px;
+      background: rgba(6, 14, 9, 0.86);
+      color: #fff3bf;
+      border: 1px solid rgba(244, 196, 48, 0.65);
+      border-radius: 6px;
+      padding: 1px 5px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      pointer-events: none;
+    }
+    .tr-modal-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 9px;
+    }
+    .tr-modal-photo-slot {
+      background: #0a140e;
+      border: 1.5px solid #355e44;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .tr-modal-photo-imgbox {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: #07100a;
+    }
+    .tr-modal-photo-imgbox img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tr-modal-photo-lbl {
+      width: 100%;
+      background: #0f1f16;
+      border: none;
+      border-top: 1px solid #294c38;
+      color: #e6f4ea;
+      font-size: 0.72rem;
+      padding: 5px 7px;
+      outline: none;
+    }
+    .tr-lb-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .tr-lb-thumbs {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .tr-lb-thumb-btn {
+      width: 52px;
+      height: 40px;
+      padding: 0;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 2px solid #2f543d;
+      background: #0b140e;
+      cursor: pointer;
+    }
+    .tr-lb-thumb-btn.active {
+      border-color: var(--accent-yellow);
+    }
+    .tr-lb-thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #modal-trophy-assign {
+      z-index: 2150;
+    }
+/* v27.1 Etappe 3: 48h-Wolf-Hinweis (0 % Score), Jagdzeiten-Etikett & Datumsdreher */
+    .signal-banner-box.is-wolf-info {
+      background: rgba(148, 163, 184, 0.13);
+      border: 1px solid rgba(203, 213, 225, 0.45);
+      color: #e2e8f0;
+      font-weight: 700;
+    }
+    .bf-info-strip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .bf-jz-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 10px;
+      padding: 4px 10px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      line-height: 1.25;
+      border: 1px solid transparent;
+    }
+    .bf-jz-chip.jz-open {
+      background: rgba(34, 230, 107, 0.16);
+      border-color: rgba(34, 230, 107, 0.65);
+      color: #8ce99a;
+    }
+    .bf-jz-chip.jz-partial {
+      background: rgba(244, 196, 48, 0.16);
+      border-color: rgba(244, 196, 48, 0.65);
+      color: #fff3bf;
+    }
+    .bf-jz-chip.jz-closed {
+      background: rgba(230, 57, 70, 0.18);
+      border-color: rgba(230, 57, 70, 0.65);
+      color: #ffb3be;
+    }
+    .date-swap-row {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .date-swap-row input[type="date"] {
+      flex: 1;
+      min-width: 0;
+    }
+    .btn-date-swap {
+      background: #1c3325;
+      color: #fff3bf;
+      border: 1px solid rgba(244, 196, 48, 0.65);
+      border-radius: 9px;
+      padding: 0 8px;
+      height: 38px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-date-swap:active {
+      transform: scale(0.95);
+      background: rgba(244, 196, 48, 0.22);
+    }
+    .future-date-alert-bar {
+      background: rgba(244, 196, 48, 0.14);
+      border: 1.5px solid rgba(244, 196, 48, 0.72);
+      border-radius: 13px;
+      padding: 8px 11px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: #fff3bf;
+      font-weight: 800;
+    }
+    #modal-date-swap-checker {
+      z-index: 2180;
     }
   </style>
 </head>
@@ -2018,6 +2356,7 @@
           🐗 Frühabend-Besuch heute → ~37 % Chance auf 2. Besuch noch in dieser Nacht!
         </div>
         <div class="signal-banner-box is-disturb" id="cp-beunruhigung-banner"></div>
+        <div class="signal-banner-box is-wolf-info" id="cp-wolf-info-banner"></div>
 
         <!-- 3 Wetter-Rohdaten-Boxen -->
         <div class="cockpit-weather-grid">
@@ -2551,12 +2890,19 @@
       <div class="form-row-2col">
         <div>
           <label class="app-label">📅 Datum</label>
-          <input type="date" class="app-input" id="bf-date-input">
+          <div class="date-swap-row">
+            <input type="date" class="app-input" id="bf-date-input">
+            <button type="button" class="btn-date-swap" onclick="swapDateDayMonthInInput('bf-date-input')" title="Tag und Monat tauschen (bei Datumsdreher)">🔄 T↔M</button>
+          </div>
         </div>
         <div>
           <label class="app-label">🏯 Standort / Sitz</label>
-          <select class="app-input" id="bf-kanzel-input"></select>
+          <select class="app-input" id="bf-kanzel-input" onchange="syncBeifangFreeSpotVisibility()"></select>
         </div>
+      </div>
+      <div id="bf-free-spot-wrap" style="display:none; background:#102217; border:1px solid #356045; border-radius:12px; padding:9px 10px; margin-bottom:10px;">
+        <label class="app-label">📍 Freier Ortsname (optional, z. B. Wechsel, Bahndamm)</label>
+        <input type="text" class="app-input" id="bf-free-spot-input" placeholder="Leer lassen für „Revier allgemein“ oder freien Ort eintragen">
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr 78px 72px; gap:6px; margin-bottom:10px;">
         <div><label class="app-label">🕒 Von</label><input type="time" class="app-input" id="bf-arrival-input" oninput="autoCalcBeifangDuration()"></div>
@@ -2582,7 +2928,7 @@
     </div>
   </div>
 
-  <!-- MODAL 9: TROPHÄENTRÄGER ANLEGEN / BEARBEITEN (sm_trophaeen_v1 + IndexedDB-Foto) -->
+  <!-- MODAL 9: TROPHÄENTRÄGER ANLEGEN / BEARBEITEN (sm_trophaeen_v1 + bis zu 4 Fotos in IndexedDB) -->
   <div class="modal-backdrop" id="modal-trophy-entry">
     <div class="modal-card no-swipe">
       <div class="modal-header">
@@ -2605,9 +2951,23 @@
           </select>
         </div>
         <div>
-          <label class="app-label">⏳ Geschätztes Alter</label>
-          <input type="text" class="app-input" id="tr-age-input" placeholder="z. B. 4–5 Jahre">
+          <label class="app-label">🚦 Status</label>
+          <select class="app-input" id="tr-status-input" onchange="syncTrophyModalStreckeHint()">
+            <option value="ACTIVE">🟢 Aktiv</option>
+            <option value="HARVESTED">🔴 Erlegt</option>
+            <option value="ARCHIVED">📦 Archiv</option>
+          </select>
         </div>
+      </div>
+      <div id="tr-modal-strecke-hint" style="display:none; background:rgba(230,57,70,0.14); border:1px solid rgba(230,57,70,0.55); border-radius:11px; padding:8px 10px; margin-bottom:10px; font-size:0.75rem; color:#ffd6dc;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span>🔴 Als erlegt markiert – direkt in Streckenliste übernehmen?</span>
+          <button type="button" class="btn-sm btn-yes" style="padding:4px 9px; font-size:0.74rem;" onclick="saveAndTransferTrophyToStrecke()">🎯 In Streckenliste</button>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label class="app-label">⏳ Geschätztes Alter</label>
+        <input type="text" class="app-input" id="tr-age-input" placeholder="z. B. 4–5 Jahre">
       </div>
       <div style="margin-bottom:10px;">
         <label class="app-label">🔎 Merkmale / Geweih- bzw. Gehörnbeschreibung</label>
@@ -2620,22 +2980,41 @@
       <div style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:10px; margin-bottom:12px;">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
           <div>
-            <div style="font-size:0.8rem; font-weight:800;">📷 Foto zum Wiedererkennen</div>
-            <div style="font-size:0.68rem; color:var(--text-muted);" id="tr-photo-status">Automatisch verkleinert in lokaler Bild-Datenbank (schont Speicher)</div>
+            <div style="font-size:0.8rem; font-weight:800;">📷 Fotos zum Wiedererkennen (bis zu 4)</div>
+            <div style="font-size:0.68rem; color:var(--text-muted);" id="tr-photo-status">0 / 4 Fotos · komprimiert in lokaler Bild-Datenbank</div>
           </div>
-          <label class="btn-sm btn-yes" style="cursor:pointer; font-size:0.76rem; padding:6px 10px; white-space:nowrap;">
+          <label class="btn-sm btn-yes" id="tr-add-photo-label" style="cursor:pointer; font-size:0.76rem; padding:6px 10px; white-space:nowrap;">
             + Foto
-            <input type="file" accept="image/*" style="display:none;" onchange="handleTrophyPhotoUpload(event)">
+            <input type="file" id="tr-photo-file-input" accept="image/*" style="display:none;" onchange="handleTrophyPhotoUpload(event)">
           </label>
         </div>
-        <div class="trophy-photo-preview-wrap" id="tr-photo-preview-wrap">
-          <img id="tr-photo-preview-img" src="" alt="Trophäen-Foto">
-          <button type="button" class="del-photo-btn" onclick="clearTrophyModalPhoto()">✕ Entfernen</button>
-        </div>
+        <div class="tr-modal-photo-grid" id="tr-modal-photo-grid" style="display:none;"></div>
       </div>
       <button type="button" class="btn-add-entry-hero" onclick="saveTrophyProfileFromModal()">💾 Steckbrief speichern</button>
       <div class="modal-footer-back">
         <button type="button" class="back-pill-btn" onclick="closeModal('modal-trophy-entry')">◀ Zurück</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 9b: 1-KLICK-ZUORDNUNG EINER SICHTUNG ZU EINEM TROPHÄENTRÄGER -->
+  <div class="modal-backdrop" id="modal-trophy-assign">
+    <div class="modal-card no-swipe" style="max-width:460px; padding:14px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;">🏆 In Trophäenliste übernehmen</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-trophy-assign')">✕</button>
+      </div>
+      <div id="tr-assign-source-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.45; color:#d8e6dc;"></div>
+      <div style="font-size:0.78rem; font-weight:800; color:var(--text-muted); margin-bottom:6px;">Mit bestehendem Steckbrief verknüpfen:</div>
+      <div id="tr-assign-existing-list" style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;"></div>
+      <div style="border-top:1px solid #294c38; padding-top:10px;">
+        <button type="button" class="btn-add-entry-hero" style="width:100%;" onclick="createNewTrophyFromPendingAssign()">➕ Neuen Steckbrief vorausgefüllt anlegen</button>
+        <div style="font-size:0.7rem; color:var(--text-muted); margin-top:6px; text-align:center;">
+          🛡️ Der Originaleintrag bleibt zu 100 % unverändert im Tagebuch bzw. Beifang.
+        </div>
+      </div>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-trophy-assign')">◀ Zurück</button>
       </div>
     </div>
   </div>
@@ -2675,7 +3054,7 @@
     </div>
   </div>
 
-  <!-- MODAL 11: FOTO-VOLLBILD (TROPHÄEN-LIGHTBOX) -->
+  <!-- MODAL 11: FOTO-VOLLBILD (TROPHÄEN-LIGHTBOX, BIS ZU 4 FOTOS) -->
   <div class="modal-backdrop" id="modal-photo-lightbox" onclick="if(event.target===this) closeModal('modal-photo-lightbox')">
     <div class="modal-card no-swipe" style="max-width:520px; padding:12px;">
       <div class="modal-header" style="margin-bottom:8px;">
@@ -2683,8 +3062,29 @@
         <button type="button" class="close-x-btn" onclick="closeModal('modal-photo-lightbox')">✕</button>
       </div>
       <img id="lightbox-photo-img" src="" alt="Foto Großansicht">
+      <div id="lightbox-photo-caption" style="text-align:center; font-size:0.78rem; font-weight:700; color:#fff3bf; margin-top:6px;"></div>
+      <div class="tr-lb-nav-row" id="lightbox-nav-row" style="display:none;">
+        <button type="button" class="btn-sm btn-no" onclick="stepTrophyLightbox(-1)">◀ Vorheriges</button>
+        <span id="lightbox-counter" style="font-size:0.76rem; color:var(--text-muted); font-weight:800;">1 / 1</span>
+        <button type="button" class="btn-sm btn-no" onclick="stepTrophyLightbox(1)">Nächstes ▶</button>
+      </div>
+      <div class="tr-lb-thumbs" id="lightbox-thumbs-row" style="display:none;"></div>
       <div class="modal-footer-back" style="margin-top:10px;">
         <button type="button" class="back-pill-btn" onclick="closeModal('modal-photo-lightbox')">◀ Schließen</button>
+      </div>
+    </div>
+  </div>
+<!-- MODAL 12: DATUMSDREHER-PRÜFER FÜR ALTBESTÄNDE (ZUKUNFTSDATEN) -->
+  <div class="modal-backdrop" id="modal-date-swap-checker">
+    <div class="modal-card no-swipe" style="max-width:490px; padding:14px;">
+      <div class="modal-header">
+        <h3 style="font-size:1.02rem;">🔄 Datumsdreher-Prüfer</h3>
+        <button type="button" class="close-x-btn" onclick="closeModal('modal-date-swap-checker')">✕</button>
+      </div>
+      <div id="date-swap-checker-summary" style="background:#0f1f16; border:1px solid #2e553d; border-radius:12px; padding:9px 11px; margin-bottom:10px; font-size:0.78rem; line-height:1.45; color:#d8e6dc;"></div>
+      <div id="date-swap-checker-list"></div>
+      <div class="modal-footer-back">
+        <button type="button" class="back-pill-btn" onclick="closeModal('modal-date-swap-checker')">◀ Zurück</button>
       </div>
     </div>
   </div>
@@ -3833,7 +4233,7 @@
 
       const dateStr = getLocalISODate();
       const backupPayload = {
-        appVersion: "Sauenmatrix-v27.0",
+        appVersion: "Sauenmatrix-v27.1",
         exportDatum: getLocalISODateTime(),
         activeKanzel: activeKanzel,
         logs: logs,
@@ -5865,6 +6265,11 @@
           const radarModal = document.getElementById("modal-live-radar");
           if (radarModal && radarModal.classList.contains("open")) {
             drawLiveRadarCanvas();
+          }
+
+          // Dezenter, rein informativer 48h-Wolf-Hinweis am aktiven Sitz (0 % Einfluss auf Sauen-Score)
+          if (typeof window.updateCockpitWolfInfoBanner === "function") {
+            window.updateCockpitWolfInfoBanner(activeKanzel);
           }
 
           // 5. Nahtlose Kopplung an Baustein 3 (Cockpit-Detailseite & 4-Tage-Prognose) & Sauenmatrix
@@ -8782,6 +9187,7 @@
 
   <!-- BEREICH A: SAUEN-TAGEBUCH (UNVERÄNDERT) -->
   <div id="tb-section-SAUEN">
+    <div id="diary-future-date-alert-slot"></div>
   <div class="truhe-mode-switcher cols-3 no-swipe">
     <button type="button" class="truhe-mode-btn active" id="tb-mode-CAL" onclick="setTagebuchSubMode('CAL')">📅 Kalender</button>
     <button type="button" class="truhe-mode-btn" id="tb-mode-LIST" onclick="setTagebuchSubMode('LIST')">📖 Liste (<span id="diary-total-count-badge">0</span>)</button>
@@ -8874,6 +9280,9 @@
       <button type="button" class="btn-sm btn-no" style="width:100%; font-size:0.78rem; padding:6px 10px; color:#d8e6dc;" onclick="runManualDuplicateCleanup()">
         🧹 Bestand auf Duplikate prüfen &amp; bereinigen
       </button>
+      <button type="button" class="btn-sm btn-no" style="width:100%; font-size:0.78rem; padding:6px 10px; color:#fff3bf; margin-top:6px;" onclick="openDateSwapCheckerModal()">
+        🔄 Datumsdreher / Zukunftsdaten prüfen
+      </button>
       <div style="font-size:0.69rem; color:#d8e6dc; margin-top:6px; text-align:center; line-height:1.3;">
         Erkennt Sauenmatrix-, alte HTML-App- &amp; Jagdbegleiter-Backups automatisch inkl. Beifang, Trophäenträger &amp; Duplikatschutz.
       </div>
@@ -8893,6 +9302,11 @@
 
     <!-- FILTER 2: EXAKTE WILDARTEN-FILTERLEISTE MIT ZÄHLERN -->
     <div class="spot-chip-row no-swipe" id="bf-species-chip-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
+
+    <!-- v27.1: Zukunftsdaten-Hinweis, 48h-Wolf-Hinweis & Jagdzeiten-Etikett -->
+    <div id="bf-future-date-alert-slot"></div>
+    <div class="signal-banner-box is-wolf-info" id="bf-wolf-info-banner" style="margin-bottom:8px;"></div>
+    <div id="bf-jagdzeit-badge-slot"></div>
 
     <!-- AKTIVITÄTS-ÜBERBLICK (7-TAGE-TREND + HÄUFIGSTE ZEIT + GESAMT) -->
     <div class="bf-activity-strip" id="bf-activity-strip">
@@ -8969,10 +9383,12 @@
     <span style="font-weight:800; font-size:0.95rem;">🏆 Trophäenträger-Register</span>
     <span class="jz-badge jz-warn"><span id="tr-total-badge">0</span> Steckbriefe</span>
   </div>
+  <div id="tr-open-sightings-box-slot"></div>
   <div style="margin-bottom:9px;">
     <button type="button" class="btn-add-entry-hero" style="width:100%;" onclick="openTrophyModal(null)">➕ Neuer Trophäenträger</button>
   </div>
   <div class="spot-chip-row no-swipe" id="tr-species-filter-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
+  <div class="spot-chip-row no-swipe" id="tr-status-filter-bar" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()"></div>
   <div style="margin-bottom:10px;">
     <input type="text" class="app-input" id="tr-search-input" placeholder="🔍 Suchen (Name, Merkmal, Kanzel...)" oninput="renderTrophaeenView()">
   </div>
@@ -9180,7 +9596,7 @@
       </div>
     </div>
     <div class="form-row-2col">
-      <div><label class="app-label">📅 Datum</label><input type="date" class="app-input" id="entry-date-input"></div>
+      <div><label class="app-label">📅 Datum</label><div class="date-swap-row"><input type="date" class="app-input" id="entry-date-input"><button type="button" class="btn-date-swap" onclick="swapDateDayMonthInInput('entry-date-input')" title="Tag und Monat tauschen (bei Datumsdreher)">🔄 T↔M</button></div></div>
       <div id="entry-kanzel-field-wrap"><label class="app-label">🏯 Hochsitz</label><select class="app-input" id="entry-kanzel-select"></select></div>
     </div>
     <div style="display:grid; grid-template-columns:1fr 1fr 92px; gap:8px; margin-bottom:12px;">
@@ -10452,6 +10868,18 @@
       notiz: noteTxt,
       richtung: wind || "",
       weatherStamp: (item.weatherStamp && typeof item.weatherStamp === "object") ? Object.assign({}, item.weatherStamp) : null,
+      ocrTempC: (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) ? Number(item.ocrTempC) : null,
+      visitId: String(item.visitId || "").trim(),
+      inboxId: String(item.inboxId || "").trim(),
+      source: String(item.source || "").trim(),
+      sourceVersion: String(item.sourceVersion || "").trim(),
+      isTrophy: Boolean(item.isTrophy),
+      trophyType: String(item.trophyType || "").trim(),
+      trophyDetail: String(item.trophyDetail || "").trim(),
+      trophyTag: String(item.trophyTag || "").trim(),
+      isMaleTrophy: Boolean(item.isMaleTrophy),
+      trophyId: String(item.trophyId || "").trim(),
+      trophyIgnored: Boolean(item.trophyIgnored),
       photo: (typeof photoVal === "string" && (photoVal.startsWith("data:image") || photoVal.startsWith("http"))) ? photoVal : null
     };
   }
@@ -10620,8 +11048,9 @@
     names.forEach(kName => {
       const cnt = monthLogs.filter(e => (e.kanzel || "Tunnel") === kName).length;
       const safeK = escapeHTML(kName).replace(/'/g, "&#39;");
+      const spotIco = (typeof getSpotIconPrefix === "function") ? getSpotIconPrefix(kName) : "🏯";
       chips.push(
-        `<button type="button" class="spot-chip ${currentDiaryCalKanzel === kName ? "active" : ""}" onclick="setDiaryCalKanzelFilter('${safeK}')">🏯 ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
+        `<button type="button" class="spot-chip ${currentDiaryCalKanzel === kName ? "active" : ""}" onclick="setDiaryCalKanzelFilter('${safeK}')">${spotIco} ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
       );
     });
     bar.innerHTML = chips.join("");
@@ -10629,6 +11058,7 @@
 
   function renderDiaryCalendar() {
     mountBlock4Views();
+    if (typeof renderFutureDateAlertsInViews === "function") renderFutureDateAlertsInViews();
     renderDiaryCalKanzelBar();
     const grid = document.getElementById("diary-calendar-grid");
     if (!grid) return;
@@ -10715,6 +11145,12 @@
     if (ws && ws.tempC !== null && ws.tempC !== undefined && !isNaN(Number(ws.tempC))) {
       parts.push(`🌡️ ${Number(ws.tempC).toFixed(1).replace(".", ",")} °C`);
     }
+    const camTempVal = (e.ocrTempC !== null && e.ocrTempC !== undefined && e.ocrTempC !== "" && !isNaN(Number(e.ocrTempC)))
+      ? Number(e.ocrTempC)
+      : ((ws && ws.source === "ocr" && ws.tempC !== null && ws.tempC !== undefined && !isNaN(Number(ws.tempC))) ? Number(ws.tempC) : null);
+    if (camTempVal !== null) {
+      parts.push(`📷 ${camTempVal.toFixed(1).replace(".", ",")} °C`);
+    }
     if (ws && ws.pressHpa !== null && ws.pressHpa !== undefined && !isNaN(Number(ws.pressHpa))) {
       parts.push(`${Math.round(Number(ws.pressHpa))} hPa`);
     }
@@ -10735,7 +11171,7 @@
     const kirrText = (e.kirrgut && e.kirrgut !== "-- Kein Wechsel --") ? `🌽 ${escapeHTML(e.kirrgut)}` : "";
     const weatherHtml = formatDiaryWeatherStampHTML(e);
     const photoHtml = e.photo ? `<div style="margin-top:6px;"><img src="${e.photo}" alt="Foto" style="max-height:110px; border-radius:8px;"></div>` : "";
-    const kanzelDisp = (e.status === "DRUECKJAGD") ? "🌲 Revierweit (alle Kirrungen)" : `🏯 ${escapeHTML(e.kanzel || "Tunnel")}`;
+    const kanzelDisp = (e.status === "DRUECKJAGD") ? "🌲 Revierweit (alle Kirrungen)" : escapeHTML((typeof formatSpotLabel === "function") ? formatSpotLabel(e.kanzel || "Tunnel") : `🏯 ${e.kanzel || "Tunnel"}`);
     const vergPill = isVerg ? `<span class="vergraemt-pill">⚠️ Wild vergrämt</span>` : "";
 
     return `
@@ -10750,7 +11186,15 @@
         </div>
         <div style="font-size:0.84rem; font-weight:800; color:#fff;">${kanzelDisp} — ${escapeHTML(e.structure || meta.label)}${vergPill}</div>
         ${kirrText ? `<div style="font-size:0.75rem; color:var(--accent-yellow); font-weight:700;">${kirrText}</div>` : ""}
-        ${(e.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(e.trophyId) : ""}
+        ${(() => {
+          const pill = (e.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(e.trophyId) : "";
+          if (pill) return pill;
+          if (typeof isDiaryTrophyCandidate === "function" && isDiaryTrophyCandidate(e)) {
+            const sid = escapeHTML(e.id).replace(/'/g, "&#39;");
+            return `<div style="margin-top:2px;"><button type="button" class="trophy-quick-btn" onclick="event.stopPropagation(); openTrophyQuickAssignModal('DIARY', '${sid}')">🏆 In Trophäenliste</button></div>`;
+          }
+          return "";
+        })()}
         ${weatherHtml}
         ${e.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(e.note)}</div>` : ""}
         ${photoHtml}
@@ -11146,6 +11590,9 @@
       if (wSpd !== null && wSpd !== undefined && !isNaN(Number(wSpd))) baseStamp.windKmh = Math.round(Number(wSpd));
       if (tVal !== null && tVal !== undefined && !isNaN(Number(tVal))) baseStamp.tempC = Math.round(Number(tVal) * 10) / 10;
       if (pVal !== null && pVal !== undefined && !isNaN(Number(pVal))) baseStamp.pressHpa = Math.round(Number(pVal));
+      if (targetEntry.ocrTempC === undefined && targetEntry.weatherStamp && targetEntry.weatherStamp.source === "ocr" && targetEntry.weatherStamp.tempC !== null && targetEntry.weatherStamp.tempC !== undefined) {
+        targetEntry.ocrTempC = Number(targetEntry.weatherStamp.tempC);
+      }
       baseStamp.hourKey = targetHourKey;
       baseStamp.source = srcTag;
 
@@ -11208,14 +11655,28 @@
       }
     }
 
+    const jnDateObj = new Date(`${dateVal}T${arrVal || "21:00"}:00`);
+    const computedJagdnacht = isNaN(jnDateObj.getTime()) ? dateVal : getJagdnachtKeyFromDate(jnDateObj);
     const entryObj = {
-      id, date: dateVal, datum: dateVal, jagdnacht: dateVal,
+      id,
+      inboxId: prevEntry?.inboxId || "",
+      visitId: prevEntry?.visitId || "",
+      source: prevEntry?.source || "",
+      sourceVersion: prevEntry?.sourceVersion || "",
+      date: dateVal, datum: dateVal, jagdnacht: computedJagdnacht,
       arrival: arrVal, ankunft: arrVal, departure: depVal, abgang: depVal,
       durationMin: durVal, dauer_min: durVal,
       status: currentEntryStatus, kanzel: kanzelVal, vergraemt: isVergraemt, structure: structVal, anzahl: structVal,
       totalStk, counts: isRotteStatus ? Object.assign({}, rottenCounts) : null, kirrgut: finalKirrgut, lockmittel: finalKirrgut,
       richtung: finalRichtung, weatherStamp: finalWeatherStamp,
+      ocrTempC: (prevEntry && prevEntry.ocrTempC !== undefined) ? prevEntry.ocrTempC : null,
+      isTrophy: Boolean((prevEntry && prevEntry.isTrophy) || (isRotteStatus && rottenCounts.K > 0)),
+      trophyType: (prevEntry && prevEntry.trophyType) ? prevEntry.trophyType : (isRotteStatus && rottenCounts.K > 0 ? "KEILER" : ""),
+      trophyDetail: prevEntry?.trophyDetail || "",
+      trophyTag: prevEntry?.trophyTag || "",
+      isMaleTrophy: Boolean((prevEntry && prevEntry.isMaleTrophy) || (isRotteStatus && rottenCounts.K > 0)),
       trophyId: isRotteStatus ? (document.getElementById("entry-trophy-select")?.value || "").trim() : "",
+      trophyIgnored: Boolean(prevEntry && prevEntry.trophyIgnored),
       note: document.getElementById("entry-note-input").value.trim(),
       notiz: document.getElementById("entry-note-input").value.trim(),
       photo: currentEntryPhotoData
@@ -11423,7 +11884,7 @@
     }
   }
 
-  function openStreckeModal(editId = null) {
+  function openStreckeModal(editId = null, prefillObj = null) {
     const titleEl = document.getElementById("str-modal-title");
     const wildSel = document.getElementById("str-wildart-input");
     const genSel = document.getElementById("str-gender-input");
@@ -11454,15 +11915,24 @@
     } else {
       if (titleEl) titleEl.textContent = "🎯 Abschuss eintragen";
       document.getElementById("str-edit-id").value = "";
-      document.getElementById("str-date-input").value = getLocalISODate();
-      document.getElementById("str-time-input").value = getLocalHHMM();
-      if (wildSel) wildSel.value = "Schwarzwild";
-      document.getElementById("str-weight-input").value = "";
-      document.getElementById("str-klasse-input").value = "";
-      if (genSel) genSel.value = "männlich";
-      populateStreckeKanzelSelect();
-      document.getElementById("str-note-input").value = "";
-      __strKlasseManuallyEdited = false;
+      document.getElementById("str-date-input").value = (prefillObj && prefillObj.date) ? prefillObj.date : getLocalISODate();
+      document.getElementById("str-time-input").value = (prefillObj && prefillObj.time) ? prefillObj.time : getLocalHHMM();
+      const pfWild = (prefillObj && prefillObj.wildart) ? prefillObj.wildart : "Schwarzwild";
+      if (wildSel) {
+        if (pfWild && !Array.from(wildSel.options).some(o => o.value === pfWild)) {
+          const o = document.createElement("option");
+          o.value = pfWild;
+          o.textContent = pfWild;
+          wildSel.appendChild(o);
+        }
+        wildSel.value = pfWild;
+      }
+      document.getElementById("str-weight-input").value = (prefillObj && prefillObj.weightKg) ? String(prefillObj.weightKg) : "";
+      document.getElementById("str-klasse-input").value = (prefillObj && prefillObj.klasse) ? prefillObj.klasse : "";
+      if (genSel) genSel.value = (prefillObj && prefillObj.gender) ? prefillObj.gender : "männlich";
+      populateStreckeKanzelSelect((prefillObj && prefillObj.kanzel) ? prefillObj.kanzel : null);
+      document.getElementById("str-note-input").value = (prefillObj && prefillObj.note) ? prefillObj.note : "";
+      __strKlasseManuallyEdited = Boolean(prefillObj && prefillObj.klasse);
       updateStreckeKlasseSuggestion(false);
     }
     openModal("modal-strecke-entry");
@@ -13355,9 +13825,9 @@
 
   function isSameDiaryEntry(a, b, toleranceMin = 15) {
     if (!a || !b) return false;
-    // 1. Exakte ID-, inboxId- oder visitId-Übereinstimmung
-    if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
-    if (a.visitId && b.visitId && String(a.visitId) === String(b.visitId)) return true;
+    // 1. Primär über visitId, danach inboxId oder exakte ID
+    if (a.visitId && b.visitId && String(a.visitId).trim() === String(b.visitId).trim()) return true;
+    if (a.inboxId && b.inboxId && String(a.inboxId).trim() === String(b.inboxId).trim()) return true;
     if (a.id && b.id && a.id === b.id && a.date === b.date) return true;
 
     const stA = a.status || "GREEN";
@@ -13463,10 +13933,19 @@
       merged.weatherStamp = Object.assign({}, incoming.weatherStamp);
       if (!merged.richtung && merged.weatherStamp.windDir) merged.richtung = merged.weatherStamp.windDir;
     }
+    if (incoming.isTrophy) merged.isTrophy = true;
+    if (incoming.isMaleTrophy) merged.isMaleTrophy = true;
+    if (!merged.trophyType && incoming.trophyType) merged.trophyType = incoming.trophyType;
+    if (!merged.trophyDetail && incoming.trophyDetail) merged.trophyDetail = incoming.trophyDetail;
+    if (!merged.trophyTag && incoming.trophyTag) merged.trophyTag = incoming.trophyTag;
     if (!merged.trophyId && incoming.trophyId) merged.trophyId = incoming.trophyId;
+    if (incoming.ocrTempC !== null && incoming.ocrTempC !== undefined && incoming.ocrTempC !== "" && !isNaN(Number(incoming.ocrTempC))) {
+      merged.ocrTempC = Number(incoming.ocrTempC);
+    }
     if (!merged.inboxId && incoming.inboxId) merged.inboxId = incoming.inboxId;
     if (!merged.visitId && incoming.visitId) merged.visitId = incoming.visitId;
     if (!merged.source && incoming.source) merged.source = incoming.source;
+    if (!merged.sourceVersion && incoming.sourceVersion) merged.sourceVersion = incoming.sourceVersion;
     return merged;
   }
 
@@ -13807,29 +14286,68 @@
   }
 
   function runManualDuplicateCleanup() {
-    const before = diaryLogs.length;
-    if (before === 0) {
-      alert("Das Tagebuch enthält aktuell keine Einträge.");
+    const beforeLogs = diaryLogs.length;
+    const bfRaw = (typeof getBeifangEntries === "function") ? getBeifangEntries() : [];
+    const beforeBf = bfRaw.length;
+    if (beforeLogs === 0 && beforeBf === 0) {
+      alert("Tagebuch und Beifang enthalten aktuell keine Einträge.");
       return;
     }
-    const check = deduplicateDiaryLists([], diaryLogs, "REPLACE", 15, false);
-    const removed = before - check.mergedList.length;
-    if (removed <= 0) {
-      alert(`✅ Keine Duplikate gefunden – dein Tagebuch (${before} Einträge) ist komplett sauber!`);
+
+    const checkLogs = beforeLogs > 0
+      ? deduplicateDiaryLists([], diaryLogs, "REPLACE", 15, false)
+      : { mergedList: [] };
+    const removedLogs = beforeLogs - checkLogs.mergedList.length;
+
+    // Artgenaue Duplikat-Prüfung über sm_beifang_v1 (mit schonendem Nachpflegen über mergeDuplicateBeifangEntry)
+    const dedupBf = [];
+    if (beforeBf > 0 && typeof isSameBeifangEntry === "function") {
+      bfRaw.forEach(item => {
+        const hitIdx = dedupBf.findIndex(r => isSameBeifangEntry(r, item, 15));
+        if (hitIdx >= 0) {
+          dedupBf[hitIdx] = (typeof mergeDuplicateBeifangEntry === "function")
+            ? mergeDuplicateBeifangEntry(dedupBf[hitIdx], item)
+            : dedupBf[hitIdx];
+        } else {
+          dedupBf.push(Object.assign({}, item));
+        }
+      });
+    } else {
+      bfRaw.forEach(item => dedupBf.push(Object.assign({}, item)));
+    }
+    const removedBf = beforeBf - dedupBf.length;
+    const totalRemoved = removedLogs + removedBf;
+
+    if (totalRemoved <= 0) {
+      alert(`✅ Keine Duplikate gefunden – dein Bestand (${beforeLogs} Tagebuch · ${beforeBf} Beifang) ist komplett sauber!`);
       return;
     }
-    if (!confirm(`🔁 Es wurden ${removed} doppelte Einträge gefunden (inkl. ±15 Min. Toleranz am selben Sitz & Typ).\n\nJetzt automatisch bereinigen? Die ausführlicheren Angaben (Struktur, Notiz, Kirrgut, Foto) bleiben erhalten.`)) {
+
+    const detailLines = [];
+    if (removedLogs > 0) detailLines.push(`• 🐗 Schwarzwild-Tagebuch: ${removedLogs} Duplikat${removedLogs === 1 ? "" : "e"}`);
+    if (removedBf > 0) detailLines.push(`• 🦌 Beifang (artgenau): ${removedBf} Duplikat${removedBf === 1 ? "" : "e"}`);
+
+    if (!confirm(`🔁 Es wurden ${totalRemoved} doppelte Einträge gefunden (visitId + ±15 Min. Toleranz):\n\n${detailLines.join("\n")}\n\nJetzt automatisch bereinigen? Die ausführlicheren Angaben (Struktur, Trophäen-Felder, Kamera-Temp, Notiz, Foto) bleiben erhalten.`)) {
       return;
     }
-    diaryLogs = check.mergedList;
-    window.TAGEBUCH_EINTRAEGE = diaryLogs;
-    safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+
+    if (removedLogs > 0) {
+      diaryLogs = checkLogs.mergedList;
+      window.TAGEBUCH_EINTRAEGE = diaryLogs;
+      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+    }
+    if (removedBf > 0 && typeof saveBeifangEntries === "function") {
+      saveBeifangEntries(dedupBf);
+    }
+
     renderDiaryCalendar();
     renderDiaryList();
+    if (typeof renderBeifangView === "function") renderBeifangView();
+    if (typeof renderTrophaeenView === "function") renderTrophaeenView();
     window.renderTab4Stats();
     if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
     if (typeof updateCockpitAll === "function") updateCockpitAll();
-    alert(`✅ Bereinigung fertig!\n• ${removed} Duplikate entfernt\n• Verbleibend: ${diaryLogs.length} eindeutige Einträge`);
+    alert(`✅ Bereinigung fertig!\n• 🐗 Tagebuch: −${removedLogs} (${diaryLogs.length} verbleibend)\n• 🦌 Beifang: −${removedBf} (${dedupBf.length} verbleibend)`);
   }
 
   function importDiaryBackupJSON(event) {
@@ -16190,6 +16708,110 @@
 
   // Intelligente Erkennungslogik für Überläufer v0.5.4 (wertet category + speciesDetail aus)
   // Gibt zurück: "SCHWARZWILD" | "IGNORE" (Haustier/Hase/Vogel) | eine der 13 BEIFANG_SPECIES_ORDER-Arten
+
+  const REV_ALLGEMEIN_LABEL = "Revier allgemein";
+
+  function isRevierAllgemeinSpot(name) {
+    return String(name || "").trim().toLowerCase() === REV_ALLGEMEIN_LABEL.toLowerCase();
+  }
+
+  function isKnownKanzelSpot(name) {
+    const clean = String(name || "").trim();
+    if (!clean || isRevierAllgemeinSpot(clean) || clean === "Revierweit") return false;
+    const map = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
+    const low = clean.toLowerCase();
+    return Object.keys(map).some(k => k.toLowerCase() === low);
+  }
+
+  function getSpotIconPrefix(name) {
+    const clean = String(name || "").trim();
+    if (!clean || isRevierAllgemeinSpot(clean)) return "🌲";
+    if (isKnownKanzelSpot(clean)) return "🏯";
+    return "📍";
+  }
+
+  function formatSpotLabel(name) {
+    const clean = String(name || "").trim() || REV_ALLGEMEIN_LABEL;
+    return `${getSpotIconPrefix(clean)} ${clean}`;
+  }
+
+  function isSpecialBeifangKey(spKey) {
+    return ["WOLF", "SCHAKAL", "WILDKATZE", "SONSTIGES"].includes(String(spKey || "").toUpperCase());
+  }
+
+  function normalizeTrophySpeciesFromType(rawType, rawDetail = "", spKey = "") {
+    const t = _normSpeciesText(rawType);
+    if (t.includes("REHBOCK") || t.includes("REHWILD")) return "REHBOCK";
+    if (t.includes("DAMHIRSCH") || t.includes("DAMWILD")) return "DAMHIRSCH";
+    if (t.includes("ROTHIRSCH") || t.includes("ROTWILD")) return "ROTHIRSCH";
+    if (t.includes("KEILER") || t.includes("SCHWARZWILD")) return "KEILER";
+    if (spKey === "REHWILD") return "REHBOCK";
+    if (spKey === "DAMWILD") return "DAMHIRSCH";
+    if (spKey === "ROTWILD") return "ROTHIRSCH";
+    const det = _normSpeciesText(rawDetail);
+    if (det.includes("KEILER")) return "KEILER";
+    if (det.includes("DAMHIRSCH") || det.includes("SCHAUFLER")) return "DAMHIRSCH";
+    if (det.includes("ROTHIRSCH")) return "ROTHIRSCH";
+    if (det.includes("REHBOCK") || det.includes("BOCK")) return "REHBOCK";
+    return "";
+  }
+
+  function resolveLinkedTrophyIdFromInbox(item, spKey = "") {
+    const profiles = (typeof getTrophyProfiles === "function") ? getTrophyProfiles() : [];
+    const rawId = String(item?.trophyId || "").trim();
+    const rawTag = String(item?.trophyTag || "").trim();
+    if (!Array.isArray(profiles) || profiles.length === 0) {
+      return rawId;
+    }
+    if (rawId) {
+      const byId = profiles.find(p => String(p.id || "").trim().toLowerCase() === rawId.toLowerCase());
+      if (byId) return byId.id;
+    }
+    const targetSpecies = normalizeTrophySpeciesFromType(item?.trophyType, `${rawTag} ${item?.trophyDetail || ""} ${item?.speciesDetail || ""}`, spKey);
+    const candidates = [rawId, rawTag].map(v => v.toLowerCase()).filter(Boolean);
+    for (let i = 0; i < candidates.length; i++) {
+      const c = candidates[i];
+      const exactSpec = targetSpecies
+        ? profiles.find(p => p.species === targetSpecies && String(p.name || "").trim().toLowerCase() === c)
+        : null;
+      if (exactSpec) return exactSpec.id;
+      const exactAny = profiles.find(p => String(p.name || "").trim().toLowerCase() === c);
+      if (exactAny) return exactAny.id;
+      if (c.length >= 3) {
+        const partSpec = targetSpecies
+          ? profiles.find(p => p.species === targetSpecies && (String(p.name || "").trim().toLowerCase().includes(c) || c.includes(String(p.name || "").trim().toLowerCase())))
+          : null;
+        if (partSpec) return partSpec.id;
+        const partAny = profiles.find(p => {
+          const pn = String(p.name || "").trim().toLowerCase();
+          return pn.length >= 3 && (pn.includes(c) || c.includes(pn));
+        });
+        if (partAny) return partAny.id;
+      }
+    }
+    return "";
+  }
+
+  function normalizeInboxSpotName(rawKanzel, rawOriginalSpot) {
+    const c1 = String(rawKanzel || "").trim().replace(/\s+/g, " ");
+    if (!c1) return REV_ALLGEMEIN_LABEL;
+    if (isRevierAllgemeinSpot(c1) || c1.toLowerCase() === "revier") return REV_ALLGEMEIN_LABEL;
+    if (isKnownKanzelSpot(c1)) {
+      const map = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
+      const hit = Object.keys(map).find(k => k.toLowerCase() === c1.toLowerCase());
+      return hit || c1;
+    }
+    // Freier Ort (z. B. "Wechsel", "Bahndamm") bleibt erhalten, wird aber NIEMALS in sm_kanzeln_v1 angelegt!
+    return c1;
+  }
+
+  function parseOcrTempValue(rawVal) {
+    if (rawVal === undefined || rawVal === null || rawVal === "") return null;
+    const cleaned = String(rawVal).replace(",", ".").trim();
+    const num = Number(cleaned);
+    return (!isNaN(num) && isFinite(num)) ? Math.round(num * 10) / 10 : null;
+  }
+
   function classifyBeifangSpecies(rawCat, rawDetail = "", rawNote = "") {
     const cat = _normSpeciesText(rawCat);
     const det = _normSpeciesText(rawDetail);
@@ -16239,6 +16861,7 @@
       return "IGNORE";
     }
 
+    if (cat === "BESONDERES" || cat === "BESONDERER_FUND" || cat === "SONDERFUND") return "SONSTIGES";
     // 5. Direkter Fallback auf exakte Schlüssel (z. B. SONSTIGES / BESONDERES / Luchs / Biber / Otter)
     if (BEIFANG_SPECIES_META[cat]) return cat;
     return "SONSTIGES";
@@ -16260,9 +16883,11 @@
 
   function getCamInboxItemRole(item) {
     if (!item || typeof item !== "object") return "IGNORE";
+    const st = String(item.status || "").trim().toUpperCase();
     const sp = classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
-    if (sp === "SCHWARZWILD") return "SCHWARZWILD";
     if (sp === "IGNORE") return "IGNORE";
+    if (st === "BEIFANG") return "BEIFANG";
+    if (sp === "SCHWARZWILD") return "SCHWARZWILD";
     return "BEIFANG";
   }
 
@@ -16354,7 +16979,7 @@
 
     const rawSt = String(item.status || "GREEN").trim().toUpperCase();
     const statusVal = ["GREEN", "BLUE", "RED", "YELLOW", "DRUECKJAGD"].includes(rawSt) ? rawSt : "GREEN";
-    const kanzelVal = normalizeImportedKanzelName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel");
+    const kanzelVal = normalizeInboxSpotName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel", item.originalSpot);
 
     const counts = extractCamInboxCounts(item);
     const countSum = Object.values(counts).reduce((a, b) => a + b, 0);
@@ -16378,9 +17003,7 @@
     if (item.originalSpot && normalizeKanzelCompareKey(item.originalSpot) !== normalizeKanzelCompareKey(kanzelVal)) {
       metaBits.push(`Spot: ${String(item.originalSpot).trim()}`);
     }
-    if (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) {
-      metaBits.push(`Cam ${Number(item.ocrTempC)}°C`);
-    }
+
     const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
     if (fCnt > 0) metaBits.push(`${fCnt} Datei${fCnt === 1 ? "" : "en"}`);
     if (metaBits.length > 0) {
@@ -16388,10 +17011,16 @@
     }
     const finalNote = noteParts.join(" · ");
 
+    const ocrTempVal = parseOcrTempValue(item.ocrTempC);
     const stamp = buildLocalWeatherStampSync(dateVal, arrVal);
-    if (stamp && stamp.tempC === null && item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) {
-      stamp.tempC = Number(item.ocrTempC);
-    }
+    const trophyTypeStr = String(item.trophyType || "").trim();
+    const trophyDetailStr = String(item.trophyDetail || "").trim();
+    const trophyTagStr = String(item.trophyTag || "").trim();
+    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr || counts.K > 0);
+    const isMaleTrophyFlag = (item.isMaleTrophy !== undefined && item.isMaleTrophy !== null)
+      ? Boolean(item.isMaleTrophy)
+      : isTrophyFlag;
+    const linkedTrophyId = resolveLinkedTrophyIdFromInbox(item, "SCHWARZWILD");
 
     const inboxIdStr = String(item.inboxId || "").trim();
     const visitIdStr = String(item.visitId || "").trim();
@@ -16425,7 +17054,13 @@
       lockmittel: statusVal === "BLUE" ? "Körnermais" : "-- Kein Wechsel --",
       richtung: (stamp && stamp.windDir) ? stamp.windDir : "",
       weatherStamp: stamp,
-      trophyId: String(item.trophyId || "").trim(),
+      ocrTempC: ocrTempVal,
+      isTrophy: isTrophyFlag,
+      trophyType: trophyTypeStr || (counts.K > 0 ? "KEILER" : ""),
+      trophyDetail: trophyDetailStr,
+      trophyTag: trophyTagStr,
+      isMaleTrophy: isMaleTrophyFlag,
+      trophyId: linkedTrophyId,
       note: finalNote,
       notiz: finalNote,
       photo: null
@@ -16447,16 +17082,21 @@
       ? item.speciesKey
       : classifyBeifangSpecies(item.category, item.speciesDetail, item.note);
     const speciesKey = BEIFANG_SPECIES_META[spKeyRaw] ? spKeyRaw : "SONSTIGES";
-    const kanzelVal = normalizeImportedKanzelName(item.kanzel || item.originalSpot || activeKanzel || "Tunnel");
+    const kanzelVal = normalizeInboxSpotName(item.kanzel || item.originalSpot || REV_ALLGEMEIN_LABEL, item.originalSpot);
     const inboxIdStr = String(item.inboxId || "").trim();
     const visitIdStr = String(item.visitId || "").trim();
     const uid = inboxIdStr || visitIdStr || (`${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
     const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
     const detailStr = String(item.speciesDetail || "").trim();
     const noteStr = String(item.note || "").trim();
-    const maleFlag = (item.isMaleTrophy !== undefined)
+    const trophyDetailStr = String(item.trophyDetail || "").trim();
+    const trophyTagStr = String(item.trophyTag || "").trim();
+    const trophyTypeStr = String(item.trophyType || "").trim();
+    const isTrophyFlag = Boolean(item.isTrophy || trophyDetailStr || trophyTagStr || trophyTypeStr);
+    const maleFlag = (item.isMaleTrophy !== undefined && item.isMaleTrophy !== null)
       ? Boolean(item.isMaleTrophy)
-      : detectMaleTrophyHint(speciesKey, detailStr, noteStr);
+      : (isTrophyFlag || detectMaleTrophyHint(speciesKey, `${detailStr} ${trophyDetailStr} ${trophyTagStr}`, noteStr));
+    const linkedTrophyId = resolveLinkedTrophyIdFromInbox(item, speciesKey);
 
     return {
       id: item.id && String(item.id).startsWith("bf-") ? String(item.id) : `bf-${uid}`,
@@ -16476,19 +17116,24 @@
       speciesKey: speciesKey,
       speciesDetail: detailStr,
       totalCount: Math.max(1, Math.round(Number(item.totalCount || 1))),
+      isTrophy: isTrophyFlag,
+      trophyType: trophyTypeStr,
+      trophyDetail: trophyDetailStr,
+      trophyTag: trophyTagStr,
       isMaleTrophy: maleFlag,
-      trophyId: String(item.trophyId || "").trim(),
-      ocrTempC: (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "" && !isNaN(Number(item.ocrTempC))) ? Number(item.ocrTempC) : null,
+      trophyId: linkedTrophyId,
+      ocrTempC: parseOcrTempValue(item.ocrTempC),
       fileCount: Math.max(0, Math.round(fCnt)),
       note: noteStr
     };
   }
 
-  // v27.0 Fix: Dublettenschutz vergleicht nach exakter Einzelart (nicht nur grob RAUBWILD!)
   function isSameBeifangEntry(a, b, toleranceMin = 15) {
     if (!a || !b) return false;
+    const vA = String(a.visitId || "").trim();
+    const vB = String(b.visitId || "").trim();
+    if (vA && vB && vA === vB) return true;
     if (a.inboxId && b.inboxId && String(a.inboxId) === String(b.inboxId)) return true;
-    if (a.visitId && b.visitId && String(a.visitId) === String(b.visitId)) return true;
     if (a.id && b.id && a.id === b.id) return true;
     if (getBeifangSpeciesKey(a) !== getBeifangSpeciesKey(b)) return false;
     if (normalizeKanzelCompareKey(a.kanzel) !== normalizeKanzelCompareKey(b.kanzel)) return false;
@@ -16500,20 +17145,54 @@
     return a.date === b.date && String(a.speciesDetail || "").toLowerCase() === String(b.speciesDetail || "").toLowerCase();
   }
 
+  function mergeDuplicateBeifangEntry(existing, incoming) {
+    const merged = Object.assign({}, existing);
+    if (!merged.visitId && incoming.visitId) merged.visitId = incoming.visitId;
+    if (!merged.inboxId && incoming.inboxId) merged.inboxId = incoming.inboxId;
+    if (!merged.cameraName && incoming.cameraName) merged.cameraName = incoming.cameraName;
+    if (!merged.originalSpot && incoming.originalSpot) merged.originalSpot = incoming.originalSpot;
+    if (!merged.speciesDetail && incoming.speciesDetail) merged.speciesDetail = incoming.speciesDetail;
+    if (Number(incoming.totalCount || 0) > Number(merged.totalCount || 0)) {
+      merged.totalCount = Number(incoming.totalCount);
+    }
+    if (incoming.isTrophy) merged.isTrophy = true;
+    if (incoming.isMaleTrophy) merged.isMaleTrophy = true;
+    if (!merged.trophyType && incoming.trophyType) merged.trophyType = incoming.trophyType;
+    if (!merged.trophyDetail && incoming.trophyDetail) merged.trophyDetail = incoming.trophyDetail;
+    if (!merged.trophyTag && incoming.trophyTag) merged.trophyTag = incoming.trophyTag;
+    if (!merged.trophyId && incoming.trophyId) merged.trophyId = incoming.trophyId;
+    if (incoming.ocrTempC !== null && incoming.ocrTempC !== undefined && !isNaN(Number(incoming.ocrTempC))) {
+      merged.ocrTempC = Number(incoming.ocrTempC);
+    }
+    if (Number(incoming.fileCount || 0) > Number(merged.fileCount || 0)) {
+      merged.fileCount = Number(incoming.fileCount);
+    }
+    const exNote = String(merged.note || "").trim();
+    const inNote = String(incoming.note || "").trim();
+    if (inNote.length > exNote.length) {
+      merged.note = inNote;
+    } else if (inNote && exNote && !exNote.toLowerCase().includes(inNote.toLowerCase())) {
+      merged.note = `${exNote} · ${inNote}`;
+    }
+    return merged;
+  }
+
   function mergeBeifangLists(existingList, incomingList, mode = "MERGE") {
     const cleanIn = (incomingList || []).map(convertCamInboxToBeifangEntry).filter(Boolean);
     if (mode === "REPLACE") {
       const dedup = [];
       cleanIn.forEach(item => {
-        if (!dedup.some(r => isSameBeifangEntry(r, item, 15))) dedup.push(item);
+        const hitIdx = dedup.findIndex(r => isSameBeifangEntry(r, item, 15));
+        if (hitIdx >= 0) dedup[hitIdx] = mergeDuplicateBeifangEntry(dedup[hitIdx], item);
+        else dedup.push(item);
       });
       return dedup;
     }
     const result = (existingList || []).map(x => Object.assign({}, x));
     cleanIn.forEach(item => {
-      if (!result.some(r => isSameBeifangEntry(r, item, 15))) {
-        result.push(item);
-      }
+      const hitIdx = result.findIndex(r => isSameBeifangEntry(r, item, 15));
+      if (hitIdx >= 0) result[hitIdx] = mergeDuplicateBeifangEntry(result[hitIdx], item);
+      else result.push(item);
     });
     return result;
   }
@@ -16617,8 +17296,10 @@
 
       if (role === "BEIFANG") {
         const bfEntry = convertCamInboxToBeifangEntry(item);
-        const isDup = beifangList.some(existing => isSameBeifangEntry(existing, bfEntry, 15));
-        if (isDup) {
+        const dupIdx = beifangList.findIndex(existing => isSameBeifangEntry(existing, bfEntry, 15));
+        if (dupIdx >= 0) {
+          beifangList[dupIdx] = mergeDuplicateBeifangEntry(beifangList[dupIdx], bfEntry);
+          beifangChanged = true;
           skippedDups++;
         } else {
           beifangList.unshift(bfEntry);
@@ -16815,30 +17496,35 @@
       const tags = [];
       if (item.cameraName) tags.push(`📷 ${escapeHTML(item.cameraName)}`);
       if (item.rottenTag) tags.push(`🏷️ ${escapeHTML(item.rottenTag)}`);
-      if (item.ocrTempC !== undefined && item.ocrTempC !== null && item.ocrTempC !== "") tags.push(`🌡️ ${escapeHTML(item.ocrTempC)} °C`);
+      const ocrVal = parseOcrTempValue(item.ocrTempC); if (ocrVal !== null) tags.push(`📷 ${String(ocrVal).replace(".", ",")} °C`);
       const fCnt = Number(item.fileCount || (Array.isArray(item.fileNames) ? item.fileNames.length : 0) || 0);
       if (fCnt > 0) tags.push(`🖼️ ${fCnt} Bild${fCnt === 1 ? "" : "er"}`);
 
+      const isSpecial = isBf && isSpecialBeifangKey(spKey);
+      const trInfo = String(item.trophyDetail || item.trophyTag || item.trophyId || "").trim();
+      if (trInfo) tags.push(`🏆 ${escapeHTML(trInfo)}`);
       const targetBadge = isIgn
         ? `<span class="beifang-cat-pill" style="background:rgba(100,116,139,0.22); border-color:#64748b; color:#cbd5e1;">⏭️ Wird ignoriert</span>`
-        : (isBf
-          ? `<span class="beifang-cat-pill">${spMeta.icon} ${escapeHTML(spMeta.short)}</span>`
-          : `<span class="duration-badge-green">🐗 Sauen-Tagebuch</span>`);
+        : (isSpecial
+          ? `<span class="special-alert-pill">🚨 ${spMeta.icon} ${escapeHTML(spMeta.short)}</span>`
+          : (isBf
+            ? `<span class="beifang-cat-pill">${spMeta.icon} ${escapeHTML(spMeta.short)}</span>`
+            : `<span class="duration-badge-green">🐗 Sauen-Tagebuch</span>`));
 
       const dupBadge = isDup
-        ? `<div style="font-size:0.72rem; color:var(--accent-yellow); font-weight:800;">🔁 Bereits im Bestand erkannt (Duplikatschutz aktiv)</div>`
+        ? `<div style="font-size:0.72rem; color:var(--accent-yellow); font-weight:800;">🔁 Bereits im Bestand erkannt (Duplikatschutz / Nachpflege aktiv)</div>`
         : "";
 
       const safeKeyAttr = escapeHTML(key).replace(/'/g, "&#39;");
       const actionLabel = isIgn ? "⏭️ Entfernen" : (isDup ? "🔁 Abgleichen" : "✅ Übernehmen");
       return `
-        <div class="ul-inbox-card ${isBf ? "is-beifang" : ""} ${isIgn ? "is-ignored" : ""} ${isDup ? "is-dup" : ""}">
+        <div class="ul-inbox-card ${isBf ? "is-beifang" : ""} ${isSpecial ? "is-special" : ""} ${isIgn ? "is-ignored" : ""} ${isDup ? "is-dup" : ""}">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
             <strong style="font-size:0.84rem; color:#fff;">📅 ${formatDateDE(item.date)} · 🕒 ${escapeHTML(timeStr)}${durStr ? ` (${durStr})` : ""}</strong>
             ${targetBadge}
           </div>
           <div style="font-size:0.85rem; font-weight:800; color:#fff;">
-            🏯 ${escapeHTML(kanzelDisp)} — ${structTxt}
+            ${formatSpotLabel(kanzelDisp)} — ${structTxt}
           </div>
           ${tags.length > 0 ? `<div class="ul-inbox-meta-row">${tags.map(t => `<span class="ul-inbox-tag">${t}</span>`).join("")}</div>` : ""}
           ${item.note ? `<div style="font-size:0.75rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
@@ -16924,13 +17610,23 @@
   }
   window.jumpBeifangToCurrentMonth = jumpBeifangToCurrentMonth;
 
+  const BEIFANG_SPECIAL_KEYS = ["WOLF", "WILDKATZE", "SCHAKAL", "SONSTIGES"];
+  const BEIFANG_RAUBWILD_KEYS = ["FUCHS", "DACHS", "MARDER", "MARDERHUND", "WASCHBAER"];
+
+  function matchesBeifangSpeciesFilter(spKey, filterKey) {
+    if (!filterKey || filterKey === "ALL") return true;
+    if (filterKey === "SPECIAL_ALL") return BEIFANG_SPECIAL_KEYS.includes(spKey);
+    if (filterKey === "RAUBWILD_ALL") return BEIFANG_RAUBWILD_KEYS.includes(spKey);
+    return spKey === filterKey;
+  }
+
   function getFilteredBeifangEntries(ignoreSearch = false) {
     const all = getBeifangEntries();
     const q = ignoreSearch ? "" : (document.getElementById("bf-search-input")?.value || "").trim().toLowerCase();
     return all.filter(item => {
       const spKey = getBeifangSpeciesKey(item);
-      if (currentBeifangKanzelFilter !== "ALL" && (item.kanzel || "Tunnel") !== currentBeifangKanzelFilter) return false;
-      if (currentBeifangSpeciesFilter !== "ALL" && spKey !== currentBeifangSpeciesFilter) return false;
+      if (currentBeifangKanzelFilter !== "ALL" && (item.kanzel || REV_ALLGEMEIN_LABEL) !== currentBeifangKanzelFilter) return false;
+      if (!matchesBeifangSpeciesFilter(spKey, currentBeifangSpeciesFilter)) return false;
       if (!q) return true;
       const meta = BEIFANG_SPECIES_META[spKey] || BEIFANG_SPECIES_META.SONSTIGES;
       const trName = item.trophyId ? (getTrophyById(item.trophyId)?.name || "") : "";
@@ -16941,19 +17637,20 @@
   function renderBeifangFilterBars(allEntries) {
     // 1. Standort-Chips (dynamisch aus sm_kanzeln_v1 + genutzte Standorte)
     const kBar = document.getElementById("bf-kanzel-chip-bar");
-    const kNames = getDynamicKanzelListForFilters(allEntries);
-    if (currentBeifangKanzelFilter !== "ALL" && !kNames.includes(currentBeifangKanzelFilter)) {
+    const kNamesWithRev = getDynamicKanzelListForFilters(allEntries);
+    if (!kNamesWithRev.some(n => isRevierAllgemeinSpot(n))) kNamesWithRev.push(REV_ALLGEMEIN_LABEL);
+    if (currentBeifangKanzelFilter !== "ALL" && !kNamesWithRev.includes(currentBeifangKanzelFilter)) {
       currentBeifangKanzelFilter = "ALL";
     }
     if (kBar) {
       const kChips = [
         `<button type="button" class="spot-chip ${currentBeifangKanzelFilter === "ALL" ? "active-bf" : ""}" onclick="setBeifangKanzelFilter('ALL')">🌲 Alle Standorte <span class="spot-chip-cnt">${allEntries.length}</span></button>`
       ];
-      kNames.forEach(kName => {
-        const cnt = allEntries.filter(b => (b.kanzel || "Tunnel") === kName).length;
+      kNamesWithRev.forEach(kName => {
+        const cnt = allEntries.filter(b => (b.kanzel || REV_ALLGEMEIN_LABEL) === kName).length;
         const safeK = escapeHTML(kName).replace(/'/g, "&#39;");
         kChips.push(
-          `<button type="button" class="spot-chip ${currentBeifangKanzelFilter === kName ? "active-bf" : ""}" onclick="setBeifangKanzelFilter('${safeK}')">🏯 ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
+          `<button type="button" class="spot-chip ${currentBeifangKanzelFilter === kName ? "active-bf" : ""}" onclick="setBeifangKanzelFilter('${safeK}')">${getSpotIconPrefix(kName)} ${escapeHTML(kName)} <span class="spot-chip-cnt">${cnt}</span></button>`
         );
       });
       kBar.innerHTML = kChips.join("");
@@ -16964,14 +17661,18 @@
     if (spBar) {
       const byStand = currentBeifangKanzelFilter === "ALL"
         ? allEntries
-        : allEntries.filter(b => (b.kanzel || "Tunnel") === currentBeifangKanzelFilter);
+        : allEntries.filter(b => (b.kanzel || REV_ALLGEMEIN_LABEL) === currentBeifangKanzelFilter);
       const countsBySp = {};
       byStand.forEach(b => {
         const k = getBeifangSpeciesKey(b);
         countsBySp[k] = (countsBySp[k] || 0) + 1;
       });
+      const specialCnt = BEIFANG_SPECIAL_KEYS.reduce((acc, k) => acc + (countsBySp[k] || 0), 0);
+      const raubwildCnt = BEIFANG_RAUBWILD_KEYS.reduce((acc, k) => acc + (countsBySp[k] || 0), 0);
       const spChips = [
-        `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === "ALL" ? "active-bf" : ""}" onclick="setBeifangSpeciesFilter('ALL')">📋 Alle Beifänge <span class="spot-chip-cnt">${byStand.length}</span></button>`
+        `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === "ALL" ? "active-bf" : ""}" onclick="setBeifangSpeciesFilter('ALL')">📋 Alle Beifänge <span class="spot-chip-cnt">${byStand.length}</span></button>`,
+        `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === "SPECIAL_ALL" ? "active-bf" : ""}" style="${specialCnt > 0 ? "border-color:#fb7185; color:#ffe4e6;" : ""}" onclick="setBeifangSpeciesFilter('SPECIAL_ALL')">🚨 Sonderfunde <span class="spot-chip-cnt">${specialCnt}</span></button>`,
+        `<button type="button" class="spot-chip ${currentBeifangSpeciesFilter === "RAUBWILD_ALL" ? "active-bf" : ""}" onclick="setBeifangSpeciesFilter('RAUBWILD_ALL')">🦊 Raubwild gesamt <span class="spot-chip-cnt">${raubwildCnt}</span></button>`
       ];
       BEIFANG_SPECIES_ORDER.forEach(spKey => {
         const meta = BEIFANG_SPECIES_META[spKey];
@@ -17079,27 +17780,42 @@
     const stkTxt = `${Math.max(1, Number(item.totalCount || 1))} Stk.`;
     const metaBits = [];
     if (item.cameraName) metaBits.push(`📷 ${escapeHTML(item.cameraName)}`);
-    if (item.ocrTempC !== null && item.ocrTempC !== undefined) metaBits.push(`🌡️ ${item.ocrTempC} °C`);
+    const bfOcr = parseOcrTempValue(item.ocrTempC); if (bfOcr !== null) metaBits.push(`📷 ${String(bfOcr).replace(".", ",")} °C`);
     if (Number(item.fileCount || 0) > 0) metaBits.push(`🖼️ ${item.fileCount} Datei${item.fileCount === 1 ? "" : "en"}`);
     const safeId = escapeHTML(item.id).replace(/'/g, "&#39;");
-    const maleBadge = item.isMaleTrophy ? `<span class="male-horn-pill">♂ Geweih/Gehörn</span>` : "";
+    const trHintTxt = String(item.trophyDetail || item.trophyTag || "").trim();
+    const maleBadge = (item.isMaleTrophy || item.isTrophy)
+      ? `<span class="male-horn-pill">♂ ${trHintTxt ? escapeHTML(trHintTxt) : "Geweih/Gehörn"}</span>`
+      : "";
     const trophyPill = (item.trophyId && typeof renderTrophyLinkPillHTML === "function") ? renderTrophyLinkPillHTML(item.trophyId) : "";
 
+    const isSpecialBf = isSpecialBeifangKey(spKey);
+    const spotLabelTxt = formatSpotLabel(item.kanzel || REV_ALLGEMEIN_LABEL);
+    const specialBadge = isSpecialBf ? `<span class="special-alert-pill">🚨 Sonderfund</span>` : "";
     return `
-      <div class="beifang-card" style="border-left-color:${meta.color};">
+      <div class="beifang-card ${isSpecialBf ? "is-special" : ""}" style="border-left-color:${isSpecialBf ? "#fb7185" : meta.color};">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
           <span style="font-weight:800; font-size:0.83rem;">${meta.icon} ${formatDateDE(item.date)} · ${escapeHTML(timeRange)}</span>
           <div style="display:flex; gap:5px; align-items:center;">
+            ${specialBadge}
             ${durBadge}
             <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem;" onclick="openBeifangModal('${safeId}')">✏️</button>
             <button type="button" class="btn-sm btn-no" style="padding:2px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteBeifangEntry('${safeId}')">🗑️</button>
           </div>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-          <span style="font-size:0.86rem; font-weight:800; color:#fff;">🏯 ${escapeHTML(item.kanzel || "Tunnel")} — ${escapeHTML(titleDetail)}</span>
+          <span style="font-size:0.86rem; font-weight:800; color:#fff;">${escapeHTML(spotLabelTxt)} — ${escapeHTML(titleDetail)}</span>
           <span class="beifang-cat-pill">${stkTxt}</span>
         </div>
-        ${(maleBadge || trophyPill) ? `<div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-top:2px;">${maleBadge}${trophyPill}</div>` : ""}
+        ${(() => {
+          const canQuickAssign = !trophyPill && ["REHWILD", "DAMWILD", "ROTWILD"].includes(spKey);
+          const quickBtn = canQuickAssign
+            ? `<button type="button" class="trophy-quick-btn" onclick="event.stopPropagation(); openTrophyQuickAssignModal('BEIFANG', '${safeId}')">🏆 In Trophäenliste</button>`
+            : "";
+          return (maleBadge || trophyPill || quickBtn)
+            ? `<div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-top:2px;">${maleBadge}${trophyPill}${quickBtn}</div>`
+            : "";
+        })()}
         ${metaBits.length > 0 ? `<div class="ul-inbox-meta-row" style="margin-top:2px;">${metaBits.map(b => `<span class="ul-inbox-tag">${b}</span>`).join("")}</div>` : ""}
         ${item.note ? `<div style="font-size:0.76rem; color:#cfe3d5;">📝 ${escapeHTML(item.note)}</div>` : ""}
       </div>
@@ -17113,7 +17829,7 @@
     const yLbl = document.getElementById("bf-cal-year-label");
     if (mLbl) mLbl.textContent = MONATSNAMEN_DE[currentBfCalMonth];
     if (yLbl) {
-      const spTxt = currentBeifangSpeciesFilter === "ALL" ? "Alle Arten" : (BEIFANG_SPECIES_META[currentBeifangSpeciesFilter]?.short || "Beifang");
+      const spTxt = currentBeifangSpeciesFilter === "ALL" ? "Alle Arten" : (currentBeifangSpeciesFilter === "SPECIAL_ALL" ? "Sonderfunde" : (currentBeifangSpeciesFilter === "RAUBWILD_ALL" ? "Raubwild gesamt" : (BEIFANG_SPECIES_META[currentBeifangSpeciesFilter]?.short || "Beifang")));
       const kTxt = currentBeifangKanzelFilter === "ALL" ? "Alle Standorte" : currentBeifangKanzelFilter;
       yLbl.textContent = `${currentBfCalYear} · ${spTxt} · ${kTxt}`;
     }
@@ -17185,6 +17901,8 @@
     const fBadge = document.getElementById("bf-filtered-count-badge");
     if (fBadge) fBadge.textContent = String(listFiltered.length);
 
+    renderBeifangWolfAndJagdzeitBanners();
+    renderFutureDateAlertsInViews();
     renderBeifangActivitySummary(calFiltered);
     renderBeifangCalendar(calFiltered);
 
@@ -17209,16 +17927,46 @@
   window.renderBeifangView = renderBeifangView;
   window.renderBeifangList = renderBeifangView;
 
+  const FREE_SPOT_OPT_VALUE = "__FREE_SPOT__";
+
+  function syncBeifangFreeSpotVisibility() {
+    const sel = document.getElementById("bf-kanzel-input");
+    const wrap = document.getElementById("bf-free-spot-wrap");
+    if (!sel || !wrap) return;
+    wrap.style.display = (sel.value === FREE_SPOT_OPT_VALUE) ? "block" : "none";
+  }
+  window.syncBeifangFreeSpotVisibility = syncBeifangFreeSpotVisibility;
+
   function populateBeifangKanzelSelects(selectedVal = null) {
-    const names = getDynamicKanzelListForFilters(getBeifangEntries());
+    const kMap = (typeof kanzelMap !== "undefined" && kanzelMap) ? kanzelMap : { "Tunnel": {} };
+    const kanzelNames = Object.keys(kMap);
     const modalSel = document.getElementById("bf-kanzel-input");
-    if (modalSel) {
-      const opts = names.slice();
-      if (selectedVal && !opts.includes(selectedVal)) opts.unshift(selectedVal);
-      modalSel.innerHTML = opts.map(n => `<option value="${escapeHTML(n)}">${escapeHTML(n)}</option>`).join("");
-      const fallback = (typeof activeKanzel !== "undefined" && activeKanzel) ? activeKanzel : "Tunnel";
-      modalSel.value = selectedVal || fallback;
+    const freeInp = document.getElementById("bf-free-spot-input");
+    if (!modalSel) return;
+
+    const cleanSel = String(selectedVal || "").trim();
+    const isKnownK = kanzelNames.some(k => k.toLowerCase() === cleanSel.toLowerCase());
+    const isRevAll = isRevierAllgemeinSpot(cleanSel);
+
+    const optsHtml = [
+      ...kanzelNames.map(n => `<option value="${escapeHTML(n)}">🏯 ${escapeHTML(n)}</option>`),
+      `<option value="${escapeHTML(REV_ALLGEMEIN_LABEL)}">🌲 ${escapeHTML(REV_ALLGEMEIN_LABEL)}</option>`,
+      `<option value="${FREE_SPOT_OPT_VALUE}">📍 Freier Ort (eigener Name)...</option>`
+    ];
+    modalSel.innerHTML = optsHtml.join("");
+
+    if (!cleanSel || isRevAll) {
+      modalSel.value = REV_ALLGEMEIN_LABEL;
+      if (freeInp) freeInp.value = "";
+    } else if (isKnownK) {
+      const hitK = kanzelNames.find(k => k.toLowerCase() === cleanSel.toLowerCase()) || cleanSel;
+      modalSel.value = hitK;
+      if (freeInp) freeInp.value = "";
+    } else {
+      modalSel.value = FREE_SPOT_OPT_VALUE;
+      if (freeInp) freeInp.value = cleanSel;
     }
+    syncBeifangFreeSpotVisibility();
   }
 
   function syncBeifangModalTrophyControls(selectedTrophyId = null) {
@@ -17258,7 +18006,7 @@
     openBeifangModal(null, {
       date: useSelectedDay ? selectedBfCalDateStr : getLocalISODate(),
       kanzel: currentBeifangKanzelFilter !== "ALL" ? currentBeifangKanzelFilter : activeKanzel,
-      speciesKey: currentBeifangSpeciesFilter !== "ALL" ? currentBeifangSpeciesFilter : "REHWILD"
+      speciesKey: currentBeifangSpeciesFilter === "RAUBWILD_ALL" ? "FUCHS" : (currentBeifangSpeciesFilter === "SPECIAL_ALL" ? "WOLF" : (currentBeifangSpeciesFilter !== "ALL" ? currentBeifangSpeciesFilter : "REHWILD"))
     });
   }
   window.openBeifangModalFromCal = openBeifangModalFromCal;
@@ -17274,7 +18022,7 @@
       document.getElementById("bf-category-input").value = BEIFANG_SPECIES_META[spKey] ? spKey : "SONSTIGES";
       document.getElementById("bf-detail-input").value = existing.speciesDetail || "";
       document.getElementById("bf-date-input").value = existing.date || getLocalISODate();
-      populateBeifangKanzelSelects(existing.kanzel || "Tunnel");
+      populateBeifangKanzelSelects(existing.kanzel || REV_ALLGEMEIN_LABEL);
       document.getElementById("bf-arrival-input").value = existing.arrival || getLocalHHMM();
       document.getElementById("bf-departure-input").value = existing.departure || "";
       document.getElementById("bf-duration-input").value = existing.durationMin ? String(existing.durationMin) : "";
@@ -17331,15 +18079,27 @@
       arrival: arrVal,
       departure: depVal,
       durationMin: durVal,
-      kanzel: document.getElementById("bf-kanzel-input")?.value || "Tunnel",
+      kanzel: (() => {
+        const chosen = document.getElementById("bf-kanzel-input")?.value || REV_ALLGEMEIN_LABEL;
+        if (chosen === FREE_SPOT_OPT_VALUE) {
+          const freeTxt = String(document.getElementById("bf-free-spot-input")?.value || "").trim().replace(/\s+/g, " ");
+          return freeTxt || REV_ALLGEMEIN_LABEL;
+        }
+        return chosen;
+      })(),
       originalSpot: prev?.originalSpot || "",
       cameraName: (document.getElementById("bf-camera-input")?.value || "").trim(),
       category: spKey,
       speciesKey: spKey,
       speciesDetail: (document.getElementById("bf-detail-input")?.value || "").trim(),
       totalCount: Math.max(1, Math.round(Number(document.getElementById("bf-count-input")?.value || 1))),
+      isTrophy: Boolean(prev?.isTrophy || maleVal || trophyVal),
+      trophyType: prev?.trophyType || (maleVal && meta?.trophySpecies ? meta.trophySpecies : ""),
+      trophyDetail: prev?.trophyDetail || "",
+      trophyTag: prev?.trophyTag || "",
       isMaleTrophy: maleVal,
       trophyId: trophyVal,
+      trophyIgnored: Boolean(prev?.trophyIgnored),
       ocrTempC: prev?.ocrTempC ?? null,
       fileCount: prev?.fileCount || 0,
       note: (document.getElementById("bf-note-input")?.value || "").trim()
@@ -17492,13 +18252,45 @@
   }
   window.trPhotoGetAllMap = trPhotoGetAllMap;
 
+  const TROPHY_STATUS_META = {
+    ACTIVE:    { label: "Aktiv",  icon: "🟢", cls: "st-ACTIVE" },
+    HARVESTED: { label: "Erlegt", icon: "🔴", cls: "st-HARVESTED" },
+    ARCHIVED:  { label: "Archiv", icon: "📦", cls: "st-ARCHIVED" }
+  };
+
   let currentTrophySpeciesFilter = "ALL";
-  let pendingTrophyPhotoDataUrl = null;
-  let pendingTrophyPhotoRemoved = false;
+  let currentTrophyStatusFilter = "ALL";
+  let trOpenCandidatesExpanded = false;
+  let pendingTrophyPhotos = []; // [{ photoId, dataUrl, label, isNew }] max 4
+  let pendingTrophyRemovedPhotoIds = [];
+  let pendingTrophyAssignContext = null; // { sourceType: "DIARY"|"BEIFANG", entryId: string }
   let activeTrophySightingsId = null;
   let trCalYear = new Date().getFullYear();
   let trCalMonth = new Date().getMonth();
   let trCalSelectedDate = null;
+  let trLightboxState = { trophyName: "", items: [], idx: 0 };
+
+  function getTrophyStatusKey(tr) {
+    const raw = String(tr?.status || "ACTIVE").trim().toUpperCase();
+    return TROPHY_STATUS_META[raw] ? raw : "ACTIVE";
+  }
+
+  function getTrophyPhotoIds(tr) {
+    if (!tr || typeof tr !== "object") return [];
+    if (Array.isArray(tr.photoIds) && tr.photoIds.length > 0) {
+      return tr.photoIds.map(x => String(x || "").trim()).filter(Boolean).slice(0, 4);
+    }
+    if (tr.photoId && String(tr.photoId).trim()) {
+      return [String(tr.photoId).trim()];
+    }
+    return [];
+  }
+
+  function getTrophyPhotoLabels(tr) {
+    const ids = getTrophyPhotoIds(tr);
+    const raw = Array.isArray(tr?.photoLabels) ? tr.photoLabels : [];
+    return ids.map((_, i) => String(raw[i] || "").trim());
+  }
 
   function getTrophyProfiles() {
     try {
@@ -17519,20 +18311,284 @@
     return getTrophyProfiles().find(t => t.id === id) || null;
   }
 
+  function isDiaryTrophyCandidate(entry) {
+    if (!entry || typeof entry !== "object") return false;
+    const st = String(entry.status || "").toUpperCase();
+    if (st !== "GREEN" && st !== "RED") return false;
+    if (Number(entry.counts?.K || 0) > 0) return true;
+    if (entry.isTrophy || entry.isMaleTrophy) return true;
+    if (String(entry.trophyType || "").toUpperCase() === "KEILER") return true;
+    if (String(entry.trophyDetail || entry.trophyTag || "").trim()) return true;
+    const structStr = String(entry.structure || entry.anzahl || "");
+    if (/\bkeiler\b|\b\d+\s*k\b/i.test(structStr)) return true;
+    return false;
+  }
+  window.isDiaryTrophyCandidate = isDiaryTrophyCandidate;
+
+  function isBeifangOpenTrophyCandidate(item) {
+    if (!item || typeof item !== "object") return false;
+    const spKey = getBeifangSpeciesKey(item);
+    if (!["REHWILD", "DAMWILD", "ROTWILD"].includes(spKey)) return false;
+    if (item.isTrophy || item.isMaleTrophy) return true;
+    if (String(item.trophyDetail || item.trophyTag || item.trophyType || "").trim()) return true;
+    return detectMaleTrophyHint(spKey, item.speciesDetail || "", item.note || "");
+  }
+
+  function collectOpenTrophyCandidates() {
+    const validIds = new Set(getTrophyProfiles().map(t => t.id));
+    const open = [];
+    let ignoredCount = 0;
+
+    // 1. Unverknüpfte Keiler aus sm_logs_v1
+    diaryLogs.forEach(e => {
+      if (!isDiaryTrophyCandidate(e)) return;
+      if (e.trophyId && validIds.has(e.trophyId)) return;
+      if (e.trophyIgnored) {
+        ignoredCount++;
+        return;
+      }
+      open.push({
+        sourceType: "DIARY",
+        id: e.id,
+        species: "KEILER",
+        date: e.date || "",
+        arrival: e.arrival || "",
+        kanzel: e.kanzel || "Tunnel",
+        label: String(e.trophyDetail || e.trophyTag || e.structure || "Keiler").trim(),
+        note: String(e.note || "").trim()
+      });
+    });
+
+    // 2. Unverknüpfte Böcke/Hirsche aus sm_beifang_v1
+    getBeifangEntries().forEach(b => {
+      if (!isBeifangOpenTrophyCandidate(b)) return;
+      if (b.trophyId && validIds.has(b.trophyId)) return;
+      if (b.trophyIgnored) {
+        ignoredCount++;
+        return;
+      }
+      const spKey = getBeifangSpeciesKey(b);
+      const trSp = BEIFANG_SPECIES_META[spKey]?.trophySpecies || "REHBOCK";
+      open.push({
+        sourceType: "BEIFANG",
+        id: b.id,
+        species: trSp,
+        date: b.date || "",
+        arrival: b.arrival || "",
+        kanzel: b.kanzel || REV_ALLGEMEIN_LABEL,
+        label: String(b.trophyDetail || b.trophyTag || b.speciesDetail || TROPHY_SPECIES_META[trSp]?.label || "Trophäe").trim(),
+        note: String(b.note || "").trim()
+      });
+    });
+
+    open.sort((a, b) => `${b.date}T${b.arrival || "00:00"}`.localeCompare(`${a.date}T${a.arrival || "00:00"}`));
+    return { items: open, ignoredCount };
+  }
+
+  function toggleOpenTrophyCandidatesBox() {
+    trOpenCandidatesExpanded = !trOpenCandidatesExpanded;
+    renderTrophaeenView();
+  }
+  window.toggleOpenTrophyCandidatesBox = toggleOpenTrophyCandidatesBox;
+
+  function ignoreOpenTrophyCandidate(sourceType, entryId) {
+    if (sourceType === "DIARY") {
+      const idx = diaryLogs.findIndex(x => x.id === entryId);
+      if (idx >= 0) {
+        diaryLogs[idx].trophyIgnored = true;
+        window.TAGEBUCH_EINTRAEGE = diaryLogs;
+        safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+      }
+    } else if (sourceType === "BEIFANG") {
+      const list = getBeifangEntries();
+      const idx = list.findIndex(x => x.id === entryId);
+      if (idx >= 0) {
+        list[idx].trophyIgnored = true;
+        saveBeifangEntries(list);
+      }
+    }
+    renderTrophaeenView();
+  }
+  window.ignoreOpenTrophyCandidate = ignoreOpenTrophyCandidate;
+
+  function restoreIgnoredTrophyCandidates() {
+    let logsChg = false;
+    diaryLogs.forEach(e => {
+      if (e && e.trophyIgnored) {
+        e.trophyIgnored = false;
+        logsChg = true;
+      }
+    });
+    if (logsChg) {
+      window.TAGEBUCH_EINTRAEGE = diaryLogs;
+      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+    }
+    const bfList = getBeifangEntries();
+    let bfChg = false;
+    bfList.forEach(b => {
+      if (b && b.trophyIgnored) {
+        b.trophyIgnored = false;
+        bfChg = true;
+      }
+    });
+    if (bfChg) saveBeifangEntries(bfList);
+    renderTrophaeenView();
+  }
+  window.restoreIgnoredTrophyCandidates = restoreIgnoredTrophyCandidates;
+
+  function linkEntryToTrophyId(sourceType, entryId, trophyId) {
+    if (!sourceType || !entryId || !trophyId) return false;
+    if (sourceType === "DIARY") {
+      const idx = diaryLogs.findIndex(x => x.id === entryId);
+      if (idx < 0) return false;
+      diaryLogs[idx].trophyId = trophyId;
+      diaryLogs[idx].trophyIgnored = false;
+      window.TAGEBUCH_EINTRAEGE = diaryLogs;
+      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+    } else if (sourceType === "BEIFANG") {
+      const list = getBeifangEntries();
+      const idx = list.findIndex(x => x.id === entryId);
+      if (idx < 0) return false;
+      list[idx].trophyId = trophyId;
+      list[idx].isMaleTrophy = true;
+      list[idx].isTrophy = true;
+      list[idx].trophyIgnored = false;
+      saveBeifangEntries(list);
+    } else {
+      return false;
+    }
+    renderDiaryCalendar();
+    renderDiaryList();
+    renderBeifangView();
+    renderTrophaeenView();
+    return true;
+  }
+
+  function getAssignSourceEntryInfo(sourceType, entryId) {
+    if (sourceType === "DIARY") {
+      const e = diaryLogs.find(x => x.id === entryId);
+      if (!e) return null;
+      return {
+        sourceType: "DIARY",
+        id: e.id,
+        species: "KEILER",
+        date: e.date || "",
+        arrival: e.arrival || "",
+        kanzel: e.kanzel || "Tunnel",
+        detail: String(e.trophyDetail || e.trophyTag || e.structure || "Keiler").trim(),
+        note: String(e.note || "").trim()
+      };
+    }
+    if (sourceType === "BEIFANG") {
+      const b = getBeifangEntries().find(x => x.id === entryId);
+      if (!b) return null;
+      const spKey = getBeifangSpeciesKey(b);
+      const trSp = BEIFANG_SPECIES_META[spKey]?.trophySpecies || "REHBOCK";
+      return {
+        sourceType: "BEIFANG",
+        id: b.id,
+        species: trSp,
+        date: b.date || "",
+        arrival: b.arrival || "",
+        kanzel: b.kanzel || REV_ALLGEMEIN_LABEL,
+        detail: String(b.trophyDetail || b.trophyTag || b.speciesDetail || TROPHY_SPECIES_META[trSp]?.label || "").trim(),
+        note: String(b.note || "").trim()
+      };
+    }
+    return null;
+  }
+
+  function openTrophyQuickAssignModal(sourceType, entryId) {
+    const info = getAssignSourceEntryInfo(sourceType, entryId);
+    if (!info) return;
+    pendingTrophyAssignContext = { sourceType, entryId };
+
+    const sumEl = document.getElementById("tr-assign-source-summary");
+    const spMeta = TROPHY_SPECIES_META[info.species] || { icon: "🏆", label: info.species };
+    if (sumEl) {
+      sumEl.innerHTML =
+        `<strong>${spMeta.icon} ${escapeHTML(info.detail || spMeta.label)}</strong><br>` +
+        `📅 ${formatDateDE(info.date)}${info.arrival ? ` · 🕒 ${escapeHTML(info.arrival)} Uhr` : ""} · ${escapeHTML(formatSpotLabel(info.kanzel))}` +
+        (info.note ? `<br><span style="color:var(--text-muted);">📝 ${escapeHTML(info.note.slice(0, 120))}</span>` : "");
+    }
+
+    const listEl = document.getElementById("tr-assign-existing-list");
+    if (listEl) {
+      const allTr = getTrophyProfiles();
+      const matching = allTr.filter(t => t.species === info.species);
+      const others = allTr.filter(t => t.species !== info.species && (info.sourceType === "BEIFANG" ? t.species !== "KEILER" : false));
+      const ordered = matching.concat(others);
+      if (ordered.length === 0) {
+        listEl.innerHTML = `<div style="font-size:0.78rem; color:var(--text-muted); padding:6px 2px;">Noch kein passender Steckbrief (${spMeta.label}) vorhanden – einfach unten neu anlegen.</div>`;
+      } else {
+        listEl.innerHTML = ordered.map(t => {
+          const tm = TROPHY_SPECIES_META[t.species] || { icon: "🏆", label: t.species };
+          const stM = TROPHY_STATUS_META[getTrophyStatusKey(t)] || TROPHY_STATUS_META.ACTIVE;
+          const sid = escapeHTML(t.id).replace(/'/g, "&#39;");
+          return `
+            <button type="button" class="btn-sm btn-no" style="width:100%; text-align:left; display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 10px;" onclick="assignPendingEntryToExistingTrophy('${sid}')">
+              <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${tm.icon} <strong>${escapeHTML(t.name)}</strong>${t.traits ? ` <span style="color:var(--text-muted); font-weight:600;">· ${escapeHTML(t.traits.slice(0, 32))}</span>` : ""}</span>
+              <span class="tr-status-pill ${stM.cls}" style="flex-shrink:0;">${stM.icon} ${stM.label}</span>
+            </button>`;
+        }).join("");
+      }
+    }
+    openModal("modal-trophy-assign");
+  }
+  window.openTrophyQuickAssignModal = openTrophyQuickAssignModal;
+
+  function assignPendingEntryToExistingTrophy(trophyId) {
+    if (!pendingTrophyAssignContext) return;
+    const { sourceType, entryId } = pendingTrophyAssignContext;
+    pendingTrophyAssignContext = null;
+    linkEntryToTrophyId(sourceType, entryId, trophyId);
+    closeModal("modal-trophy-assign");
+  }
+  window.assignPendingEntryToExistingTrophy = assignPendingEntryToExistingTrophy;
+
+  function createNewTrophyFromPendingAssign() {
+    if (!pendingTrophyAssignContext) return;
+    const info = getAssignSourceEntryInfo(pendingTrophyAssignContext.sourceType, pendingTrophyAssignContext.entryId);
+    closeModal("modal-trophy-assign");
+    if (!info) return;
+    const spMeta = TROPHY_SPECIES_META[info.species] || { label: "Trophäenträger" };
+    const cleanSpot = isRevierAllgemeinSpot(info.kanzel) ? "" : info.kanzel;
+    const cleanDetail = (info.detail && !["sauen-besuch", "sauen bestätigt", "rehwild", "damwild", "rotwild"].includes(info.detail.toLowerCase()))
+      ? info.detail
+      : spMeta.label;
+    const nameSuggestion = cleanSpot && !cleanDetail.toLowerCase().includes(cleanSpot.toLowerCase())
+      ? `${cleanDetail} ${cleanSpot}`
+      : cleanDetail;
+    openTrophyModal(null, {
+      name: nameSuggestion,
+      species: info.species,
+      traits: (info.detail && info.detail !== spMeta.label) ? info.detail : "",
+      note: info.note,
+      linkAfterSave: { sourceType: info.sourceType, entryId: info.id }
+    });
+  }
+  window.createNewTrophyFromPendingAssign = createNewTrophyFromPendingAssign;
+
   function mergeTrophyLists(existingList, incomingList, mode = "MERGE") {
     const sanitize = (item) => {
       if (!item || typeof item !== "object") return null;
       const name = String(item.name || "").trim();
       if (!name) return null;
       const sp = TROPHY_SPECIES_META[item.species] ? item.species : "REHBOCK";
+      const photoIds = getTrophyPhotoIds(item);
+      const photoLabels = getTrophyPhotoLabels(item);
+      const st = getTrophyStatusKey(item);
       return {
         id: String(item.id || (`tr-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`)),
         name: name,
         species: sp,
+        status: st,
         ageEstimate: String(item.ageEstimate || "").trim(),
         traits: String(item.traits || "").trim(),
         note: String(item.note || "").trim(),
-        photoId: String(item.photoId || "").trim(),
+        photoId: photoIds[0] || "",
+        photoIds: photoIds,
+        photoLabels: photoLabels,
         createdAt: String(item.createdAt || getLocalISODateTime()),
         updatedAt: String(item.updatedAt || getLocalISODateTime())
       };
@@ -17547,7 +18603,14 @@
         if (!cur.traits && item.traits) cur.traits = item.traits;
         if (!cur.ageEstimate && item.ageEstimate) cur.ageEstimate = item.ageEstimate;
         if (!cur.note && item.note) cur.note = item.note;
-        if (!cur.photoId && item.photoId) cur.photoId = item.photoId;
+        if (cur.status === "ACTIVE" && item.status !== "ACTIVE") cur.status = item.status;
+        item.photoIds.forEach((pid, idx) => {
+          if (pid && !cur.photoIds.includes(pid) && cur.photoIds.length < 4) {
+            cur.photoIds.push(pid);
+            cur.photoLabels.push(item.photoLabels[idx] || "");
+          }
+        });
+        cur.photoId = cur.photoIds[0] || "";
       } else {
         result.push(item);
       }
@@ -17591,7 +18654,7 @@
           arrival: b.arrival || "",
           departure: b.departure || "",
           durationMin: Number(b.durationMin || 0),
-          kanzel: b.kanzel || "Tunnel",
+          kanzel: b.kanzel || REV_ALLGEMEIN_LABEL,
           detail: b.speciesDetail || (BEIFANG_SPECIES_META[getBeifangSpeciesKey(b)]?.label || ""),
           note: b.note || ""
         });
@@ -17617,45 +18680,90 @@
     return results;
   }
 
+  function computeTrophyRecencyBadge(latestDateStr) {
+    if (!latestDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(latestDateStr)) {
+      return { text: "Noch keine Sichtung", cls: "is-old", days: null };
+    }
+    const now = new Date();
+    const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0).getTime();
+    const [yy, mm, dd] = latestDateStr.split("-").map(Number);
+    const seenMid = new Date(yy, mm - 1, dd, 12, 0, 0).getTime();
+    const diffDays = Math.round((todayMid - seenMid) / 86400000);
+    if (diffDays < 0) return { text: `⚠️ Zukunft (${formatDateDE(latestDateStr)})`, cls: "is-mid", days: diffDays };
+    if (diffDays === 0) return { text: "Zuletzt heute", cls: "is-fresh", days: 0 };
+    if (diffDays === 1) return { text: "Zuletzt vor 1 Tag", cls: "is-fresh", days: 1 };
+    if (diffDays <= 7) return { text: `Zuletzt vor ${diffDays} Tagen`, cls: "is-fresh", days: diffDays };
+    if (diffDays <= 21) return { text: `Zuletzt vor ${diffDays} Tagen`, cls: "is-mid", days: diffDays };
+    return { text: `Zuletzt vor ${diffDays} Tagen`, cls: "is-old", days: diffDays };
+  }
+
   function computeTrophyStats(trophyId) {
     const sightings = collectSightingsForTrophy(trophyId);
     const count = sightings.length;
     const latest = count > 0 ? sightings[0] : null;
 
-    // Standorte zählen
     const spotCounts = {};
-    let sinSum = 0, cosSum = 0, timeN = 0;
+    const hourBuckets = Array(24).fill(0);
+    const tod = { morgen: 0, tag: 0, abend: 0, nacht: 0 }; // 05-09, 10-15, 16-20, 21-04
+    let timeN = 0;
+
     sightings.forEach(s => {
-      const k = s.kanzel || "Tunnel";
+      const k = s.kanzel || REV_ALLGEMEIN_LABEL;
       spotCounts[k] = (spotCounts[k] || 0) + 1;
       const m = String(s.arrival || "").match(/^(\d{1,2}):(\d{2})/);
       if (m) {
-        const mins = Number(m[1]) * 60 + Number(m[2]);
-        const ang = (mins / 1440) * 2 * Math.PI;
-        sinSum += Math.sin(ang);
-        cosSum += Math.cos(ang);
+        const hh = clamp(Number(m[1]), 0, 23);
+        hourBuckets[hh]++;
         timeN++;
+        if (hh >= 5 && hh <= 9) tod.morgen++;
+        else if (hh >= 10 && hh <= 15) tod.tag++;
+        else if (hh >= 16 && hh <= 20) tod.abend++;
+        else tod.nacht++;
       }
     });
 
-    const spotParts = Object.entries(spotCounts)
-      .sort((a, b) => b[1] - a[1])
-      .map(([k, c]) => `${c}× ${k}`);
+    const spotEntries = Object.entries(spotCounts).sort((a, b) => b[1] - a[1]);
+    const spotParts = spotEntries.map(([k, c]) => `${c}× ${formatSpotLabel(k)}`);
+    const topSpot = spotEntries.length > 0 ? spotEntries[0][0] : "";
 
-    let prefTimeStr = "--:--";
+    // 2-Stunden-Hauptfenster berechnen
+    let bestWinH = -1, bestWinHits = 0;
     if (timeN > 0) {
-      let meanAng = Math.atan2(sinSum / timeN, cosSum / timeN);
-      if (meanAng < 0) meanAng += 2 * Math.PI;
-      const totMins = Math.round((meanAng / (2 * Math.PI)) * 1440) % 1440;
-      prefTimeStr = `~${String(Math.floor(totMins / 60)).padStart(2, "0")}:${String(totMins % 60).padStart(2, "0")} Uhr`;
+      for (let h = 0; h < 24; h++) {
+        const hits = hourBuckets[h] + hourBuckets[(h + 1) % 24];
+        if (hits > bestWinHits) {
+          bestWinHits = hits;
+          bestWinH = h;
+        }
+      }
     }
+    const peakWindowStr = (bestWinH >= 0 && bestWinHits > 0)
+      ? `${String(bestWinH).padStart(2, "0")}–${String((bestWinH + 2) % 24).padStart(2, "0")} Uhr (${bestWinHits}/${timeN})`
+      : "--:--";
+
+    // Stärkste Tageszeit ermitteln
+    const todOrder = [
+      { k: "morgen", icon: "🌅", label: "Morgen", cnt: tod.morgen },
+      { k: "tag",    icon: "☀️", label: "Tag",    cnt: tod.tag },
+      { k: "abend",  icon: "🌇", label: "Abend",  cnt: tod.abend },
+      { k: "nacht",  icon: "🌙", label: "Nacht",  cnt: tod.nacht }
+    ];
+    const peakTodCnt = Math.max(tod.morgen, tod.tag, tod.abend, tod.nacht);
+    const recency = computeTrophyRecencyBadge(latest ? latest.date : "");
 
     return {
       sightings,
       count,
       latest,
+      topSpot,
       spotsText: spotParts.length > 0 ? spotParts.join(" · ") : "Noch keine verknüpften Sichtungen",
-      prefTimeStr
+      prefTimeStr: peakWindowStr,
+      peakWindowStr,
+      tod,
+      todOrder,
+      peakTodCnt,
+      timeN,
+      recency
     };
   }
 
@@ -17674,12 +18782,19 @@
   }
   window.setTrophySpeciesFilter = setTrophySpeciesFilter;
 
+  function setTrophyStatusFilter(st) {
+    currentTrophyStatusFilter = st || "ALL";
+    renderTrophaeenView();
+  }
+  window.setTrophyStatusFilter = setTrophyStatusFilter;
+
   function hydrateTrophyThumbImages(profiles) {
     (profiles || []).forEach(tr => {
-      if (!tr || !tr.photoId) return;
+      const pIds = getTrophyPhotoIds(tr);
+      if (pIds.length === 0) return;
       const box = document.getElementById(`tr-thumb-${tr.id}`);
       if (!box) return;
-      trPhotoGet(tr.photoId).then(dataUrl => {
+      trPhotoGet(pIds[0]).then(dataUrl => {
         if (!dataUrl) return;
         const curBox = document.getElementById(`tr-thumb-${tr.id}`);
         if (curBox) {
@@ -17689,27 +18804,153 @@
     });
   }
 
-  function openTrophyPhotoLightbox(trophyId) {
+  function renderTrophyLightboxView() {
+    const st = trLightboxState;
+    if (!st.items || st.items.length === 0) return;
+    const idx = clamp(st.idx, 0, st.items.length - 1);
+    st.idx = idx;
+    const cur = st.items[idx];
+    const titleEl = document.getElementById("lightbox-photo-title");
+    const imgEl = document.getElementById("lightbox-photo-img");
+    const capEl = document.getElementById("lightbox-photo-caption");
+    const navEl = document.getElementById("lightbox-nav-row");
+    const cntEl = document.getElementById("lightbox-counter");
+    const thumbsEl = document.getElementById("lightbox-thumbs-row");
+
+    if (titleEl) titleEl.textContent = `🏆 ${st.trophyName}`;
+    if (imgEl) imgEl.src = cur.dataUrl;
+    if (capEl) capEl.textContent = cur.label ? `🏷️ ${cur.label}` : (st.items.length > 1 ? `Foto ${idx + 1} von ${st.items.length}` : "");
+    if (navEl) navEl.style.display = st.items.length > 1 ? "flex" : "none";
+    if (cntEl) cntEl.textContent = `${idx + 1} / ${st.items.length}`;
+    if (thumbsEl) {
+      if (st.items.length > 1) {
+        thumbsEl.style.display = "flex";
+        thumbsEl.innerHTML = st.items.map((it, i) =>
+          `<button type="button" class="tr-lb-thumb-btn ${i === idx ? "active" : ""}" onclick="selectTrophyLightboxIndex(${i})"><img src="${it.dataUrl}" alt="Foto ${i + 1}"></button>`
+        ).join("");
+      } else {
+        thumbsEl.style.display = "none";
+        thumbsEl.innerHTML = "";
+      }
+    }
+  }
+
+  function stepTrophyLightbox(delta) {
+    if (!trLightboxState.items || trLightboxState.items.length <= 1) return;
+    trLightboxState.idx = (trLightboxState.idx + delta + trLightboxState.items.length) % trLightboxState.items.length;
+    renderTrophyLightboxView();
+  }
+  window.stepTrophyLightbox = stepTrophyLightbox;
+
+  function selectTrophyLightboxIndex(i) {
+    trLightboxState.idx = i;
+    renderTrophyLightboxView();
+  }
+  window.selectTrophyLightboxIndex = selectTrophyLightboxIndex;
+
+  async function openTrophyPhotoLightbox(trophyId, startIdx = 0) {
     const tr = getTrophyById(trophyId);
-    if (!tr || !tr.photoId) return;
-    trPhotoGet(tr.photoId).then(dataUrl => {
-      if (!dataUrl) return;
-      const titleEl = document.getElementById("lightbox-photo-title");
-      const imgEl = document.getElementById("lightbox-photo-img");
-      if (titleEl) titleEl.textContent = `🏆 ${tr.name}`;
-      if (imgEl) imgEl.src = dataUrl;
-      openModal("modal-photo-lightbox");
-    });
+    if (!tr) return;
+    const pIds = getTrophyPhotoIds(tr);
+    const pLabels = getTrophyPhotoLabels(tr);
+    if (pIds.length === 0) return;
+    const loaded = [];
+    for (let i = 0; i < pIds.length; i++) {
+      const dataUrl = await trPhotoGet(pIds[i]);
+      if (dataUrl) loaded.push({ photoId: pIds[i], dataUrl, label: pLabels[i] || "" });
+    }
+    if (loaded.length === 0) return;
+    trLightboxState = { trophyName: tr.name, items: loaded, idx: clamp(startIdx, 0, loaded.length - 1) };
+    renderTrophyLightboxView();
+    openModal("modal-photo-lightbox");
   }
   window.openTrophyPhotoLightbox = openTrophyPhotoLightbox;
 
+  function transferTrophyToStrecke(trophyId) {
+    const tr = getTrophyById(trophyId);
+    if (!tr) return;
+    const stats = computeTrophyStats(tr.id);
+    const wildartMap = {
+      KEILER: "Schwarzwild",
+      REHBOCK: "Rehwild",
+      DAMHIRSCH: "Damwild",
+      ROTHIRSCH: "Rotwild"
+    };
+    const meta = TROPHY_SPECIES_META[tr.species] || { label: "Stück" };
+    const kanzelPref = (stats.topSpot && isKnownKanzelSpot(stats.topSpot))
+      ? stats.topSpot
+      : ((stats.latest && isKnownKanzelSpot(stats.latest.kanzel)) ? stats.latest.kanzel : activeKanzel);
+    const klassePref = tr.ageEstimate ? `${meta.label} (${tr.ageEstimate})` : meta.label;
+    const noteParts = [`🏆 Trophäenträger: ${tr.name}`];
+    if (tr.traits) noteParts.push(tr.traits);
+    if (tr.note) noteParts.push(tr.note);
+
+    openStreckeModal(null, {
+      date: getLocalISODate(),
+      time: getLocalHHMM(),
+      wildart: wildartMap[tr.species] || "Schwarzwild",
+      gender: "männlich",
+      klasse: klassePref,
+      kanzel: kanzelPref,
+      note: noteParts.join(" · ")
+    });
+  }
+  window.transferTrophyToStrecke = transferTrophyToStrecke;
+
+  function renderOpenTrophyCandidatesBox() {
+    const slot = document.getElementById("tr-open-sightings-box-slot");
+    if (!slot) return;
+    const { items, ignoredCount } = collectOpenTrophyCandidates();
+    if (items.length === 0 && ignoredCount === 0) {
+      slot.innerHTML = "";
+      return;
+    }
+    const badgeColor = items.length > 0 ? "var(--accent-yellow)" : "var(--text-muted)";
+    let bodyHtml = "";
+    if (trOpenCandidatesExpanded) {
+      const listHtml = items.length === 0
+        ? `<div style="font-size:0.78rem; color:var(--text-muted); padding:4px 2px;">Alle offenen Trophäen-Sichtungen sind zugeordnet oder ignoriert.</div>`
+        : items.slice(0, 30).map(it => {
+            const spMeta = TROPHY_SPECIES_META[it.species] || { icon: "🏆", label: it.species };
+            const sid = escapeHTML(it.id).replace(/'/g, "&#39;");
+            return `
+              <div class="tr-open-item">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <strong style="font-size:0.8rem; color:#fff;">${spMeta.icon} ${formatDateDE(it.date)}${it.arrival ? ` · ${escapeHTML(it.arrival)} Uhr` : ""}</strong>
+                  <span class="beifang-cat-pill" style="font-size:0.67rem;">${it.sourceType === "DIARY" ? "🐗 Tagebuch" : "🦌 Beifang"}</span>
+                </div>
+                <div style="font-size:0.78rem; color:#e6f4ea; font-weight:700;">${escapeHTML(formatSpotLabel(it.kanzel))} — ${escapeHTML(it.label)}</div>
+                <div class="tr-open-item-actions">
+                  <button type="button" class="btn-sm btn-yes" style="flex:1; padding:5px 8px; font-size:0.74rem;" onclick="openTrophyQuickAssignModal('${it.sourceType}', '${sid}')">🏆 Zuordnen</button>
+                  <button type="button" class="btn-sm btn-no" style="padding:5px 9px; font-size:0.74rem; color:#cbd5e1;" onclick="ignoreOpenTrophyCandidate('${it.sourceType}', '${sid}')">✕ Ignorieren</button>
+                </div>
+              </div>`;
+          }).join("");
+      const moreNote = items.length > 30 ? `<div style="font-size:0.72rem; color:var(--text-muted); text-align:center;">Zeige die neuesten 30 von ${items.length} offenen Sichtungen.</div>` : "";
+      const restoreBtn = ignoredCount > 0
+        ? `<button type="button" class="btn-sm btn-no" style="width:100%; font-size:0.72rem; padding:5px 8px; margin-top:2px;" onclick="restoreIgnoredTrophyCandidates()">↺ ${ignoredCount} ignorierte Sichtung${ignoredCount === 1 ? "" : "en"} wieder einblenden</button>`
+        : "";
+      bodyHtml = `<div class="tr-open-box-body">${listHtml}${moreNote}${restoreBtn}</div>`;
+    }
+
+    slot.innerHTML = `
+      <div class="tr-open-box">
+        <button type="button" class="tr-open-box-head" onclick="toggleOpenTrophyCandidatesBox()">
+          <span>🔎 Offene Trophäen-Sichtungen <span style="color:${badgeColor};">(${items.length})</span></span>
+          <span style="font-size:0.78rem; color:var(--text-muted);">${trOpenCandidatesExpanded ? "▲ Einklappen" : "▼ Anzeigen"}</span>
+        </button>
+        ${bodyHtml}
+      </div>`;
+  }
+
   function renderTrophaeenView() {
     mountTrophaeenView();
+    renderOpenTrophyCandidatesBox();
     const all = getTrophyProfiles();
     const totalBadge = document.getElementById("tr-total-badge");
     if (totalBadge) totalBadge.textContent = String(all.length);
 
-    // Filter-Chips mit Zählern
+    // 1. Art-Filter-Chips
     const fltBar = document.getElementById("tr-species-filter-bar");
     if (fltBar) {
       const cnts = { ALL: all.length, REHBOCK: 0, DAMHIRSCH: 0, ROTHIRSCH: 0, KEILER: 0 };
@@ -17726,17 +18967,41 @@
       ).join("");
     }
 
+    // 2. Status-Filter-Chips (🟢 Aktiv | 🔴 Erlegt | 📦 Archiv)
+    const stBar = document.getElementById("tr-status-filter-bar");
+    if (stBar) {
+      const stCnts = { ALL: all.length, ACTIVE: 0, HARVESTED: 0, ARCHIVED: 0 };
+      all.forEach(t => {
+        const sk = getTrophyStatusKey(t);
+        if (stCnts[sk] !== undefined) stCnts[sk]++;
+      });
+      const stDefs = [
+        { k: "ALL",       lbl: "📋 Alle Status" },
+        { k: "ACTIVE",    lbl: "🟢 Aktiv" },
+        { k: "HARVESTED", lbl: "🔴 Erlegt" },
+        { k: "ARCHIVED",  lbl: "📦 Archiv" }
+      ];
+      stBar.innerHTML = stDefs.map(c =>
+        `<button type="button" class="spot-chip ${currentTrophyStatusFilter === c.k ? "active" : ""}" onclick="setTrophyStatusFilter('${c.k}')">${c.lbl} <span class="spot-chip-cnt">${stCnts[c.k]}</span></button>`
+      ).join("");
+    }
+
     const q = (document.getElementById("tr-search-input")?.value || "").trim().toLowerCase();
-    const enriched = all.map(tr => ({ tr, stats: computeTrophyStats(tr.id) }));
-    const filtered = enriched.filter(({ tr, stats }) => {
+    const enriched = all.map(tr => ({ tr, stats: computeTrophyStats(tr.id), stKey: getTrophyStatusKey(tr) }));
+    const filtered = enriched.filter(({ tr, stats, stKey }) => {
       if (currentTrophySpeciesFilter !== "ALL" && tr.species !== currentTrophySpeciesFilter) return false;
+      if (currentTrophyStatusFilter !== "ALL" && stKey !== currentTrophyStatusFilter) return false;
       if (!q) return true;
       const meta = TROPHY_SPECIES_META[tr.species] || { label: "" };
-      return `${tr.name} ${meta.label} ${tr.traits} ${tr.ageEstimate} ${tr.note} ${stats.spotsText}`.toLowerCase().includes(q);
+      const stLabel = TROPHY_STATUS_META[stKey]?.label || "";
+      return `${tr.name} ${meta.label} ${stLabel} ${tr.traits} ${tr.ageEstimate} ${tr.note} ${stats.spotsText}`.toLowerCase().includes(q);
     });
 
-    // Nach letzter Sichtung sortieren (neueste zuerst), sonst Erstellungsdatum
+    // Sortierung: Aktive zuerst, dann nach letzter Sichtung (neueste zuerst)
+    const stRank = { ACTIVE: 0, HARVESTED: 1, ARCHIVED: 2 };
     filtered.sort((a, b) => {
+      const rDiff = (stRank[a.stKey] ?? 9) - (stRank[b.stKey] ?? 9);
+      if (rDiff !== 0) return rDiff;
       const dA = a.stats.latest ? `${a.stats.latest.date}T${a.stats.latest.arrival || "00:00"}` : (a.tr.updatedAt || "");
       const dB = b.stats.latest ? `${b.stats.latest.date}T${b.stats.latest.arrival || "00:00"}` : (b.tr.updatedAt || "");
       return dB.localeCompare(dA);
@@ -17748,38 +19013,60 @@
     if (filtered.length === 0) {
       container.innerHTML = `<div style="text-align:center; padding:24px 14px; color:var(--text-muted); font-size:0.84rem; line-height:1.45;">
         ${all.length === 0
-          ? "Noch keine Trophäenträger angelegt.<br>Tippe oben auf <strong>„➕ Neuer Trophäenträger“</strong>, um Rehböcke, Damhirsche, Rothirsche oder Keiler inkl. Foto zu verfolgen."
+          ? "Noch keine Trophäenträger angelegt.<br>Tippe oben auf <strong>„➕ Neuer Trophäenträger“</strong> oder nutze <strong>„🔎 Offene Trophäen-Sichtungen“</strong>."
           : "Keine Trophäenträger für diesen Filter gefunden."}
       </div>`;
       return;
     }
 
-    container.innerHTML = filtered.map(({ tr, stats }) => {
+    container.innerHTML = filtered.map(({ tr, stats, stKey }) => {
       const meta = TROPHY_SPECIES_META[tr.species] || { icon: "🏆", label: tr.species, color: "var(--accent-yellow)" };
+      const stMeta = TROPHY_STATUS_META[stKey] || TROPHY_STATUS_META.ACTIVE;
       const safeId = escapeHTML(tr.id).replace(/'/g, "&#39;");
-      const cachedPhoto = tr.photoId ? __trPhotoCache.get(tr.photoId) : null;
+      const pIds = getTrophyPhotoIds(tr);
+      const cachedPhoto = pIds.length > 0 ? __trPhotoCache.get(pIds[0]) : null;
       const thumbInner = cachedPhoto
         ? `<img src="${cachedPhoto}" alt="${escapeHTML(tr.name)}">`
         : `${meta.icon}`;
+      const photoCntBadge = pIds.length > 1 ? `<span class="tr-photo-count-badge">📷 ${pIds.length}/4</span>` : "";
       const lastSeenTxt = stats.latest
         ? `${formatDateDE(stats.latest.date)}${stats.latest.arrival ? ` · ${stats.latest.arrival}` : ""}`
         : "noch offen";
       const lastSpotSub = stats.latest ? ` (${stats.latest.kanzel})` : "";
+      const todBarHtml = `
+        <div class="tr-timeofday-bar">
+          ${stats.todOrder.map(t => {
+            const cls = t.cnt > 0 && t.cnt === stats.peakTodCnt ? "is-peak" : (t.cnt > 0 ? "has-hits" : "");
+            return `<div class="tr-tod-cell ${cls}">${t.icon} ${t.label} <strong>${t.cnt}</strong></div>`;
+          }).join("")}
+        </div>`;
+      const streckeBtn = stKey === "HARVESTED"
+        ? `<button type="button" class="btn-sm btn-no" style="padding:6px 9px; font-size:0.74rem; border-color:var(--accent-red); color:#ffb3be;" onclick="transferTrophyToStrecke('${safeId}')">🎯 Strecke</button>`
+        : "";
 
       return `
-        <div class="trophy-card sp-${tr.species}">
+        <div class="trophy-card sp-${tr.species} ${stMeta.cls}">
           <div class="trophy-card-top">
-            <div class="trophy-thumb-box" id="tr-thumb-${escapeHTML(tr.id)}" onclick="openTrophyPhotoLightbox('${safeId}')" title="${tr.photoId ? "Tippen für Vollbild" : "Kein Foto"}">${thumbInner}</div>
+            <div class="tr-thumb-wrap-rel">
+              <div class="trophy-thumb-box" id="tr-thumb-${escapeHTML(tr.id)}" onclick="openTrophyPhotoLightbox('${safeId}')" title="${pIds.length > 0 ? "Tippen für Foto-Vollbild" : "Kein Foto"}">${thumbInner}</div>
+              ${photoCntBadge}
+            </div>
             <div style="flex:1; min-width:0;">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
                 <div style="min-width:0;">
-                  <span class="beifang-cat-pill" style="margin-bottom:3px; border-color:${meta.color};">${meta.icon} ${meta.label}${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}</span>
+                  <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-bottom:3px;">
+                    <span class="beifang-cat-pill" style="border-color:${meta.color};">${meta.icon} ${meta.label}${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}</span>
+                    <span class="tr-status-pill ${stMeta.cls}">${stMeta.icon} ${stMeta.label}</span>
+                  </div>
                   <div style="font-weight:900; font-size:0.95rem; color:#fff; line-height:1.25;">${escapeHTML(tr.name)}</div>
                 </div>
                 <div style="display:flex; gap:4px; flex-shrink:0;">
                   <button type="button" class="btn-sm btn-no" style="padding:3px 7px; font-size:0.72rem;" onclick="openTrophyModal('${safeId}')" title="Bearbeiten">✏️</button>
                   <button type="button" class="btn-sm btn-no" style="padding:3px 7px; font-size:0.72rem; color:#ff8fa3;" onclick="deleteTrophyProfile('${safeId}')" title="Löschen">🗑️</button>
                 </div>
+              </div>
+              <div style="margin-top:4px;">
+                <span class="tr-recency-pill ${stats.recency.cls}">⏱️ ${escapeHTML(stats.recency.text)}</span>
               </div>
               ${tr.traits ? `<div style="font-size:0.76rem; color:#e6f4ea; margin-top:4px; line-height:1.35;">🔎 ${escapeHTML(tr.traits)}</div>` : ""}
               ${tr.note ? `<div style="font-size:0.73rem; color:var(--text-muted); margin-top:2px; line-height:1.3;">📝 ${escapeHTML(tr.note)}</div>` : ""}
@@ -17788,20 +19075,23 @@
 
           <div class="trophy-stats-grid">
             <div class="trophy-stat-mini">
-              <span style="color:var(--text-muted);">👁️ Sichtungen</span>
-              <strong style="color:var(--accent-green);">${stats.count}× · ${stats.prefTimeStr}</strong>
+              <span style="color:var(--text-muted);">🕒 2h-Hauptfenster</span>
+              <strong style="color:var(--accent-green);">${stats.count}× · ${escapeHTML(stats.peakWindowStr)}</strong>
             </div>
             <div class="trophy-stat-mini">
-              <span style="color:var(--text-muted);">📅 Zuletzt gesehen</span>
+              <span style="color:var(--text-muted);">📅 Letzte Sichtung</span>
               <strong>${escapeHTML(lastSeenTxt)}${escapeHTML(lastSpotSub)}</strong>
             </div>
           </div>
 
-          <div class="trophy-spots-line">🏯 Standorte: ${escapeHTML(stats.spotsText)}</div>
+          ${todBarHtml}
+
+          <div class="trophy-spots-line">Standorte: ${escapeHTML(stats.spotsText)}</div>
 
           <div class="trophy-actions-row">
-            <button type="button" class="btn-sm btn-yes" style="flex:1; padding:6px 10px; font-size:0.76rem;" onclick="openTrophySightingsModal('${safeId}')">📅 Sichtungen &amp; Kalender (${stats.count})</button>
-            <button type="button" class="btn-sm btn-no" style="padding:6px 10px; font-size:0.76rem; border-color:var(--accent-yellow); color:#fff3bf;" onclick="addSightingForTrophy('${safeId}')">➕ Sichtung</button>
+            <button type="button" class="btn-sm btn-yes" style="flex:1; padding:6px 10px; font-size:0.76rem;" onclick="openTrophySightingsModal('${safeId}')">📅 Sichtungen (${stats.count})</button>
+            <button type="button" class="btn-sm btn-no" style="padding:6px 9px; font-size:0.74rem; border-color:var(--accent-yellow); color:#fff3bf;" onclick="addSightingForTrophy('${safeId}')">➕ Sichtung</button>
+            ${streckeBtn}
           </div>
         </div>
       `;
@@ -17811,46 +19101,94 @@
   }
   window.renderTrophaeenView = renderTrophaeenView;
 
-  function syncTrophyModalPhotoPreview(dataUrl) {
-    const wrap = document.getElementById("tr-photo-preview-wrap");
-    const img = document.getElementById("tr-photo-preview-img");
-    const st = document.getElementById("tr-photo-status");
-    if (dataUrl && wrap && img) {
-      img.src = dataUrl;
-      wrap.style.display = "block";
-      if (st) st.textContent = "✅ Foto bereit (komprimiert in lokaler Bild-Datenbank)";
-    } else if (wrap && img) {
-      img.src = "";
-      wrap.style.display = "none";
-      if (st) st.textContent = "Automatisch verkleinert in lokaler Bild-Datenbank (schont Speicher)";
-    }
+  function syncTrophyModalStreckeHint() {
+    const st = document.getElementById("tr-status-input")?.value || "ACTIVE";
+    const hint = document.getElementById("tr-modal-strecke-hint");
+    if (hint) hint.style.display = (st === "HARVESTED") ? "block" : "none";
   }
+  window.syncTrophyModalStreckeHint = syncTrophyModalStreckeHint;
+
+  function renderTrophyModalPhotoGrid() {
+    const grid = document.getElementById("tr-modal-photo-grid");
+    const st = document.getElementById("tr-photo-status");
+    const addLbl = document.getElementById("tr-add-photo-label");
+    if (st) {
+      st.textContent = `${pendingTrophyPhotos.length} / 4 Fotos · komprimiert in lokaler Bild-Datenbank`;
+    }
+    if (addLbl) {
+      addLbl.style.opacity = pendingTrophyPhotos.length >= 4 ? "0.45" : "1";
+      addLbl.style.pointerEvents = pendingTrophyPhotos.length >= 4 ? "none" : "auto";
+    }
+    if (!grid) return;
+    if (pendingTrophyPhotos.length === 0) {
+      grid.style.display = "none";
+      grid.innerHTML = "";
+      return;
+    }
+    grid.style.display = "grid";
+    grid.innerHTML = pendingTrophyPhotos.map((p, idx) => `
+      <div class="tr-modal-photo-slot">
+        <div class="tr-modal-photo-imgbox">
+          <img src="${p.dataUrl}" alt="Foto ${idx + 1}">
+          <button type="button" class="del-photo-btn" onclick="removeTrophyModalPhoto(${idx})">✕</button>
+        </div>
+        <input type="text" class="tr-modal-photo-lbl" value="${escapeHTML(p.label || "")}" placeholder="z. B. Bast / Verfegt / 2026" oninput="updateTrophyModalPhotoLabel(${idx}, this.value)">
+      </div>`).join("");
+  }
+
+  function updateTrophyModalPhotoLabel(idx, val) {
+    if (pendingTrophyPhotos[idx]) pendingTrophyPhotos[idx].label = String(val || "");
+  }
+  window.updateTrophyModalPhotoLabel = updateTrophyModalPhotoLabel;
+
+  function removeTrophyModalPhoto(idx) {
+    const removed = pendingTrophyPhotos.splice(idx, 1)[0];
+    if (removed && removed.photoId && !removed.isNew) {
+      pendingTrophyRemovedPhotoIds.push(removed.photoId);
+    }
+    renderTrophyModalPhotoGrid();
+  }
+  window.removeTrophyModalPhoto = removeTrophyModalPhoto;
 
   async function handleTrophyPhotoUpload(event) {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
+    if (pendingTrophyPhotos.length >= 4) {
+      alert("Maximal 4 Fotos pro Steckbrief möglich. Bitte zuerst ein Foto entfernen.");
+      event.target.value = "";
+      return;
+    }
     if (typeof window.compressImageFile === "function") {
       const compressed = await window.compressImageFile(file, 640, 0.70);
-      pendingTrophyPhotoDataUrl = compressed;
-      pendingTrophyPhotoRemoved = false;
-      syncTrophyModalPhotoPreview(compressed);
+      pendingTrophyPhotos.push({
+        photoId: "",
+        dataUrl: compressed,
+        label: "",
+        isNew: true
+      });
+      renderTrophyModalPhotoGrid();
     }
     event.target.value = "";
   }
   window.handleTrophyPhotoUpload = handleTrophyPhotoUpload;
 
   function clearTrophyModalPhoto() {
-    pendingTrophyPhotoDataUrl = null;
-    pendingTrophyPhotoRemoved = true;
-    syncTrophyModalPhotoPreview(null);
+    pendingTrophyPhotos.forEach(p => {
+      if (p.photoId && !p.isNew) pendingTrophyRemovedPhotoIds.push(p.photoId);
+    });
+    pendingTrophyPhotos = [];
+    renderTrophyModalPhotoGrid();
   }
   window.clearTrophyModalPhoto = clearTrophyModalPhoto;
 
-  async function openTrophyModal(editId = null) {
+  let __trLinkAfterSaveCtx = null;
+
+  async function openTrophyModal(editId = null, prefillObj = null) {
     const titleEl = document.getElementById("tr-modal-title");
-    pendingTrophyPhotoDataUrl = null;
-    pendingTrophyPhotoRemoved = false;
-    syncTrophyModalPhotoPreview(null);
+    pendingTrophyPhotos = [];
+    pendingTrophyRemovedPhotoIds = [];
+    __trLinkAfterSaveCtx = (prefillObj && prefillObj.linkAfterSave) ? prefillObj.linkAfterSave : null;
+    renderTrophyModalPhotoGrid();
 
     if (editId) {
       const existing = getTrophyById(editId);
@@ -17859,57 +19197,75 @@
       document.getElementById("tr-edit-id").value = existing.id;
       document.getElementById("tr-name-input").value = existing.name || "";
       document.getElementById("tr-species-input").value = TROPHY_SPECIES_META[existing.species] ? existing.species : "REHBOCK";
+      document.getElementById("tr-status-input").value = getTrophyStatusKey(existing);
       document.getElementById("tr-age-input").value = existing.ageEstimate || "";
       document.getElementById("tr-traits-input").value = existing.traits || "";
       document.getElementById("tr-note-input").value = existing.note || "";
-      if (existing.photoId) {
-        const loaded = await trPhotoGet(existing.photoId);
-        if (loaded) syncTrophyModalPhotoPreview(loaded);
+      const pIds = getTrophyPhotoIds(existing);
+      const pLabels = getTrophyPhotoLabels(existing);
+      for (let i = 0; i < pIds.length; i++) {
+        const loaded = await trPhotoGet(pIds[i]);
+        if (loaded) {
+          pendingTrophyPhotos.push({ photoId: pIds[i], dataUrl: loaded, label: pLabels[i] || "", isNew: false });
+        }
       }
+      renderTrophyModalPhotoGrid();
     } else {
       if (titleEl) titleEl.textContent = "🏆 Trophäenträger anlegen";
       document.getElementById("tr-edit-id").value = "";
-      document.getElementById("tr-name-input").value = "";
-      document.getElementById("tr-species-input").value =
-        (currentTrophySpeciesFilter !== "ALL" && TROPHY_SPECIES_META[currentTrophySpeciesFilter])
-          ? currentTrophySpeciesFilter
-          : "REHBOCK";
-      document.getElementById("tr-age-input").value = "";
-      document.getElementById("tr-traits-input").value = "";
-      document.getElementById("tr-note-input").value = "";
+      document.getElementById("tr-name-input").value = (prefillObj && prefillObj.name) ? prefillObj.name : "";
+      const spInit = (prefillObj && prefillObj.species && TROPHY_SPECIES_META[prefillObj.species])
+        ? prefillObj.species
+        : ((currentTrophySpeciesFilter !== "ALL" && TROPHY_SPECIES_META[currentTrophySpeciesFilter]) ? currentTrophySpeciesFilter : "REHBOCK");
+      document.getElementById("tr-species-input").value = spInit;
+      document.getElementById("tr-status-input").value = "ACTIVE";
+      document.getElementById("tr-age-input").value = (prefillObj && prefillObj.ageEstimate) ? prefillObj.ageEstimate : "";
+      document.getElementById("tr-traits-input").value = (prefillObj && prefillObj.traits) ? prefillObj.traits : "";
+      document.getElementById("tr-note-input").value = (prefillObj && prefillObj.note) ? prefillObj.note : "";
     }
+    syncTrophyModalStreckeHint();
     openModal("modal-trophy-entry");
   }
   window.openTrophyModal = openTrophyModal;
 
-  async function saveTrophyProfileFromModal() {
+  async function saveTrophyProfileFromModal(returnSavedId = false) {
     const name = (document.getElementById("tr-name-input")?.value || "").trim();
     if (!name) {
       alert("Bitte einen Namen oder Spitznamen eingeben (z. B. Ungerader 6er Bahndamm).");
-      return;
+      return null;
     }
     const editId = (document.getElementById("tr-edit-id")?.value || "").trim();
     const list = getTrophyProfiles();
     const prev = editId ? list.find(x => x.id === editId) : null;
     const id = editId || (`tr-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`);
 
-    let photoId = prev?.photoId || "";
-    if (pendingTrophyPhotoDataUrl) {
-      photoId = photoId || (`trp-${id}`);
-      await trPhotoSave(photoId, pendingTrophyPhotoDataUrl);
-    } else if (pendingTrophyPhotoRemoved && photoId) {
-      await trPhotoDelete(photoId);
-      photoId = "";
+    for (let i = 0; i < pendingTrophyRemovedPhotoIds.length; i++) {
+      await trPhotoDelete(pendingTrophyRemovedPhotoIds[i]);
+    }
+
+    const finalPhotoIds = [];
+    const finalPhotoLabels = [];
+    for (let i = 0; i < Math.min(4, pendingTrophyPhotos.length); i++) {
+      const p = pendingTrophyPhotos[i];
+      const pid = p.photoId || (`trp-${id}-${Date.now()}-${i}`);
+      if (p.isNew && p.dataUrl) {
+        await trPhotoSave(pid, p.dataUrl);
+      }
+      finalPhotoIds.push(pid);
+      finalPhotoLabels.push(String(p.label || "").trim());
     }
 
     const obj = {
       id: id,
       name: name,
       species: document.getElementById("tr-species-input")?.value || "REHBOCK",
+      status: document.getElementById("tr-status-input")?.value || "ACTIVE",
       ageEstimate: (document.getElementById("tr-age-input")?.value || "").trim(),
       traits: (document.getElementById("tr-traits-input")?.value || "").trim(),
       note: (document.getElementById("tr-note-input")?.value || "").trim(),
-      photoId: photoId,
+      photoId: finalPhotoIds[0] || "",
+      photoIds: finalPhotoIds,
+      photoLabels: finalPhotoLabels,
       createdAt: prev?.createdAt || getLocalISODateTime(),
       updatedAt: getLocalISODateTime()
     };
@@ -17919,20 +19275,38 @@
     else list.unshift(obj);
 
     saveTrophyProfiles(list);
-    pendingTrophyPhotoDataUrl = null;
-    pendingTrophyPhotoRemoved = false;
+    pendingTrophyPhotos = [];
+    pendingTrophyRemovedPhotoIds = [];
+
+    const linkCtx = __trLinkAfterSaveCtx;
+    __trLinkAfterSaveCtx = null;
+    if (linkCtx && linkCtx.sourceType && linkCtx.entryId) {
+      linkEntryToTrophyId(linkCtx.sourceType, linkCtx.entryId, obj.id);
+    }
+
     closeModal("modal-trophy-entry");
     renderTrophaeenView();
     renderBeifangView();
     renderDiaryCalendar();
+    renderDiaryList();
+    return returnSavedId ? obj.id : undefined;
   }
   window.saveTrophyProfileFromModal = saveTrophyProfileFromModal;
+
+  async function saveAndTransferTrophyToStrecke() {
+    const savedId = await saveTrophyProfileFromModal(true);
+    if (savedId) transferTrophyToStrecke(savedId);
+  }
+  window.saveAndTransferTrophyToStrecke = saveAndTransferTrophyToStrecke;
 
   async function deleteTrophyProfile(id) {
     const tr = getTrophyById(id);
     if (!tr) return;
     if (!confirm(`Steckbrief „${tr.name}“ wirklich löschen? (Die Sichtungen selbst bleiben erhalten.)`)) return;
-    if (tr.photoId) await trPhotoDelete(tr.photoId);
+    const pIds = getTrophyPhotoIds(tr);
+    for (let i = 0; i < pIds.length; i++) {
+      await trPhotoDelete(pIds[i]);
+    }
     const nextList = getTrophyProfiles().filter(x => x.id !== id);
     saveTrophyProfiles(nextList);
     renderTrophaeenView();
@@ -17990,6 +19364,362 @@
   }
   window.openTrophySightingsModal = openTrophySightingsModal;
 
+  // =========================================================================
+  // v27.1 Etappe 3: 48h-Wolf-Hinweis (0 % Score), Jagdzeiten-Etikett & Datumsdreher
+  // =========================================================================
+  function findRecentWolfSightingForSpot(spotName = "ALL", windowHours = 48) {
+    const entries = (typeof getBeifangEntries === "function") ? getBeifangEntries() : [];
+    const nowMs = Date.now();
+    const maxAgeMs = windowHours * 3600000;
+    let latestHit = null;
+
+    entries.forEach(item => {
+      if (!item || getBeifangSpeciesKey(item) !== "WOLF") return;
+      const itemSpot = String(item.kanzel || REV_ALLGEMEIN_LABEL).trim();
+      if (spotName && spotName !== "ALL") {
+        if (normalizeKanzelCompareKey(itemSpot) !== normalizeKanzelCompareKey(spotName)) return;
+      }
+      const ts = parseLogTimestamp(item);
+      if (!ts) return;
+      const diffMs = nowMs - ts;
+      if (diffMs >= -7200000 && diffMs <= maxAgeMs) {
+        if (!latestHit || ts > latestHit.ts) {
+          latestHit = {
+            ts,
+            hoursAgo: Math.max(0, Math.round(diffMs / 3600000)),
+            date: item.date || "",
+            arrival: item.arrival || "",
+            kanzel: itemSpot,
+            count: Math.max(1, Number(item.totalCount || 1))
+          };
+        }
+      }
+    });
+    return latestHit;
+  }
+
+  function formatWolf48hHintHTML(hit, inCockpit = false) {
+    if (!hit) return "";
+    const agoTxt = hit.hoursAgo <= 1 ? "vor ca. 1 Std." : `vor ${hit.hoursAgo} Std.`;
+    const cntTxt = hit.count > 1 ? ` (${hit.count} Stk.)` : "";
+    const spotTxt = formatSpotLabel(hit.kanzel);
+    const tail = inCockpit ? " · rein informativ (0 % Score-Einfluss)" : " · rein informativ";
+    return `🐺 <strong>Wolf-Hinweis (48h):</strong> ${agoTxt}${cntTxt} an ${escapeHTML(spotTxt)} (${formatDateDE(hit.date)}${hit.arrival ? ` ${escapeHTML(hit.arrival)}` : ""})${tail}`;
+  }
+
+  function updateCockpitWolfInfoBanner(kanzelName = activeKanzel) {
+    const banner = document.getElementById("cp-wolf-info-banner");
+    if (!banner) return;
+    const hit = findRecentWolfSightingForSpot(kanzelName, 48);
+    if (hit) {
+      banner.style.display = "block";
+      banner.innerHTML = formatWolf48hHintHTML(hit, true);
+    } else {
+      banner.style.display = "none";
+      banner.innerHTML = "";
+    }
+  }
+  window.updateCockpitWolfInfoBanner = updateCockpitWolfInfoBanner;
+
+  function buildBeifangJagdzeitBadgeHTML(filterKey) {
+    if (!filterKey || filterKey === "ALL" || filterKey === "STOERUNG" || filterKey === "SONSTIGES" || filterKey === "SPECIAL_ALL") {
+      return "";
+    }
+    if (["WOLF", "WILDKATZE", "SCHAKAL"].includes(filterKey)) {
+      const lbl = BEIFANG_SPECIES_META[filterKey]?.short || filterKey;
+      return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-closed">🔴 Ganzjährig geschont / geschützt (${escapeHTML(lbl)} · Uelzen/Nds.)</span></div>`;
+    }
+    if (typeof window.getJagdzeitenList !== "function" || typeof evaluateJagdzeitSpecies !== "function") {
+      return "";
+    }
+    const jzList = window.getJagdzeitenList();
+    const findById = (id) => jzList.find(x => x.id === id) || null;
+    const now = new Date();
+
+    if (filterKey === "RAUBWILD_ALL") {
+      const raubIds = ["jz-fuchs", "jz-dachs", "jz-steinmarder", "jz-baummarder", "jz-marderhund", "jz-waschbaer"];
+      const openNames = [];
+      const closedNames = [];
+      raubIds.forEach(id => {
+        const it = findById(id);
+        if (!it) return;
+        const ev = evaluateJagdzeitSpecies(it, now);
+        if (ev.status === "OPEN" || ev.status === "PARTIAL") openNames.push(it.title);
+        else closedNames.push(it.title);
+      });
+      if (openNames.length === 0) {
+        return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-closed">🔴 Schonzeit · aktuell kein gelistetes Raubwild frei (Uelzen)</span></div>`;
+      }
+      const cls = closedNames.length === 0 ? "jz-open" : "jz-partial";
+      const icon = closedNames.length === 0 ? "🟢 heute frei" : "🟢 teils frei";
+      return `<div class="bf-info-strip-row"><span class="bf-jz-chip ${cls}">${icon}: ${escapeHTML(openNames.join(", "))}${closedNames.length > 0 ? ` · 🔴 Schonzeit: ${escapeHTML(closedNames.join(", "))}` : ""}</span></div>`;
+    }
+
+    const idMap = {
+      ROTWILD: ["jz-rotwild"],
+      DAMWILD: ["jz-damwild"],
+      REHWILD: ["jz-rehwild"],
+      FUCHS: ["jz-fuchs"],
+      DACHS: ["jz-dachs"],
+      MARDER: ["jz-steinmarder", "jz-baummarder", "jz-iltis"],
+      MARDERHUND: ["jz-marderhund"],
+      WASCHBAER: ["jz-waschbaer"]
+    };
+    const ids = idMap[filterKey];
+    if (!ids || ids.length === 0) return "";
+
+    if (ids.length === 1) {
+      const item = findById(ids[0]);
+      if (!item) return "";
+      const ev = evaluateJagdzeitSpecies(item, now);
+      if (ev.status === "OPEN") {
+        return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-open">🟢 heute frei · ${escapeHTML(item.title)} (Jagdzeiten Uelzen)</span></div>`;
+      }
+      if (ev.status === "PARTIAL") {
+        const openParts = ev.lines.filter(l => l.isOpen).map(l => l.label).slice(0, 2).join(", ");
+        return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-partial">🟢 heute frei (teilw.): ${escapeHTML(openParts || item.title)}</span></div>`;
+      }
+      return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-closed">🔴 Schonzeit · ${escapeHTML(item.title)} (Jagdzeiten Uelzen)</span></div>`;
+    }
+
+    // Marder (Steinmarder, Baummarder, Iltis)
+    const openSub = [];
+    const closedSub = [];
+    ids.forEach(id => {
+      const it = findById(id);
+      if (!it) return;
+      const ev = evaluateJagdzeitSpecies(it, now);
+      if (ev.status === "OPEN" || ev.status === "PARTIAL") openSub.push(it.title);
+      else closedSub.push(it.title);
+    });
+    if (openSub.length === 0) {
+      return `<div class="bf-info-strip-row"><span class="bf-jz-chip jz-closed">🔴 Schonzeit · Marder (Stein-/Baummarder, Iltis)</span></div>`;
+    }
+    const cls = closedSub.length === 0 ? "jz-open" : "jz-partial";
+    return `<div class="bf-info-strip-row"><span class="bf-jz-chip ${cls}">🟢 heute frei: ${escapeHTML(openSub.join(", "))}${closedSub.length > 0 ? ` · 🔴 zu: ${escapeHTML(closedSub.join(", "))}` : ""}</span></div>`;
+  }
+
+  function renderBeifangWolfAndJagdzeitBanners() {
+    const wolfEl = document.getElementById("bf-wolf-info-banner");
+    if (wolfEl) {
+      const hit = findRecentWolfSightingForSpot(currentBeifangKanzelFilter, 48);
+      if (hit) {
+        wolfEl.style.display = "block";
+        wolfEl.innerHTML = formatWolf48hHintHTML(hit, false);
+      } else {
+        wolfEl.style.display = "none";
+        wolfEl.innerHTML = "";
+      }
+    }
+    const jzSlot = document.getElementById("bf-jagdzeit-badge-slot");
+    if (jzSlot) {
+      jzSlot.innerHTML = buildBeifangJagdzeitBadgeHTML(currentBeifangSpeciesFilter);
+    }
+  }
+
+  // --- DATUMSDREHER-KORREKTUR (Tag ↔ Monat mit Schutz bei Tag > 12) ---
+  function trySwapIsoDateDayMonth(isoStr) {
+    if (!isoStr || !/^\d{4}-\d{2}-\d{2}$/.test(isoStr)) {
+      return { ok: false, reason: "Kein gültiges Datum vorhanden." };
+    }
+    const [yy, mm, dd] = isoStr.split("-").map(Number);
+    if (dd > 12) {
+      return { ok: false, reason: `Tag (${String(dd).padStart(2, "0")}) ist größer als 12 – kein gültiger Monat nach Tausch.` };
+    }
+    if (mm < 1 || mm > 31) {
+      return { ok: false, reason: "Monat ungültig." };
+    }
+    const newMonth = dd;
+    const newDay = mm;
+    const probe = new Date(yy, newMonth - 1, newDay, 12, 0, 0);
+    if (probe.getFullYear() !== yy || probe.getMonth() !== newMonth - 1 || probe.getDate() !== newDay) {
+      return { ok: false, reason: `Getauschtes Datum ${String(newDay).padStart(2, "0")}.${String(newMonth).padStart(2, "0")}.${yy} existiert im Kalender nicht.` };
+    }
+    const swappedIso = `${yy}-${String(newMonth).padStart(2, "0")}-${String(newDay).padStart(2, "0")}`;
+    return { ok: true, swappedIso };
+  }
+
+  function swapDateDayMonthInInput(inputId) {
+    const inp = document.getElementById(inputId);
+    if (!inp) return;
+    const curVal = String(inp.value || "").trim();
+    const res = trySwapIsoDateDayMonth(curVal);
+    if (!res.ok) {
+      alert(`⚠️ Tausch nicht möglich:\n${res.reason}`);
+      return;
+    }
+    inp.value = res.swappedIso;
+    inp.dispatchEvent(new Event("change", { bubbles: true }));
+    if (typeof showHomeToast === "function") {
+      showHomeToast(`🔄 Datum getauscht: ${formatDateDE(curVal)} → ${formatDateDE(res.swappedIso)}`);
+    }
+  }
+  window.swapDateDayMonthInInput = swapDateDayMonthInInput;
+
+  function collectSuspiciousFutureEntries() {
+    const todayIso = getLocalISODate();
+    const findings = [];
+
+    diaryLogs.forEach(e => {
+      if (!e || !e.date || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return;
+      if (e.date > todayIso) {
+        const sw = trySwapIsoDateDayMonth(e.date);
+        findings.push({
+          sourceType: "DIARY",
+          id: e.id,
+          date: e.date,
+          arrival: e.arrival || "",
+          kanzel: e.kanzel || "Tunnel",
+          label: `${(STATUS_META[e.status] || STATUS_META.GREEN).icon} ${e.structure || "Sauen-Eintrag"}`,
+          canSwapToPast: Boolean(sw.ok && sw.swappedIso <= todayIso),
+          swappedIso: sw.ok ? sw.swappedIso : ""
+        });
+      }
+    });
+
+    getBeifangEntries().forEach(b => {
+      if (!b || !b.date || !/^\d{4}-\d{2}-\d{2}$/.test(b.date)) return;
+      if (b.date > todayIso) {
+        const spKey = getBeifangSpeciesKey(b);
+        const meta = BEIFANG_SPECIES_META[spKey] || BEIFANG_SPECIES_META.SONSTIGES;
+        const sw = trySwapIsoDateDayMonth(b.date);
+        findings.push({
+          sourceType: "BEIFANG",
+          id: b.id,
+          date: b.date,
+          arrival: b.arrival || "",
+          kanzel: b.kanzel || REV_ALLGEMEIN_LABEL,
+          label: `${meta.icon} ${b.speciesDetail || meta.label}`,
+          canSwapToPast: Boolean(sw.ok && sw.swappedIso <= todayIso),
+          swappedIso: sw.ok ? sw.swappedIso : ""
+        });
+      }
+    });
+
+    findings.sort((a, b) => a.date.localeCompare(b.date));
+    return findings;
+  }
+
+  function renderFutureDateAlertsInViews() {
+    const findings = collectSuspiciousFutureEntries();
+    const diarySlot = document.getElementById("diary-future-date-alert-slot");
+    const bfSlot = document.getElementById("bf-future-date-alert-slot");
+    const diaryCnt = findings.filter(f => f.sourceType === "DIARY").length;
+    const bfCnt = findings.filter(f => f.sourceType === "BEIFANG").length;
+
+    if (diarySlot) {
+      diarySlot.innerHTML = diaryCnt > 0
+        ? `<div class="future-date-alert-bar">
+             <span>⚠️ ${diaryCnt} verdächtige${diaryCnt === 1 ? "s Zukunftsdatum" : " Zukunftsdaten"} (mögl. Datumsdreher)</span>
+             <button type="button" class="btn-sm btn-yes" style="padding:4px 9px; font-size:0.72rem; flex-shrink:0;" onclick="openDateSwapCheckerModal()">🔄 Prüfen</button>
+           </div>`
+        : "";
+    }
+    if (bfSlot) {
+      bfSlot.innerHTML = bfCnt > 0
+        ? `<div class="future-date-alert-bar">
+             <span>⚠️ ${bfCnt} verdächtige${bfCnt === 1 ? "s Zukunftsdatum" : " Zukunftsdaten"} im Beifang</span>
+             <button type="button" class="btn-sm btn-yes" style="padding:4px 9px; font-size:0.72rem; flex-shrink:0;" onclick="openDateSwapCheckerModal()">🔄 Prüfen</button>
+           </div>`
+        : "";
+    }
+  }
+
+  function applyDirectDateSwapForEntry(sourceType, entryId) {
+    if (sourceType === "DIARY") {
+      const idx = diaryLogs.findIndex(x => x.id === entryId);
+      if (idx < 0) return;
+      const cur = diaryLogs[idx];
+      const sw = trySwapIsoDateDayMonth(cur.date);
+      if (!sw.ok) {
+        alert(`⚠️ Tausch nicht möglich:\n${sw.reason}`);
+        return;
+      }
+      const newDate = sw.swappedIso;
+      const arrVal = cur.arrival || "21:00";
+      const jnDt = new Date(`${newDate}T${arrVal}:00`);
+      const newStamp = buildLocalWeatherStampSync(newDate, arrVal);
+      cur.date = newDate;
+      cur.datum = newDate;
+      cur.jagdnacht = isNaN(jnDt.getTime()) ? newDate : getJagdnachtKeyFromDate(jnDt);
+      cur.weatherStamp = newStamp;
+      cur.richtung = (newStamp && newStamp.windDir) ? newStamp.windDir : "";
+      diaryLogs.sort((a, b) => `${b.date}T${b.arrival || "00:00"}`.localeCompare(`${a.date}T${a.arrival || "00:00"}`));
+      window.TAGEBUCH_EINTRAEGE = diaryLogs;
+      safeSetItem("sm_logs_v1", JSON.stringify(diaryLogs));
+      if (!newStamp || newStamp.source !== "cache") {
+        enrichDiaryEntryWeatherAsync(cur.id, newDate, arrVal);
+      }
+      renderDiaryCalendar();
+      renderDiaryList();
+      if (typeof updateCockpitAll === "function") updateCockpitAll();
+      if (typeof renderSauenmatrixView === "function") renderSauenmatrixView();
+      if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+    } else if (sourceType === "BEIFANG") {
+      const list = getBeifangEntries();
+      const idx = list.findIndex(x => x.id === entryId);
+      if (idx < 0) return;
+      const sw = trySwapIsoDateDayMonth(list[idx].date);
+      if (!sw.ok) {
+        alert(`⚠️ Tausch nicht möglich:\n${sw.reason}`);
+        return;
+      }
+      list[idx].date = sw.swappedIso;
+      saveBeifangEntries(list);
+      renderBeifangView();
+      if (typeof renderTrophaeenView === "function") renderTrophaeenView();
+      if (typeof updateCockpitAll === "function") updateCockpitAll();
+    }
+    renderDateSwapCheckerModal();
+  }
+  window.applyDirectDateSwapForEntry = applyDirectDateSwapForEntry;
+
+  function renderDateSwapCheckerModal() {
+    const findings = collectSuspiciousFutureEntries();
+    const sumEl = document.getElementById("date-swap-checker-summary");
+    const listEl = document.getElementById("date-swap-checker-list");
+    if (sumEl) {
+      if (findings.length === 0) {
+        sumEl.innerHTML = "✅ <strong>Alles sauber!</strong> Keine verdächtigen Zukunftsdaten in Tagebuch oder Beifang gefunden.";
+      } else {
+        sumEl.innerHTML = `⚠️ <strong>${findings.length} verdächtige${findings.length === 1 ? "r Eintrag" : " Einträge"}</strong> mit Datum nach heute (${formatDateDE(getLocalISODate())}) gefunden. Mit <strong>🔄 Tag ↔ Monat</strong> korrigierst du Datumsdreher direkt (inkl. Wetter-Stempel im Tagebuch).`;
+      }
+    }
+    if (!listEl) return;
+    if (findings.length === 0) {
+      listEl.innerHTML = "";
+      return;
+    }
+    listEl.innerHTML = findings.map(f => {
+      const sid = escapeHTML(f.id).replace(/'/g, "&#39;");
+      const swapBtn = f.swappedIso
+        ? `<button type="button" class="btn-sm btn-yes" style="flex:1; padding:5px 8px; font-size:0.74rem;" onclick="applyDirectDateSwapForEntry('${f.sourceType}', '${sid}')">🔄 → ${formatDateDE(f.swappedIso)}</button>`
+        : `<span style="font-size:0.72rem; color:#ff8fa3; font-weight:700;">Tag &gt; 12 (manuell prüfen)</span>`;
+      const editAction = f.sourceType === "DIARY"
+        ? `closeModal('modal-date-swap-checker'); openDiaryEntryModal(null, '${sid}')`
+        : `closeModal('modal-date-swap-checker'); openBeifangModal('${sid}')`;
+      return `
+        <div class="tr-open-item" style="margin-bottom:7px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+            <strong style="font-size:0.82rem; color:#fff3bf;">📅 ${formatDateDE(f.date)}${f.arrival ? ` · ${escapeHTML(f.arrival)} Uhr` : ""}</strong>
+            <span class="beifang-cat-pill" style="font-size:0.67rem;">${f.sourceType === "DIARY" ? "🐗 Tagebuch" : "🦌 Beifang"}</span>
+          </div>
+          <div style="font-size:0.78rem; color:#e6f4ea; font-weight:700;">${escapeHTML(formatSpotLabel(f.kanzel))} — ${f.label}</div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            ${swapBtn}
+            <button type="button" class="btn-sm btn-no" style="padding:5px 9px; font-size:0.74rem;" onclick="${editAction}">✏️ Bearbeiten</button>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  function openDateSwapCheckerModal() {
+    renderDateSwapCheckerModal();
+    openModal("modal-date-swap-checker");
+  }
+  window.openDateSwapCheckerModal = openDateSwapCheckerModal;
+
+
   function changeTrophyCalMonth(delta) {
     trCalMonth += delta;
     if (trCalMonth > 11) { trCalMonth = 0; trCalYear++; }
@@ -18023,10 +19753,13 @@
 
     const sumEl = document.getElementById("tr-sightings-modal-summary");
     if (sumEl) {
+      const stM = TROPHY_STATUS_META[getTrophyStatusKey(tr)] || TROPHY_STATUS_META.ACTIVE;
+      const todLine = `🌅 ${stats.tod.morgen} · ☀️ ${stats.tod.tag} · 🌇 ${stats.tod.abend} · 🌙 ${stats.tod.nacht}`;
       sumEl.innerHTML =
-        `<strong>${meta.label}</strong>${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""}<br>` +
-        `👁️ <strong>${stats.count} Sichtung${stats.count === 1 ? "" : "en"}</strong> · 🕒 ${stats.prefTimeStr}<br>` +
-        `🏯 ${escapeHTML(stats.spotsText)}`;
+        `<strong>${meta.label}</strong>${tr.ageEstimate ? ` · ${escapeHTML(tr.ageEstimate)}` : ""} · <span class="tr-status-pill ${stM.cls}">${stM.icon} ${stM.label}</span><br>` +
+        `👁️ <strong>${stats.count} Sichtung${stats.count === 1 ? "" : "en"}</strong> · 🕒 2h-Fenster: <strong>${escapeHTML(stats.peakWindowStr)}</strong><br>` +
+        `${todLine} · ⏱️ ${escapeHTML(stats.recency.text)}<br>` +
+        `${escapeHTML(stats.spotsText)}`;
     }
 
     const mLbl = document.getElementById("tr-cal-month-label");
